@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <title>NetOps Desk — Calculadora IPv4</title>
+    <link rel="stylesheet" href="/static/reset.css">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <a class="brand" href="/" aria-label="NetOps Desk, inicio">NetOps Desk</a>
+            <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="true" aria-label="Cambiar a tema claro">
+                <span class="theme-toggle__icon" aria-hidden="true">◐</span>
+                <span class="theme-toggle__label">Cambiar a tema claro</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="app-shell">
+        <div class="page-heading">
+            <p class="eyebrow">Herramientas de red</p>
+            <h1>Calculadora IPv4</h1>
+            <p class="page-description">Calculá redes, rangos y capacidad de direcciones IPv4.</p>
+        </div>
+
+        <fieldset class="operation-picker" aria-describedby="operation-help">
+            <legend>Tipo de cálculo</legend>
+            <p id="operation-help" class="visually-muted">Elegí la operación que querés realizar.</p>
+            <div class="operation-picker__options">
+                <label class="operation-option">
+                    <input type="radio" name="operation" value="direct-cidr" aria-controls="panel-direct-cidr" checked>
+                    <span>CIDR</span>
+                </label>
+                <label class="operation-option">
+                    <input type="radio" name="operation" value="direct-address" aria-controls="panel-direct-address">
+                    <span>Dirección + máscara</span>
+                </label>
+                <label class="operation-option">
+                    <input type="radio" name="operation" value="inverse" aria-controls="panel-inverse">
+                    <span>Hosts requeridos</span>
+                </label>
+            </div>
+        </fieldset>
+
+        <section id="panel-direct-cidr" class="operation-panel" aria-labelledby="direct-cidr-heading">
+            <h2 id="direct-cidr-heading">Calcular desde CIDR</h2>
+            <form id="form-direct-cidr" novalidate>
+                <div class="form-grid form-grid--two">
+                    <div class="form-group">
+                        <label for="cidr">Dirección y prefijo</label>
+                        <input type="text" id="cidr" name="cidr" placeholder="192.168.1.5/24" autocomplete="off" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="mode-direct-cidr">Modo de cálculo</label>
+                        <select id="mode-direct-cidr" name="mode">
+                            <option value="conventional" selected>Convencional</option>
+                            <option value="point-to-point">Punto a punto</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="button-primary">Calcular red</button>
+                <p class="operation-status" role="status" aria-live="polite" aria-atomic="true"></p>
+            </form>
+            <div id="result-direct-cidr" class="result-area" aria-live="polite" aria-atomic="true"></div>
+            <ul id="warnings-direct-cidr" class="warning-list" aria-label="Advertencias" aria-live="polite"></ul>
+            <div id="error-direct-cidr" class="error-area" role="alert" aria-live="assertive"></div>
+        </section>
+
+        <section id="panel-direct-address" class="operation-panel" aria-labelledby="direct-address-heading" hidden>
+            <h2 id="direct-address-heading">Calcular desde dirección y máscara</h2>
+            <form id="form-direct-address" novalidate>
+                <div class="form-grid form-grid--two">
+                    <div class="form-group">
+                        <label for="address">Dirección IPv4</label>
+                        <input type="text" id="address" name="address" placeholder="192.168.1.5" autocomplete="off" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="netmask">Máscara de subred</label>
+                        <input type="text" id="netmask" name="netmask" placeholder="255.255.255.0" autocomplete="off" required>
+                    </div>
+                    <div class="form-group form-grid__mode">
+                        <label for="mode-direct-address">Modo de cálculo</label>
+                        <select id="mode-direct-address" name="mode">
+                            <option value="conventional" selected>Convencional</option>
+                            <option value="point-to-point">Punto a punto</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="button-primary">Calcular red</button>
+                <p class="operation-status" role="status" aria-live="polite" aria-atomic="true"></p>
+            </form>
+            <div id="result-direct-address" class="result-area" aria-live="polite" aria-atomic="true"></div>
+            <ul id="warnings-direct-address" class="warning-list" aria-label="Advertencias" aria-live="polite"></ul>
+            <div id="error-direct-address" class="error-area" role="alert" aria-live="assertive"></div>
+        </section>
+
+        <section id="panel-inverse" class="operation-panel" aria-labelledby="inverse-heading" hidden>
+            <h2 id="inverse-heading">Calcular por hosts requeridos</h2>
+            <form id="form-inverse" novalidate>
+                <div class="form-grid form-grid--two">
+                    <div class="form-group">
+                        <label for="required-hosts">Hosts requeridos</label>
+                        <input type="number" id="required-hosts" name="required_hosts" min="1" step="1" inputmode="numeric" placeholder="3" autocomplete="off" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="mode-inverse">Modo de cálculo</label>
+                        <select id="mode-inverse" name="mode" required>
+                            <option value="conventional">Convencional</option>
+                            <option value="point-to-point" selected>Punto a punto</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="button-primary">Encontrar prefijo</button>
+                <p class="operation-status" role="status" aria-live="polite" aria-atomic="true"></p>
+            </form>
+            <div id="result-inverse" class="result-area" aria-live="polite" aria-atomic="true"></div>
+            <ul id="warnings-inverse" class="warning-list" aria-label="Advertencias" aria-live="polite"></ul>
+            <div id="error-inverse" class="error-area" role="alert" aria-live="assertive"></div>
+        </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "netops-desk"
+version = "0.1.0"
+description = "NetOps Desk - A web-based network operations toolkit"
+readme = "README.md"
+requires-python = ">=3.12"
+license = {text = "MIT"}
+authors = [
+    {name = "Nicolás Dominguez"}
+]
+keywords = ["network", "networking", "ip", "subnet", "calculator", "fastapi"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "fastapi>=0.100.0",
+    "pydantic>=2.0.0",
+    "uvicorn>=0.27.0",
+]
+
+[project.optional-dependencies]
+test = ["httpx2>=2.0.0", "pytest>=8.0.0"]
+dev = ["ruff>=0.4.0", "black>=24.0.0", "mypy>=1.10.0"]
+
+[project.urls]
+Homepage = "https://github.com/Carperro/NetOpsDesk"
+Repository = "https://github.com/Carperro/NetOpsDesk"
+Issues = "https://github.com/Carperro/NetOpsDesk/issues"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = ["-v", "--tb=short"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP"]
+ignore = ["E501"]
+
+[tool.black]
+line-length = 100
+target-version = ["py312"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
