@@ -1,10 +1,6 @@
-
-## 2. `api-contracts.md` corregido
-
-```markdown
 # Contrato de API - Calculadora IPv4/CIDR (MVP)
 
-Este documento describe el contrato que implementan actualmente `models.py`, `routes/ipv4.py`, `exceptions.py` y el dominio. Los códigos y mensajes están contrastados con el código fuente.
+Este documento describe el contrato de la herramienta IPv4/CIDR. Su modelo está en `src/netops_desk/api/models/ipv4.py`; la ruta, los handlers compartidos y el dominio están en `src/netops_desk/api/routes/ipv4.py`, `src/netops_desk/api/exceptions.py` y `src/netops_desk/ipv4.py`. Subnetting tiene un contrato separado en `docs/modulo1/subnetting/api-contracts.md`.
 
 ## Endpoint
 
@@ -203,7 +199,7 @@ Tipo de contenido no soportado:
 
 ### Orden de validación
 
-El handler Pydantic prioriza los errores de campo desconocido cuando aparecen junto con otros errores de validación; si hay varios, los agrupa y ordena. El modelo ejecuta las comprobaciones de incompatibilidad y campos faltantes en el orden definido en `models.py`. Las pruebas cubren método antes de cuerpo malformado, tipo de contenido no admitido antes de interpretar JSON, campo desconocido frente a incompatibilidad, incompatibilidad frente a falta de campo o tipo inválido, falta frente a tipo inválido y tipo/valor frente a máscara no contigua.
+El handler Pydantic prioriza los errores de campo desconocido cuando aparecen junto con otros errores de validación; si hay varios, los agrupa y ordena. El modelo ejecuta las comprobaciones de incompatibilidad y campos faltantes en el orden definido en `api/models/ipv4.py`. Las pruebas cubren método antes de cuerpo malformado, tipo de contenido no admitido antes de interpretar JSON, campo desconocido frente a incompatibilidad, incompatibilidad frente a falta de campo o tipo inválido, falta frente a tipo inválido y tipo/valor frente a máscara no contigua.
 
 ## Diferencia respecto del contrato documentado anteriormente
 

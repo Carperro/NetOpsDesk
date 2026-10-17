@@ -143,7 +143,6 @@ class IPV4Input(BaseModel):
             f"El campo '{field}' debe ser una dirección IPv4 en formato string.",
         )
 
-
 # ---------------------------------------------------------------------------
 # Salidas
 # ---------------------------------------------------------------------------
@@ -168,7 +167,6 @@ class IPV4DirectOutput(BaseModel):
         description="Advertencias emitidas durante el cálculo."
     )
 
-
 class IPV4InverseOutput(BaseModel):
     """Resultado del cálculo inverso."""
 
@@ -187,7 +185,6 @@ class IPV4InverseOutput(BaseModel):
     warnings: list[dict[str, str]] = Field(
         description="Advertencias emitidas durante el cálculo."
     )
-
 
 # ---------------------------------------------------------------------------
 # Errores

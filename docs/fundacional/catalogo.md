@@ -2,13 +2,13 @@
 
 El catálogo del producto contempla **25 herramientas distribuidas en cinco módulos**. Representa el alcance previsto a largo plazo, no el estado actual de desarrollo.
 
-La implementación es gradual. El primer módulo se prioriza con una sola herramienta completa, probada y útil; el resto del catálogo se incorpora a medida que se valida el enfoque.
+La implementación es gradual. El primer módulo prioriza herramientas de direccionamiento IP; el resto del catálogo se incorpora a medida que se valida el enfoque.
 
 ## Estado actual
 
-**MVP en desarrollo:** Módulo 1, herramienta 1 (Calculadora IPv4/CIDR).
+**MVP implementado:** Módulo 1, herramientas 1 (Calculadora IPv4/CIDR) y 2 (Subnetting IPv4).
 
-Todas las demás herramientas están previstas pero no implementadas. El detalle del alcance del MVP está en `docs/modulo1/ipv4-calculator/requisitos.md` y `docs/modulo1/ipv4-calculator/decision-log.md`.
+Las herramientas 3 a 25 están previstas y no se marcan como implementadas. El alcance aprobado del MVP está registrado en `docs/modulo1/ipv4-calculator/decision-log.md`; los requisitos de las herramientas 1 y 2 están en sus directorios respectivos.
 
 ## Módulo 1. Direccionamiento IP y subnetting
 
@@ -19,7 +19,7 @@ Todas las demás herramientas están previstas pero no implementadas. El detalle
 - Rango de hosts.
 - Cantidad de direcciones y hosts utilizables.
 
-### 2. Subnetting IPv4 *(prevista)*
+### 2. Subnetting IPv4 *(MVP — implementada)*
 - División de redes por prefijos.
 - Cálculo según cantidad de hosts requerida.
 - Visualización de las subredes resultantes.

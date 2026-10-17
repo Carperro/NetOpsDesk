@@ -221,10 +221,10 @@ async def http_exception_handler(
     error_code = _HTTP_STATUS_MAP.get(status_code, f"http_{status_code}")
 
     # Mensajes en español para los errores que produce FastAPI/Starlette.
-    if status_code == status.HTTP_400_BAD_REQUEST:
-        detail = "El cuerpo de la petición no es JSON válido."
-    elif status_code == status.HTTP_404_NOT_FOUND:
+    if status_code == status.HTTP_404_NOT_FOUND:
         detail = "Recurso no encontrado."
+    elif status_code == status.HTTP_400_BAD_REQUEST and str(exc.detail) == "There was an error parsing the body":
+        detail = "El cuerpo de la petición no es JSON válido."
     else:
         detail = str(exc.detail) if exc.detail else "Error HTTP."
 

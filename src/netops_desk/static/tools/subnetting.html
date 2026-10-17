@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetOps Desk — Subnetting IPv4</title>
+    
+    <link rel="stylesheet" href="/static/css/reset.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/subnetting.css"> 
+    
+    <script src="/static/js/sidebar.js" defer></script>
+    <script src="/static/js/common.js" defer></script>
+    <script src="/static/js/subnetting.js" defer></script>
+</head>
+<body id="top">
+
+    <div class="app-layout">
+        <div id="sidebar-container"></div>
+
+        <main class="main-content">
+            <header class="topbar">
+                <a href="/modulo-1" class="back-link">← Volver al Módulo 1</a>
+            </header>
+
+            <div class="page-container">
+                <div class="page-heading">
+                    <p class="eyebrow">Herramientas de red</p>
+                    <h1>Subnetting IPv4</h1>
+                    <p class="page-description">Dividí una red en subredes más pequeñas por cantidad o por hosts requeridos.</p>
+                </div>
+
+                <!-- Selector de modo -->
+                <fieldset class="operation-picker">
+                    <legend>Tipo de cálculo</legend>
+                    <div class="operation-picker__options">
+                        <label class="operation-option">
+                            <input type="radio" name="operation" value="by-count" checked>
+                            <span>Por cantidad de subredes</span>
+                        </label>
+                        <label class="operation-option">
+                            <input type="radio" name="operation" value="by-hosts">
+                            <span>Por hosts requeridos</span>
+                        </label>
+                    </div>
+                </fieldset>
+
+                <!-- PANEL 1: POR CANTIDAD -->
+                <section id="panel-by-count" class="operation-panel">
+                    <h2>Dividir por cantidad de subredes</h2>
+                    <form id="form-by-count" novalidate>
+                        <div class="form-grid form-grid--two">
+                            <div class="form-group">
+                                <label for="cidr-count">Red base (CIDR)</label>
+                                <input type="text" id="cidr-count" name="network_cidr" placeholder="192.168.1.0/24" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="subnet-count">Cantidad de subredes</label>
+                                <input type="number" id="subnet-count" name="subnet_count" min="1" placeholder="4" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="button-primary">Calcular subredes</button>
+                        <p class="operation-status" role="status" aria-live="polite"></p>
+                    </form>
+                </section>
+
+                <!-- PANEL 2: POR HOSTS -->
+                <section id="panel-by-hosts" class="operation-panel" hidden>
+                    <h2>Dividir por hosts requeridos</h2>
+                    <form id="form-by-hosts" novalidate>
+                        <div class="form-grid form-grid--two">
+                            <div class="form-group">
+                                <label for="cidr-hosts">Red base (CIDR)</label>
+                                <input type="text" id="cidr-hosts" name="network_cidr" placeholder="10.0.0.0/8" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="required-hosts">Hosts por subred</label>
+                                <input type="number" id="required-hosts" name="required_hosts" min="1" placeholder="50" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="button-primary">Calcular subredes</button>
+                        <p class="operation-status" role="status" aria-live="polite"></p>
+                    </form>
+                </section>
+
+                <!-- ÁREA DE RESULTADOS (Compartida para ambos modos) -->
+                <div id="subnet-results" class="results-container" hidden>
+                    <div class="results-header">
+                        <h3>Resultados</h3>
+                    </div>
+                    <div id="normalization-warning" hidden></div>
+                    <div class="table-responsive">
+                        <table class="subnet-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Red</th>
+                                    <th>Máscara</th>
+                                    <th>Rango de Hosts</th>
+                                    <th>Broadcast</th>
+                                </tr>
+                            </thead>
+                            <tbody id="subnet-tbody">
+                                <!-- Aquí JS inyectará las filas -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div id="error-area" class="error-area"></div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

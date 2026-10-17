@@ -6,14 +6,14 @@ El módulo 1 de NetOps Desk agrupa herramientas para el cálculo, planificación
 
 ## Estado actual
 
-**MVP en desarrollo:** herramienta 1, Calculadora IPv4/CIDR.
+**MVP implementado:** herramienta 1, Calculadora IPv4/CIDR, y herramienta 2, Subnetting IPv4.
 
-Las herramientas 2 a 5 están previstas pero no implementadas. El catálogo completo con el estado de cada herramienta está en `docs/fundacional/catalogo.md`.
+Las herramientas 3 a 5 están previstas. El catálogo completo con el estado de cada herramienta está en `docs/fundacional/catalogo.md`.
 
 ## Herramientas del módulo
 
 1. **Calculadora IPv4/CIDR** *(MVP — implementada)*.
-2. **Subnetting IPv4** *(prevista)*.
+2. **Subnetting IPv4** *(MVP — implementada)*.
 3. **Planificador VLSM** *(prevista)*.
 4. **Detector de solapamiento de redes** *(prevista)*.
 5. **Calculadora IPv6** *(prevista)*.
@@ -38,3 +38,10 @@ La documentación de la calculadora IPv4/CIDR (herramienta 1) está en `docs/mod
 - `api-contracts.md`
 - `decision-log.md`
 - `test-strategy.md`
+
+La documentación de Subnetting IPv4 (herramienta 2) está en `docs/modulo1/subnetting/`:
+
+- `requisitos.md`
+- `arquitectura.md`
+- `api-contracts.md`
+- `decision-log.md`

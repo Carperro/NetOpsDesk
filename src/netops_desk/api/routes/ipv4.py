@@ -11,7 +11,7 @@ from __future__ import annotations
 from fastapi import APIRouter, Depends, Request, status
 
 from netops_desk.api.exceptions import APIValidationError
-from netops_desk.api.models import (
+from netops_desk.api.models.ipv4 import (
     IPV4DirectOutput,
     IPV4Input,
     IPV4InverseOutput,

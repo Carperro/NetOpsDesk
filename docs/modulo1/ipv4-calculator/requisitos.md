@@ -1,8 +1,8 @@
-# Requisitos del MVP - NetOps Desk
+# Requisitos de la Calculadora IPv4/CIDR - NetOps Desk
 
-## Objetivo del MVP
+## Objetivo de la herramienta
 
-Proveer una calculadora IPv4/CIDR funcional mediante una API FastAPI y una interfaz web local, con pruebas automatizadas que verifiquen el dominio, la API y la integración frontend-backend.
+Proveer la herramienta Calculadora IPv4/CIDR mediante una API FastAPI y una interfaz web local. Este documento define los requisitos de la herramienta 1; el alcance general del MVP también incluye Subnetting IPv4 según DEC-009.
 
 ## Alcance incluido
 
@@ -35,7 +35,7 @@ Proveer una calculadora IPv4/CIDR funcional mediante una API FastAPI y una inter
 - Acceso por LAN (el servidor solo escucha en `127.0.0.1`).
 - Frameworks de frontend (React, Vue, etc.) o bibliotecas de estilos (Tailwind, etc.).
 - Docker u otras tecnologías de contenerización.
-- Herramientas adicionales del catálogo oficial (solo la calculadora IPv4/CIDR).
+- Requisitos funcionales de otras herramientas del catálogo; Subnetting IPv4 se especifica en `docs/modulo1/subnetting/`.
 
 ## Requisitos funcionales de la calculadora IPv4/CIDR
 

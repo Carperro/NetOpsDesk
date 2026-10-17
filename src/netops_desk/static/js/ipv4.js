@@ -97,7 +97,39 @@
 
   function setError(config, message) {
     const error = getElement(config.errorId);
-    if (error) error.textContent = message;
+    if (!error) return;
+
+    error.textContent = '';
+    const alert = makeElement('div', 'alert alert--error');
+    const header = makeElement('div', 'alert__header', 'Error');
+    const messageEl = makeElement('div', 'alert__message', message);
+    alert.append(header);
+    alert.append(messageEl);
+    error.append(alert);
+  }
+
+  function renderWarnings(config, warnings) {
+    const list = getElement(config.warningId);
+    if (!list || !Array.isArray(warnings)) return;
+
+    list.textContent = '';
+
+    const items = warnings.map((warning) => {
+      const code = warning && typeof warning.code === 'string' ? warning.code : 'Advertencia';
+      const message = warning && typeof warning.message === 'string'
+        ? warning.message
+        : 'La API devolvió una advertencia sin detalle.';
+
+      const li = document.createElement('li');
+      const alert = makeElement('div', 'alert alert--warning');
+      const header = makeElement('div', 'alert__header', code.replace('_', ' '));
+      const messageEl = makeElement('div', 'alert__message', message);
+      alert.append(header);
+      alert.append(messageEl);
+      li.append(alert);
+      return li;
+    });
+    list.append(...items);
   }
 
   function setBusy(config, busy) {
@@ -191,21 +223,6 @@
     if (!isInverse) appendBinaryDetails(result, data.binary);
   }
 
-  function renderWarnings(config, warnings) {
-    const list = getElement(config.warningId);
-    if (!list || !Array.isArray(warnings)) return;
-    const items = warnings.map((warning) => {
-      const item = makeElement('li', 'warning-item');
-      const code = warning && typeof warning.code === 'string' ? warning.code : 'warning';
-      const message = warning && typeof warning.message === 'string'
-        ? warning.message
-        : 'La API devolvió una advertencia sin detalle.';
-      item.append(makeElement('strong', 'warning-item__code', code));
-      item.append(makeElement('p', 'warning-item__message', message));
-      return item;
-    });
-    list.replaceChildren(...items);
-  }
 
   function formatApiError(data) {
     const code = typeof data?.error === 'string' ? data.error : 'unknown_error';

@@ -3,8 +3,7 @@
 **Versión:** 1.0  
 **Estado:** Propuesta para aprobación  
 **Proyecto:** NetOps Desk  
-**Fase actual:** Fase D — Implementación (alcance autorizado: backend IPv4/CIDR)
-**Implementación de código:** No autorizada todavía
+**Fase actual:** Fase D — Implementación (alcance autorizado: backend IPv4/CIDR y Subnetting IPv4)
 
 ---
 
@@ -31,9 +30,10 @@ Ese documento constituye una referencia inicial, pero no convierte automáticame
 El primer MVP incluirá:
 
 1. Calculadora IPv4/CIDR.
-2. API implementada con FastAPI.
-3. Interfaz con HTML5, CSS3 nativo y JavaScript vanilla.
-4. Pruebas automatizadas del núcleo y de la API.
+2. Subnetting IPv4.
+3. API implementada con FastAPI.
+4. Interfaz con HTML5, CSS3 nativo y JavaScript vanilla.
+5. Pruebas automatizadas de las herramientas del MVP.
 
 La autenticación completa, el inventario persistente y los diagnósticos del sistema operativo quedan fuera del MVP inicial, salvo que se identifique una dependencia indispensable y el usuario apruebe modificar el alcance.
 
@@ -47,7 +47,7 @@ La autenticación completa, el inventario persistente y los diagnósticos del si
 - CSS3 nativo.
 - JavaScript vanilla.
 - Pytest.
-- HTTPX.
+- `httpx2` como dependencia de pruebas, mantenida intencionalmente por compatibilidad con Python 3.12.
 - Git y GitHub.
 - SQLite y SQLAlchemy 2.0 para las etapas que requieran persistencia.
 

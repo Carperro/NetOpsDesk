@@ -462,6 +462,57 @@ h2 { font-size: 1.25rem; font-weight: 600; margin-bottom: 16px; }
 }
 
 /* =========================================
+   Sistema de Alertas (Errores y Advertencias)
+   ========================================= */
+.alert {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px;
+    border-radius: 8px;
+    border-left: 4px solid;
+    margin-top: 20px;
+    font-size: 0.95rem;
+    animation: fadeIn 0.3s ease;
+}
+
+.alert--error {
+    background-color: var(--error-bg);
+    border-left-color: var(--error);
+    color: var(--text-main);
+}
+
+.alert--warning {
+    background-color: var(--warning-bg);
+    border-left-color: var(--warning);
+    color: var(--text-main);
+}
+
+.alert__header {
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.alert--error .alert__header { color: var(--error); }
+.alert--warning .alert__header { color: var(--warning); }
+
+.alert__message {
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* =========================================
    7. Responsive (Media Queries)
    ========================================= */
 @media (max-width: 1024px) {

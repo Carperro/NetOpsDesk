@@ -17,6 +17,7 @@ Este documento registra las decisiones aprobadas relevantes para el MVP de NetOp
 - **Alternativas consideradas**:
   - Incluir autenticación básica en el MVP (descartada: complica el inicio y no es esencial para la funcionalidad de cálculo).
   - Incluir persistencia para guardar historial de cálculos (descartada: añade complejidad de almacenamiento y no es necesaria para verificar el núcleo funcional).
+- **Vigencia**: la exclusividad de la herramienta 1 quedó sustituida por DEC-009; las demás decisiones de alcance de esta entrada permanecen vigentes.
 
 ### DEC-002
 
@@ -126,13 +127,24 @@ Este documento registra las decisiones aprobadas relevantes para el MVP de NetOp
 - **Estado**: APROBADA
 - **Contexto**: Sustitución de `httpx` por `httpx2` en el grupo `test`.
 - **Decisión**: El grupo opcional `test` de `pyproject.toml` declara la distribución `httpx2` en lugar de `httpx`. Las pruebas siguen usando `fastapi.testclient.TestClient`; no importan directamente `httpx` ni `httpx2`.
-- **Motivo**: Starlette emite una advertencia de deprecación recomendando `httpx2` como cliente de pruebas. La migración elimina la advertencia y mantiene la compatibilidad con `TestClient`.
+- **Motivo**: Se mantiene `httpx2` intencionalmente por compatibilidad con Python 3.12 y con `TestClient`. La migración también responde a la advertencia de deprecación observada en Starlette.
 - **Consecuencias**:
   - La suite de pruebas corre sin advertencias de deprecación.
   - `DEC-006` queda parcialmente sustituida en cuanto al nombre del paquete, pero se mantiene vigente en su intención: la dependencia es **solo de pruebas**, no de producción ni del dominio.
 - **Alternativas consideradas**:
   - Mantener `httpx` y silenciar la advertencia con `filterwarnings` (descartado: pospone la migración sin resolver la causa).
   - Eliminar la dependencia y no usar `TestClient` (descartado: pierde cobertura de integración HTTP).
+
+### DEC-009
+
+- **Estado**: APROBADA
+- **Contexto**: Ampliación oficial del MVP para incorporar la segunda herramienta del Módulo 1.
+- **Decisión**: El MVP incluye Subnetting IPv4 además de la Calculadora IPv4/CIDR. Esta decisión sustituye únicamente la exclusividad de herramienta indicada en DEC-001; las demás exclusiones aprobadas se mantienen.
+- **Motivo**: El usuario autorizó expresamente incluir e implementar Subnetting IPv4 en el MVP.
+- **Consecuencias**:
+  - El catálogo y la visión del Módulo 1 identifican las herramientas 1 y 2 como parte del MVP.
+  - Subnetting mantiene documentación de requisitos, arquitectura, contrato API y decisiones propia.
+  - La aprobación de alcance no equivale a una afirmación de que cada regla esté probada de extremo a extremo.
 
 ## Reglas recuperadas
 

@@ -11,7 +11,7 @@ NetOps Desk es una aplicación web que reúne herramientas habituales de redes y
 
 ## Estado actual
 
-MVP en desarrollo: calculadora IPv4/CIDR accesible desde el navegador, con API FastAPI, validación de entradas y pruebas automatizadas del dominio, la API y la entrega estática. El resto del catálogo permanece previsto.
+MVP implementado: Calculadora IPv4/CIDR y Subnetting IPv4 accesibles desde el navegador mediante API FastAPI. Las demás herramientas del catálogo permanecen previstas.
 
 El alcance detallado del MVP está en `docs/modulo1/ipv4-calculator/requisitos.md`. El catálogo completo con el estado de cada herramienta está en `docs/fundacional/catalogo.md`.
 

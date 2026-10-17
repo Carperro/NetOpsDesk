@@ -1,12 +1,12 @@
 # NetOps Desk
 
-![Tests](https://img.shields.io/badge/tests-89%20passing-brightgreen)
+![Tests](https://img.shields.io/badge/tests-101%20passing-brightgreen)
 ![Python](https://img.shields.io/badge/python-3.12-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
 **Versión:** 0.1.0 · **Python:** 3.12+ · **Licencia:** MIT
 
-NetOps Desk es una aplicación web local para herramientas de redes y soporte IT. El MVP implementado incluye una calculadora IPv4/CIDR, una API FastAPI y una interfaz servida por la misma aplicación. El catálogo completo del producto y las herramientas futuras se describen como alcance previsto en `docs/fundacional/`.
+NetOps Desk es una aplicación web local para herramientas de redes y soporte IT. El MVP implementado incluye la Calculadora IPv4/CIDR y la herramienta de Subnetting IPv4, con una API FastAPI y una interfaz servida por la misma aplicación. El catálogo completo del producto y las herramientas futuras se describen en `docs/fundacional/`.
 
 ## Funcionalidad disponible
 
@@ -14,9 +14,14 @@ NetOps Desk es una aplicación web local para herramientas de redes y soporte IT
 - Cálculo inverso a partir de `required_hosts` y `mode`.
 - Modos `conventional` y `point-to-point`, con reglas específicas para `/31` y `/32`.
 - API en `POST /api/v1/tools/ipv4/calculate`.
+- Subnetting por cantidad de subredes en `POST /api/v1/tools/subnetting/by-count`.
+- Subnetting por hosts requeridos en `POST /api/v1/tools/subnetting/by-hosts`.
 - Interfaz web en `/`, con recursos estáticos servidos localmente.
+- Interfaz de Subnetting IPv4 en `/tools/subnetting`.
 
 El contrato detallado de solicitudes, respuestas y errores está en [`api-contracts.md`](docs/modulo1/ipv4-calculator/api-contracts.md). La clasificación de direcciones sigue aplazada y no forma parte de la respuesta pública actual.
+
+La documentación de Subnetting está en [`docs/modulo1/subnetting/`](docs/modulo1/subnetting/). La insignia refleja los 101 tests aprobados según la última confirmación del usuario; no se ejecutó la suite durante esta actualización documental.
 
 ## Requisitos y ejecución local
 

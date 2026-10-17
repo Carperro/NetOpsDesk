@@ -25,6 +25,8 @@ from netops_desk.api.exceptions import (
     http_exception_handler,
     pydantic_validation_error_handler,
 )
+
+from netops_desk.api.routes.subnetting import router as subnetting_router
 from netops_desk.api.routes.ipv4 import router as ipv4_router
 from netops_desk.ipv4 import DomainError
 
@@ -55,7 +57,9 @@ def create_app() -> FastAPI:
     app.add_exception_handler(Exception, general_exception_handler)
 
     # Routers de la API.
-    app.include_router(ipv4_router)
+    app.include_router(ipv4_router)         # calc. ikpv4
+    app.include_router(subnetting_router)   # calc. subnetting
+
 
     # Archivos estáticos. Se monta DESPUÉS del router para no interceptar
     # las rutas /api/*; el prefijo /static es explícito para que no colisione
@@ -72,17 +76,26 @@ def create_app() -> FastAPI:
     @app.get("/login", include_in_schema=False)
     async def login_page() -> FileResponse:
         return FileResponse(STATIC_DIR / "login.html")
-    # Agregamos la ruta para las tools
-    # Agregamos la ruta para la calculadora de IPv4
-    @app.get("/tools/ipv4", include_in_schema=False)
-    async def ipv4_tool_page() -> FileResponse:
-        return FileResponse(STATIC_DIR / "tools" / "ipv4.html")
 
     # Agregamos la ruta para los modulos
     @app.get("/modulo-1", include_in_schema=False)
     async def modulo_1_page() -> FileResponse:
         # Le agregamos la carpeta "modules" a la ruta
         return FileResponse(STATIC_DIR / "modules" / "modulo-1.html")
+
+    
+    # Agregamos la ruta para las tools
+
+    # Agregamos la ruta para la calculadora de IPv4
+    @app.get("/tools/ipv4", include_in_schema=False)
+    async def ipv4_tool_page() -> FileResponse:
+        return FileResponse(STATIC_DIR / "tools" / "ipv4.html")
+    # Agregamos la ruta para subnetting
+    @app.get("/tools/subnetting", include_in_schema=False)
+    async def subnetting_tool_page() -> FileResponse:
+        return FileResponse(STATIC_DIR / "tools" / "subnetting.html")
+
+
 
     return app
     
