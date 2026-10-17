@@ -66,9 +66,37 @@ def create_app() -> FastAPI:
     async def root() -> FileResponse:
         """Sirve el index.html de la aplicación en la ruta raíz."""
         return FileResponse(STATIC_DIR / "index.html")
+        # --- Rutas de Páginas (Frontend) ---
+    
+    @app.get("/login", include_in_schema=False)
+    async def login_page() -> FileResponse:
+        return FileResponse(STATIC_DIR / "login.html")
 
+    @app.get("/modulo-1", include_in_schema=False)
+    async def modulo_1_page() -> FileResponse:
+        return FileResponse(STATIC_DIR / "modulo-1.html")
+
+    @app.get("/modulo-2", include_in_schema=False)
+    async def modulo_2_page() -> FileResponse:
+        return FileResponse(STATIC_DIR / "modulo-2.html")
+
+    @app.get("/modulo-3", include_in_schema=False)
+    async def modulo_3_page() -> FileResponse:
+        return FileResponse(STATIC_DIR / "modulo-3.html")
+
+    @app.get("/modulo-4", include_in_schema=False)
+    async def modulo_4_page() -> FileResponse:
+        return FileResponse(STATIC_DIR / "modulo-4.html")
+
+    @app.get("/modulo-5", include_in_schema=False)
+    async def modulo_5_page() -> FileResponse:
+        return FileResponse(STATIC_DIR / "modulo-5.html")
+
+    @app.get("/tools/ipv4", include_in_schema=False)
+    async def ipv4_tool_page() -> FileResponse:
+        return FileResponse(STATIC_DIR / "tools" / "ipv4.html")
+    
     return app
-
-
+    
 # Instancia que Uvicorn importa: 'netops_desk.api.main:app'.
 app = create_app()

@@ -1,59 +1,17 @@
 (function () {
   'use strict';
 
-  const THEME_STORAGE_KEY = 'netops-desk-theme';
+   // 1. Proteger la página (se comunica con common.js)
+  requireAuth();
+
   const API_ENDPOINT = '/api/v1/tools/ipv4/calculate';
   const unavailableText = 'No disponible para este prefijo y modo';
 
-  const themeToggle = document.getElementById('theme-toggle');
-  const themeLabel = themeToggle?.querySelector('.theme-toggle__label');
   const operationInputs = Array.from(document.querySelectorAll('input[name="operation"]'));
   const operationPanels = Array.from(document.querySelectorAll('.operation-panel'));
 
   let requestVersion = 0;
   let activeRequest = null;
-
-  function getStoredTheme() {
-    try {
-      return localStorage.getItem(THEME_STORAGE_KEY);
-    } catch (_) {
-      return null;
-    }
-  }
-
-  function setStoredTheme(theme) {
-    try {
-      localStorage.setItem(THEME_STORAGE_KEY, theme);
-    } catch (_) {
-      // La preferencia no debe impedir el cambio durante la sesión.
-    }
-  }
-
-  function applyTheme(theme) {
-    const isDark = theme === 'dark';
-    const actionLabel = isDark ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro';
-    document.documentElement.setAttribute('data-theme', theme);
-    if (themeToggle) {
-      themeToggle.setAttribute('aria-pressed', String(isDark));
-      themeToggle.setAttribute('aria-label', actionLabel);
-    }
-    if (themeLabel) themeLabel.textContent = actionLabel;
-  }
-
-  function initTheme() {
-    const stored = getStoredTheme();
-    applyTheme(stored === 'dark' || stored === 'light' ? stored : 'dark');
-  }
-
-  function toggleTheme() {
-    const current = document.documentElement.getAttribute('data-theme') || 'dark';
-    const next = current === 'dark' ? 'light' : 'dark';
-    applyTheme(next);
-    setStoredTheme(next);
-  }
-
-  if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
-  initTheme();
 
   const errorMessages = {
     method_not_allowed: 'El método de solicitud no está permitido.',

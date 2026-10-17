@@ -1,0 +1,86 @@
+
+/* =========================================
+   5. Login
+   ========================================= */
+.login-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #0B1120;
+  background-image: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.15) 0%, transparent 50%);
+  min-width: 100%;
+}
+
+.login-container {
+  width: 100%;
+  max-width: 420px;
+  background-color: #111827;
+  border: 1px solid #374151;
+  border-radius: 16px;
+  padding: 48px 40px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  color: #F9FAFB;
+}
+
+.login-header { text-align: center; margin-bottom: 32px; }
+.login-logo { display: flex; justify-content: center; margin-bottom: 16px; }
+.login-header h1 { font-size: 1.75rem; color: #FFF; margin-bottom: 8px; }
+.login-header p { color: #9CA3AF; font-size: 0.9rem; }
+
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; margin-bottom: 8px; font-size: 0.85rem; color: #D1D5DB; }
+
+.input-with-icon { position: relative; display: flex; align-items: center; }
+.input-with-icon svg { position: absolute; left: 14px; color: #6B7280; }
+.input-with-icon input {
+  width: 100%;
+  padding: 12px 14px 12px 42px;
+  border: 1px solid #374151;
+  border-radius: 8px;
+  background-color: #1F2937;
+  color: #F9FAFB;
+}
+.input-with-icon input:focus { outline: none; border-color: #3B82F6; }
+
+/* Bajamos la opacidad a todos los placeholders*/
+::placeholder {
+    opacity: 0.5; 
+}
+
+.button-primary {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  background-color: var(--primary);
+  color: var(--primary-text);
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+}
+
+/* Contenedor de los enlaces debajo del botón */
+.login-links {
+    display: flex;
+    justify-content: space-evenly; /* Distribuye los enlaces de manera uniforme */
+    margin-top: 1rem; /* Le da aire respecto al botón de arriba */
+    font-size: 0.85rem; /* Un texto un poco más pequeño que el resto */
+}
+
+/* Estilo de los enlaces (etiqueta <a>) */
+.login-links a {
+    color: var(--text-muted); /* Usamos una variable para el color grisáceo/secundario */
+    text-decoration: none; /* Quitamos el subrayado por defecto de los enlaces */
+    transition: color 0.2s ease-in-out; /* Hace que el cambio de color sea suave */
+}
+
+/* Efecto al pasar el mouse por encima (Hover) */
+.login-links a:hover {
+    color: var(--primary); /* Se vuelven del color azul principal de tu marca */
+}
+
+.button-primary:hover { background-color: var(--primary-hover); }
+.login-footer { text-align: center; margin-top: 24px; font-size: 0.9rem; color: var(--text-muted) }

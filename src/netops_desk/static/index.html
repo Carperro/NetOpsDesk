@@ -1,127 +1,172 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="dark">
+<html lang="es" data-theme="light">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="dark light">
-    <title>NetOps Desk — Calculadora IPv4</title>
-    <link rel="stylesheet" href="/static/reset.css">
-    <link rel="stylesheet" href="/static/styles.css">
+    <title>NetOps Desk - Inicio</title>
+    <link rel="stylesheet" href="/static/css/reset.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <script src="/static/js/common.js" defer></script>
 </head>
-<body>
-    <header class="site-header">
-        <div class="header-inner">
-            <a class="brand" href="/" aria-label="NetOps Desk, inicio">NetOps Desk</a>
-            <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="true" aria-label="Cambiar a tema claro">
-                <span class="theme-toggle__icon" aria-hidden="true">◐</span>
-                <span class="theme-toggle__label">Cambiar a tema claro</span>
-            </button>
-        </div>
-    </header>
 
-    <main class="app-shell">
-        <div class="page-heading">
-            <p class="eyebrow">Herramientas de red</p>
-            <h1>Calculadora IPv4</h1>
-            <p class="page-description">Calculá redes, rangos y capacidad de direcciones IPv4.</p>
-        </div>
+<body id="top">
 
-        <fieldset class="operation-picker" aria-describedby="operation-help">
-            <legend>Tipo de cálculo</legend>
-            <p id="operation-help" class="visually-muted">Elegí la operación que querés realizar.</p>
-            <div class="operation-picker__options">
-                <label class="operation-option">
-                    <input type="radio" name="operation" value="direct-cidr" aria-controls="panel-direct-cidr" checked>
-                    <span>CIDR</span>
-                </label>
-                <label class="operation-option">
-                    <input type="radio" name="operation" value="direct-address" aria-controls="panel-direct-address">
-                    <span>Dirección + máscara</span>
-                </label>
-                <label class="operation-option">
-                    <input type="radio" name="operation" value="inverse" aria-controls="panel-inverse">
-                    <span>Hosts requeridos</span>
-                </label>
+    <div class="app-layout">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <span class="brand-icon" aria-hidden="true">■</span> NetOps Desk
             </div>
-        </fieldset>
 
-        <section id="panel-direct-cidr" class="operation-panel" aria-labelledby="direct-cidr-heading">
-            <h2 id="direct-cidr-heading">Calcular desde CIDR</h2>
-            <form id="form-direct-cidr" novalidate>
-                <div class="form-grid form-grid--two">
-                    <div class="form-group">
-                        <label for="cidr">Dirección y prefijo</label>
-                        <input type="text" id="cidr" name="cidr" placeholder="192.168.1.5/24" autocomplete="off" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="mode-direct-cidr">Modo de cálculo</label>
-                        <select id="mode-direct-cidr" name="mode">
-                            <option value="conventional" selected>Convencional</option>
-                            <option value="point-to-point">Punto a punto</option>
-                        </select>
+            <nav class="sidebar-nav">
+                <a href="/" class="nav-item active">Inicio</a>
+                <a href="/modulo-1" class="nav-item">Módulos</a>
+                <a href="#" class="nav-item">Favoritos</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button id="theme-toggle" class="nav-item theme-toggle-btn">
+                    <span id="theme-icon" aria-hidden="true">◐</span> <span id="theme-text">Modo oscuro</span>
+                </button>
+                <!-- Usamos una clase en lugar de style inline -->
+                <button id="logout-btn" class="nav-item btn-logout">Cerrar Sesión</button>
+
+                <div class="user-profile">
+                    <div class="user-avatar" id="user-avatar">?</div>
+                    <div class="user-info">
+                        <div id="user-name" class="user-name">Cargando...</div>
+                        <div class="user-role">Admin</div>
                     </div>
                 </div>
-                <button type="submit" class="button-primary">Calcular red</button>
-                <p class="operation-status" role="status" aria-live="polite" aria-atomic="true"></p>
-            </form>
-            <div id="result-direct-cidr" class="result-area" aria-live="polite" aria-atomic="true"></div>
-            <ul id="warnings-direct-cidr" class="warning-list" aria-label="Advertencias" aria-live="polite"></ul>
-            <div id="error-direct-cidr" class="error-area" role="alert" aria-live="assertive"></div>
-        </section>
+            </div>
+        </aside>
 
-        <section id="panel-direct-address" class="operation-panel" aria-labelledby="direct-address-heading" hidden>
-            <h2 id="direct-address-heading">Calcular desde dirección y máscara</h2>
-            <form id="form-direct-address" novalidate>
-                <div class="form-grid form-grid--two">
-                    <div class="form-group">
-                        <label for="address">Dirección IPv4</label>
-                        <input type="text" id="address" name="address" placeholder="192.168.1.5" autocomplete="off" required>
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="main-content">
+
+            <!-- Topbar de búsqueda -->
+            <header class="topbar">
+                <div class="search-box">
+                    <span aria-hidden="true">🔍</span>
+                    <input type="text" placeholder="Buscar herramientas...">
+                </div>
+                <div class="topbar-actions">
+                    <button class="icon-btn" aria-label="Notificaciones">🔔</button>
+                    <!-- Usamos una clase en lugar de style inline -->
+                    <div class="topbar-user-name" id="topbar-user">Usuario</div>
+                </div>
+            </header>
+
+            <div class="page-container">
+                <h1 id="welcome-title">Bienvenido a NetOps Desk</h1>
+                <p class="subtitle">Tu centro de herramientas para redes, conectividad y diagnóstico.</p>
+
+                <!-- Banner Azul -->
+                <div class="welcome-banner">
+                    <div class="banner-text">
+                        <h2>Potenciá tu trabajo en redes</h2>
+                        <p>Calculá, diagnosticá, planificá y resolvé. NetOps Desk te ofrece 25 herramientas organizadas
+                            en 5 módulos, diseñadas para simplificar tu día a día.</p>
+                        <a href="/modulo-1" class="btn-primary">Explorar herramientas →</a>
                     </div>
-                    <div class="form-group">
-                        <label for="netmask">Máscara de subred</label>
-                        <input type="text" id="netmask" name="netmask" placeholder="255.255.255.0" autocomplete="off" required>
-                    </div>
-                    <div class="form-group form-grid__mode">
-                        <label for="mode-direct-address">Modo de cálculo</label>
-                        <select id="mode-direct-address" name="mode">
-                            <option value="conventional" selected>Convencional</option>
-                            <option value="point-to-point">Punto a punto</option>
-                        </select>
+                    <div class="banner-stats">
+                        <div class="stat-item">
+                            <span class="number">5</span>
+                            <span class="label">Módulos</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="number">25</span>
+                            <span class="label">Herramientas</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="number">MVP</span>
+                            <span class="label">En desarrollo</span>
+                        </div>
                     </div>
                 </div>
-                <button type="submit" class="button-primary">Calcular red</button>
-                <p class="operation-status" role="status" aria-live="polite" aria-atomic="true"></p>
-            </form>
-            <div id="result-direct-address" class="result-area" aria-live="polite" aria-atomic="true"></div>
-            <ul id="warnings-direct-address" class="warning-list" aria-label="Advertencias" aria-live="polite"></ul>
-            <div id="error-direct-address" class="error-area" role="alert" aria-live="assertive"></div>
-        </section>
 
-        <section id="panel-inverse" class="operation-panel" aria-labelledby="inverse-heading" hidden>
-            <h2 id="inverse-heading">Calcular por hosts requeridos</h2>
-            <form id="form-inverse" novalidate>
-                <div class="form-grid form-grid--two">
-                    <div class="form-group">
-                        <label for="required-hosts">Hosts requeridos</label>
-                        <input type="number" id="required-hosts" name="required_hosts" min="1" step="1" inputmode="numeric" placeholder="3" autocomplete="off" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="mode-inverse">Modo de cálculo</label>
-                        <select id="mode-inverse" name="mode" required>
-                            <option value="conventional">Convencional</option>
-                            <option value="point-to-point" selected>Punto a punto</option>
-                        </select>
-                    </div>
+                <!-- Grid de Módulos -->
+                <h2 class="section-title">Módulos</h2>
+                <div class="module-grid">
+
+                    <a href="#" class="module-card">
+                        <div class="module-icon icon-blue" aria-hidden="true">📦</div>
+                        <h3>1. Direccionamiento IP y subnetting</h3>
+                        <p>Herramientas para trabajar con IPv4, IPv6 y planificación de redes.</p>
+                        <div class="card-footer">
+                            <span>5 herramientas</span>
+                            <span class="arrow" aria-hidden="true">→</span>
+                        </div>
+                    </a>
+
+                    <a href="#" class="module-card">
+                        <div class="module-icon icon-green" aria-hidden="true">📡</div>
+                        <h3>2. Diagnóstico de conectividad</h3>
+                        <p>Verificá y analizá la conectividad de tus redes y dispositivos.</p>
+                        <div class="card-footer">
+                            <span>5 herramientas</span>
+                            <span class="arrow" aria-hidden="true">→</span>
+                        </div>
+                    </a>
+
+                    <a href="#" class="module-card">
+                        <div class="module-icon icon-purple" aria-hidden="true">💻</div>
+                        <h3>3. Diagnóstico local de Windows</h3>
+                        <p>Herramientas para analizar y configurar tu equipo local.</p>
+                        <div class="card-footer">
+                            <span>5 herramientas</span>
+                            <span class="arrow" aria-hidden="true">→</span>
+                        </div>
+                    </a>
+
+                    <a href="#" class="module-card">
+                        <div class="module-icon icon-orange" aria-hidden="true">📋</div>
+                        <h3>4. Inventario y planificación de redes</h3>
+                        <p>Gestioná dispositivos, direcciones y recursos de red.</p>
+                        <div class="card-footer">
+                            <span>5 herramientas</span>
+                            <span class="arrow" aria-hidden="true">→</span>
+                        </div>
+                    </a>
+
+                    <a href="#" class="module-card">
+                        <div class="module-icon icon-teal" aria-hidden="true">📊</div>
+                        <h3>5. Análisis, documentación y productividad</h3>
+                        <p>Generá informes, compará configuraciones y más.</p>
+                        <div class="card-footer">
+                            <span>5 herramientas</span>
+                            <span class="arrow" aria-hidden="true">→</span>
+                        </div>
+                    </a>
+
                 </div>
-                <button type="submit" class="button-primary">Encontrar prefijo</button>
-                <p class="operation-status" role="status" aria-live="polite" aria-atomic="true"></p>
-            </form>
-            <div id="result-inverse" class="result-area" aria-live="polite" aria-atomic="true"></div>
-            <ul id="warnings-inverse" class="warning-list" aria-label="Advertencias" aria-live="polite"></ul>
-            <div id="error-inverse" class="error-area" role="alert" aria-live="assertive"></div>
-        </section>
-    </main>
 
-    <script src="/static/app.js"></script>
+                <!-- Banner MVP -->
+                <div class="mvp-banner">
+                    <div class="mvp-info">
+                        <h4>✅ MVP actual: Calculadora IPv4/CIDR</h4>
+                        <p>El primer módulo y herramienta ya están disponibles. El resto del catálogo se implementará de
+                            forma gradual.</p>
+                    </div>
+                    <a href="/tools/ipv4" class="btn-primary">Ir a la herramienta →</a>
+                </div>
+
+            </div>
+
+            <!-- FOOTER -->
+            <footer class="site-footer">
+                <p>&copy; <span id="current-year"></span> NetOps Desk. Todos los derechos reservados.</p>
+                <p>Desarrollado para profesionales de IT y redes.</p>
+            </footer>
+
+        </main>
+    </div>
+
+    <!-- Botón Volver Arriba -->
+    <a href="#top" class="back-to-top" aria-label="Volver al inicio de la página">↑</a>
+
+    <script src="/static/js/dashboard.js" defer></script>
 </body>
+
 </html>

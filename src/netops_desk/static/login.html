@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NetOps Desk - Login</title>
+  <link rel="stylesheet" href="/static/css/reset.css">
+  <link rel="stylesheet" href="/static/css/styles.css">
+  <link rel="stylesheet" href="/static/css/login.css">
+  
+  <script src="/static/js/common.js" defer></script>
+</head>
+
+<body class="login-body" id="top">
+
+  <main class="login-container">
+
+    <!-- Encabezado con Logo SVG -->
+    <div class="login-header">
+      <div class="login-logo">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+          <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+          <line x1="6" y1="6" x2="6.01" y2="6"></line>
+          <line x1="6" y1="18" x2="6.01" y2="18"></line>
+        </svg>
+      </div>
+      <h1>NetOps Desk</h1>
+      <p>Herramientas de red, diagnóstico y productividad</p>
+    </div>
+
+    <form id="login-form" class="login-form">
+
+      <div class="form-group">
+        <label for="username">Usuario o correo electrónico</label>
+        <div class="input-with-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <input type="text" id="username" placeholder="usuario@empresa.com" required autocomplete="username">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <div class="input-with-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password">
+        </div>
+      </div>
+
+      <div id="error-message" class="error-message" hidden></div>
+
+      <button type="submit" class="button-primary">Iniciar sesión</button>
+       <!-- NUEVO BLOQUE DE ENLACES -->
+      <div class="login-links">
+        <a href="#">Registrarse</a>
+        <a href="#">¿Olvidaste tu contraseña?</a>
+      </div>
+
+    </form>
+
+    <div class="login-footer">
+      <p>NetOps Desk · v0.1.0</p>
+    </div>
+
+  </main>
+
+  <script src="/static/js/auth.js" defer></script>
+</body>
+
+</html>
