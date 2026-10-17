@@ -1,3 +1,4 @@
+from netops_desk.exceptions import DomainError
 import ipaddress
 import math
 
@@ -18,14 +19,14 @@ def calculate_subnets_by_count(network_cidr: str, subnet_count: int) -> dict:
     try:
         base_network = ipaddress.ip_network(network_cidr, strict=False)
     except ValueError as e:
-        raise ValueError(f"Formato de red inválido: {e}")
+        raise DomainError(f"Formato de red inválido: {e}")
 
     # Detectar si hubo normalización (para avisar en el frontend)
     original_ip = network_cidr.split('/')[0]
     was_normalized = original_ip != str(base_network.network_address)
 
     if subnet_count < 1:
-        raise ValueError("La cantidad de subredes debe ser mayor a 0.")
+        raise DomainError("La cantidad de subredes debe ser mayor a 0.")
 
     bits_needed = math.ceil(math.log2(subnet_count))
     new_prefix = base_network.prefixlen + bits_needed
@@ -34,7 +35,7 @@ def calculate_subnets_by_count(network_cidr: str, subnet_count: int) -> dict:
     max_bits_for_subnets = 32 - base_network.prefixlen
     if bits_needed > max_bits_for_subnets:
         max_subnets = 2 ** max_bits_for_subnets
-        raise ValueError(
+        raise DomainError(
             f"La red {base_network} solo permite un máximo de {max_subnets} subredes. "
             f"Pediste {subnet_count}."
         )
@@ -61,13 +62,13 @@ def calculate_subnets_by_hosts(network_cidr: str, required_hosts: int) -> dict:
     try:
         base_network = ipaddress.ip_network(network_cidr, strict=False)
     except ValueError as e:
-        raise ValueError(f"Formato de red inválido: {e}")
+        raise DomainError(f"Formato de red inválido: {e}")
 
     original_ip = network_cidr.split('/')[0]
     was_normalized = original_ip != str(base_network.network_address)
 
     if required_hosts < 1:
-        raise ValueError("La cantidad de hosts requeridos debe ser mayor a 0.")
+        raise DomainError("La cantidad de hosts requeridos debe ser mayor a 0.")
 
     # 2. Calcular cuántos bits (h) necesitamos para los hosts
     # La fórmula es 2^h - 2 >= required_hosts.
@@ -87,7 +88,7 @@ def calculate_subnets_by_hosts(network_cidr: str, required_hosts: int) -> dict:
     # (No podés pedir subredes más grandes que la red original)
     if new_prefix < base_network.prefixlen:
         max_hosts_possible = _usable_host_count(base_network.prefixlen)
-        raise ValueError(
+        raise DomainError(
             f"La red original es demasiado pequeña. El máximo de hosts para "
             f"{network_cidr} es {max_hosts_possible}. Pediste {required_hosts}."
         )

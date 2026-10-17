@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetOps Desk — Planificador VLSM</title>
+    
+    <link rel="stylesheet" href="/static/css/reset.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/vlsm.css">
+    
+    <script src="/static/js/sidebar.js" defer></script>
+    <script src="/static/js/common.js" defer></script>
+    <script src="/static/js/vlsm.js" defer></script>
+</head>
+<body id="top">
+
+    <div class="app-layout">
+        <div id="sidebar-container"></div>
+
+        <main class="main-content">
+            <header class="topbar">
+                <a href="/modulo-1" class="back-link">← Volver al Módulo 1</a>
+            </header>
+
+            <div class="page-container">
+                <div class="page-heading">
+                    <p class="eyebrow">Herramientas de red</p>
+                    <h1>Planificador VLSM</h1>
+                    <p class="page-description">Asigná subredes de distintos tamaños optimizando el espacio de tu red.</p>
+                </div>
+
+                <section class="operation-panel">
+                    <h2>Definir Red y Departamentos</h2>
+                    
+                    <form id="vlsm-form" novalidate>
+                        <div class="form-group" style="margin-bottom: 24px;">
+                            <label for="network-cidr">Red base (CIDR)</label>
+                            <input type="text" id="network-cidr" name="network_cidr" placeholder="192.168.1.0/24" required>
+                        </div>
+
+                        <div class="requirements-header">
+                            <h3>Requerimientos (Departamentos)</h3>
+                            <button type="button" id="add-req-btn" class="button-secondary">+ Agregar Departamento</button>
+                        </div>
+
+                        <!-- Acá se inyectan las filas dinámicamente -->
+                        <div id="requirements-container">
+                            <!-- Fila inicial -->
+                            <div class="requirement-row">
+                                <input type="text" class="req-name" placeholder="Ej: Ventas" required>
+                                <input type="number" class="req-hosts" placeholder="Ej: 100" min="1" required>
+                                <button type="button" class="remove-req-btn" title="Eliminar">✕</button>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="button-primary" style="margin-top: 24px;">Calcular VLSM</button>
+                    </form>
+                </section>
+
+                <div id="error-area"></div>
+
+                <!-- Área de resultados -->
+                <div id="vlsm-results" class="results-container" hidden>
+                    <h3>Resultados de la Asignación</h3>
+                    
+                    <div class="table-responsive">
+                        <table class="subnet-table">
+                            <thead>
+                                <tr>
+                                    <th>Departamento</th>
+                                    <th>Red Asignada</th>
+                                    <th>Máscara</th>
+                                    <th>Rango de Hosts</th>
+                                    <th>Pedidos</th>
+                                </tr>
+                            </thead>
+                            <tbody id="vlsm-tbody">
+                                <!-- JS inyectará las filas -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div id="remaining-info" class="remaining-box" hidden>
+                        <!-- JS inyectará el espacio sobrante -->
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+</body>
+</html>

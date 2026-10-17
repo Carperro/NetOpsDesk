@@ -6,9 +6,9 @@ La implementación es gradual. El primer módulo prioriza herramientas de direcc
 
 ## Estado actual
 
-**MVP implementado:** Módulo 1, herramientas 1 (Calculadora IPv4/CIDR) y 2 (Subnetting IPv4).
+**MVP implementado:** Módulo 1, herramientas 1 (Calculadora IPv4/CIDR), 2 (Subnetting IPv4) y 3 (Planificador VLSM).
 
-Las herramientas 3 a 25 están previstas y no se marcan como implementadas. El alcance aprobado del MVP está registrado en `docs/modulo1/ipv4-calculator/decision-log.md`; los requisitos de las herramientas 1 y 2 están en sus directorios respectivos.
+Las herramientas 4 a 25 están previstas y no se marcan como implementadas. El alcance aprobado del MVP está registrado en `docs/modulo1/ipv4-calculator/decision-log.md`; cada herramienta implementada mantiene sus documentos en el directorio correspondiente de `docs/modulo1/`.
 
 ## Módulo 1. Direccionamiento IP y subnetting
 
@@ -24,7 +24,7 @@ Las herramientas 3 a 25 están previstas y no se marcan como implementadas. El a
 - Cálculo según cantidad de hosts requerida.
 - Visualización de las subredes resultantes.
 
-### 3. Planificador VLSM *(prevista)*
+### 3. Planificador VLSM *(MVP — implementada)*
 - Asignación de subredes de distintos tamaños.
 - Organización según las necesidades de hosts.
 - Detección de asignaciones inválidas.

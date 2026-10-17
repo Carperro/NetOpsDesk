@@ -19,7 +19,7 @@ from netops_desk.api.models.ipv4 import (
 from netops_desk.ipv4 import calculate_direct, calculate_inverse
 
 
-router = APIRouter()
+router = APIRouter(tags=["IPv4 Calculator"])
 
 
 async def require_json_content_type(request: Request) -> None:

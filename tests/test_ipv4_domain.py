@@ -2,7 +2,8 @@ import ipaddress
 
 import pytest
 
-from netops_desk.ipv4 import DomainError, calculate_direct, calculate_inverse
+from netops_desk.exceptions import DomainError
+from netops_desk.ipv4 import calculate_direct, calculate_inverse
 
 
 def codes(result):

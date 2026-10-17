@@ -146,6 +146,17 @@ Este documento registra las decisiones aprobadas relevantes para el MVP de NetOp
   - Subnetting mantiene documentación de requisitos, arquitectura, contrato API y decisiones propia.
   - La aprobación de alcance no equivale a una afirmación de que cada regla esté probada de extremo a extremo.
 
+### DEC-010
+
+- **Estado**: APROBADA
+- **Contexto**: Ampliación oficial del MVP para incluir la tercera herramienta del Módulo 1.
+- **Decisión**: El MVP incluye el Planificador VLSM además de la Calculadora IPv4/CIDR y Subnetting IPv4. Esta ampliación no altera las exclusiones restantes del MVP.
+- **Motivo**: El usuario autorizó expresamente la implementación de la Herramienta 3 y solicitó actualizar la documentación para reflejar su disponibilidad.
+- **Consecuencias**:
+  - El catálogo y la visión del Módulo 1 identifican las herramientas 1, 2 y 3 como parte del MVP.
+  - VLSM mantiene documentación funcional, arquitectónica, de API y de decisiones en `docs/modulo1/vlsm/`.
+  - Las decisiones técnicas específicas de VLSM se registran en `docs/modulo1/vlsm/decision-log.md`.
+
 ## Reglas recuperadas
 
 Estas reglas proceden del contexto previo del proyecto; no se les atribuye fecha, autor ni aprobación histórica.

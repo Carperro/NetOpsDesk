@@ -14,6 +14,8 @@ from __future__ import annotations
 import ipaddress
 from typing import TypedDict
 
+from netops_desk.exceptions import DomainError
+
 
 __all__ = [
     "DomainError",
@@ -90,24 +92,9 @@ class IPv4InverseResult(TypedDict):
     warnings: list[DomainWarning]
 
 
-class DomainError(ValueError):
-    """Error de dominio con un código estable para el contrato de la API.
-
-    Hereda de ValueError para que cualquier código que atrape ValueError
-    también pueda manejar este error. El código y el mensaje se conservan
-    para que las capas superiores puedan interpretarlos sin depender de
-    HTTP ni de FastAPI.
-    """
-
-    def __init__(self, code: str, message: str) -> None:
-        super().__init__(message)
-        self.code = code
-        self.message = message
-
-
 def _error(code: str, message: str) -> DomainError:
     """Crea un error de dominio con el código y el mensaje indicados."""
-    return DomainError(code, message)
+    return DomainError(message=message, code=code)
 
 
 def _validate_mode(mode: object) -> str:

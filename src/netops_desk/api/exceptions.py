@@ -17,7 +17,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
-from netops_desk.ipv4 import DomainError
+from netops_desk.exceptions import DomainError
 
 
 logger = logging.getLogger(__name__)
@@ -87,10 +87,7 @@ _PYDANTIC_ERROR_MAP: dict[str, str] = {
 
 # Códigos HTTP → códigos contractuales.
 _HTTP_STATUS_MAP: dict[int, str] = {
-    status.HTTP_404_NOT_FOUND: "not_found",
-    status.HTTP_405_METHOD_NOT_ALLOWED: "method_not_allowed",
-    status.HTTP_415_UNSUPPORTED_MEDIA_TYPE: "unsupported_media_type",
-    status.HTTP_400_BAD_REQUEST: "invalid_json",
+    status.HTTP_400_BAD_REQUEST: "bad_request",
     status.HTTP_404_NOT_FOUND: "not_found",
     status.HTTP_405_METHOD_NOT_ALLOWED: "method_not_allowed",
     status.HTTP_415_UNSUPPORTED_MEDIA_TYPE: "unsupported_media_type",
@@ -224,6 +221,7 @@ async def http_exception_handler(
     if status_code == status.HTTP_404_NOT_FOUND:
         detail = "Recurso no encontrado."
     elif status_code == status.HTTP_400_BAD_REQUEST and str(exc.detail) == "There was an error parsing the body":
+        error_code = "invalid_json"
         detail = "El cuerpo de la petición no es JSON válido."
     else:
         detail = str(exc.detail) if exc.detail else "Error HTTP."
@@ -247,12 +245,3 @@ async def general_exception_handler(request: Request, exc: Exception) -> JSONRes
         error_code="internal_error",
         detail="Error interno del servidor.",
     )
-
-
-# ---------------------------------------------------------------------------
-# Aliases temporales (para no romper main.py durante la transición)
-# ---------------------------------------------------------------------------
-# TODO: eliminar cuando main.py use los nombres nuevos.
-
-HTTPValidationError = APIValidationError
-http_validation_error_handler = api_validation_error_handler
