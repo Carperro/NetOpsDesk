@@ -1,20 +1,40 @@
 # Visión y objetivos de NetOps Desk
 
 ## Visión del proyecto
-NetOps Desk será una aplicación web que reúna herramientas habituales de redes y soporte técnico en una interfaz centralizada, organizada y fácil de utilizar.
+
+NetOps Desk es una aplicación web que reúne herramientas habituales de redes y soporte técnico en una interfaz centralizada, organizada y fácil de utilizar.
 
 ## Objetivos principales
+
 1. Construir una herramienta práctica para tareas de diagnóstico, cálculo y documentación de redes.
 2. Desarrollar un proyecto de portfolio que demuestre conocimientos de Python, desarrollo web, redes, arquitectura de software, pruebas y buenas prácticas.
 
+## Estado actual
+
+MVP en desarrollo: calculadora IPv4/CIDR accesible desde el navegador, con API FastAPI, validación de entradas y pruebas automatizadas del dominio, la API y la entrega estática. El resto del catálogo permanece previsto.
+
+El alcance detallado del MVP está en `docs/modulo1/ipv4-calculator/requisitos.md`. El catálogo completo con el estado de cada herramienta está en `docs/fundacional/catalogo.md`.
+
 ## Plataforma inicial
-La aplicación funcionará inicialmente en una computadora con Windows, mediante un servidor local y una interfaz accesible desde el navegador.
+
+La aplicación funciona en una computadora con Windows, mediante un servidor local y una interfaz accesible desde el navegador.
 
 ## Requisitos arquitectónicos clave
-- La arquitectura deberá permitir incorporar nuevas herramientas sin tener que reescribir los componentes existentes.
-- El dominio de cálculo será independiente de FastAPI, del navegador y de cualquier base de datos.
-- Se evitarán dependencias externas obligatorias para cargar la interfaz.
-- Los cálculos de red tendrán una lógica verificable y pruebas de casos normales, límites y entradas inválidas.
+
+- La arquitectura permite incorporar nuevas herramientas sin reescribir los componentes existentes.
+- El dominio de cálculo es independiente de FastAPI, del navegador y de cualquier base de datos.
+- La interfaz se carga sin dependencias externas obligatorias (sin CDN).
+- Los cálculos de red tienen lógica verificable y pruebas de casos normales, límites y entradas inválidas.
+
+Los principios completos están en `docs/fundacional/principios-estandar.md`.
 
 ## Criterio general de finalización
-NetOps Desk se considerará una base funcional sólida cuando disponga de una arquitectura comprensible, un primer conjunto de herramientas verificadas, una API probada, una interfaz local independiente de CDNs, controles de seguridad definidos y documentación suficiente para continuar el desarrollo sin depender de decisiones implícitas.
+
+NetOps Desk se considera una base funcional sólida cuando dispone de:
+
+- Una arquitectura comprensible y documentada.
+- Al menos una herramienta verificada de punta a punta.
+- Una API probada con contrato estable.
+- Una interfaz local independiente de CDNs.
+- Validación de entradas implementada en los límites del sistema.
+- Documentación suficiente para continuar el desarrollo sin depender de decisiones implícitas.
