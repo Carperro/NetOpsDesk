@@ -3,55 +3,54 @@
 ## Principios arquitectónicos
 
 ### Modularidad y separación de responsabilidades
-- Cada componente tendrá responsabilidades definidas.
-- Interfaz, API, lógica de negocio, persistencia e integraciones estarán desacopladas.
-- El dominio de cálculo será independiente de FastAPI, del navegador y de la base de datos para ejecutar los cálculos centrales.
-- Se evitarán tanto los componentes monolíticos como la fragmentación innecesaria.
+
+- Cada componente tiene responsabilidades definidas.
+- Interfaz, API, lógica de negocio, persistencia e integraciones están desacopladas.
+- El dominio de cálculo es independiente de FastAPI, del navegador y de la base de datos para ejecutar los cálculos centrales.
+- Se evitan tanto los componentes monolíticos como la fragmentación innecesaria.
 
 ### Desarrollo progresivo y dependencias justificadas
-- Cada componente se implementará y probará antes de continuar.
-- No se incorporarán frameworks ni bibliotecas sin una necesidad técnica concreta.
-- Las dependencias serán explícitas y justificadas técnicamente.
+
+- Cada componente se implementa y se prueba antes de continuar.
+- No se incorporan frameworks ni bibliotecas sin una necesidad técnica concreta.
+- Las dependencias son explícitas y están justificadas técnicamente.
 
 ### Seguridad por defecto y funcionamiento local
-- Autenticación, autorización, validación y manejo de errores se implementarán en el servidor cuando corresponda.
-- Las herramientas que no necesiten conectividad externa funcionarán sin Internet.
-- Las operaciones específicas del sistema operativo estarán aisladas para facilitar futura adaptación a otros sistemas operativos.
+
+- Las operaciones sensibles se implementan en el servidor, no en el cliente.
+- Las herramientas que no necesiten conectividad externa funcionan sin Internet.
+- Las operaciones específicas del sistema operativo están aisladas para facilitar su futura adaptación a otros sistemas operativos.
 
 ### Trazabilidad y verificabilidad
-- Las decisiones importantes y los cambios de arquitectura quedarán documentados.
-- Los resultados deberán poder probarse mediante pruebas automatizadas o procedimientos de validación definidos.
-- Los errores se comunicarán de forma consistente y no expondrán información sensible.
+
+- Las decisiones importantes y los cambios de arquitectura quedan documentados.
+- Los resultados se prueban mediante pruebas automatizadas o procedimientos de validación definidos.
+- Los errores se comunican de forma consistente y no exponen información sensible.
 
 ## Estándares de ingeniería
 
 ### Calidad del código
-- Utilizar nombres claros y coherentes.
-- Aplicar anotaciones de tipos en Python cuando corresponda.
-- Mantener funciones y módulos enfocados en una responsabilidad.
-- Validar las entradas en los límites del sistema.
-- Evitar duplicar reglas de negocio.
-- No ocultar errores mediante excepciones genéricas o valores de éxito ficticios.
-- No añadir abstracciones sin una justificación concreta.
+
+- Nombres claros y coherentes.
+- Anotaciones de tipos en Python cuando corresponda.
+- Funciones y módulos enfocados en una responsabilidad.
+- Validación de entradas en los límites del sistema.
+- Sin duplicación de reglas de negocio.
+- Sin ocultar errores mediante excepciones genéricas o valores de éxito ficticios.
+- Sin abstracciones sin justificación concreta.
 
 ### Pruebas y validación
-- Las pruebas deberán corresponder a requisitos o comportamientos definidos.
-- Los cálculos tendrán pruebas de casos normales, límites y entradas inválidas.
-- Los servicios podrán probarse sin depender de la interfaz.
-- Las pruebas de API comprobarán códigos HTTP, esquemas y errores.
-- Las pruebas de persistencia utilizarán una base de datos temporal o aislada cuando corresponda.
-- No se considerará terminada una funcionalidad solo porque la interfaz parezca funcionar.
+
+- Las pruebas corresponden a requisitos o comportamientos definidos.
+- Los cálculos tienen pruebas de casos normales, límites y entradas inválidas.
+- Los servicios pueden probarse sin depender de la interfaz.
+- Las pruebas de API comprueban códigos HTTP, esquemas y errores.
+- Las pruebas de persistencia utilizan una base de datos temporal o aislada cuando corresponda.
+- Una funcionalidad no se considera terminada solo porque la interfaz parezca funcionar.
 
 ### Documentación y continuidad
-- La documentación será suficiente para que otra sesión o agente pueda continuar el proyecto sin depender de conversaciones anteriores.
-- Se documentarán requisitos, criterios de aceptación, arquitectura, dependencias, contratos de API, modelos de datos, seguridad, estrategia de pruebas, instrucciones de desarrollo y decisiones arquitectónicas.
-- Las decisiones importantes registrarán: identificador, contexto, decisión adoptada, motivo, alternativas consideradas (cuando sea relevante), consecuencias y estado.
-- No se mantendrán múltiples documentos como fuentes oficiales contradictorias.
 
-### Consideraciones específicas de IPv4/CIDR (para referencia)
-*Nota: Los siguientes puntos son específicos de la herramienta IPv4/CIDR y se documentan en su documentación especializada:*
-- Uso posible del módulo `ipaddress` de Python estándar para cálculos de red.
-- Formato de mensajes de error de la API: `{"error": "string", "detail": "string"}`.
-- Endpoint exacto: `POST /api/v1/tools/ipv4/calculate`.
-- Tratamiento propuesto de prefijos /31 y /32 en cuanto a hosts utilizables (ver documentación específica).
-- Validación opcional de que la IP proporcionada debe ser la dirección de red para el prefijo dado.
+- La documentación es suficiente para que otra sesión o agente continúe el proyecto sin depender de conversaciones anteriores.
+- Se documentan requisitos, criterios de aceptación, arquitectura, dependencias, contratos de API, modelos de datos, seguridad, estrategia de pruebas, instrucciones de desarrollo y decisiones arquitectónicas.
+- Las decisiones importantes registran: identificador, contexto, decisión, motivo, alternativas consideradas (cuando sea relevante), consecuencias y estado.
+- No se mantienen múltiples documentos como fuentes oficiales contradictorias.

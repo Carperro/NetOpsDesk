@@ -1,42 +1,40 @@
 # Módulo 1. Direccionamiento IP y subnetting
 
-## Propósito del módulo
-El módulo 1 de NetOps Desk se centra en el direccionamiento IP y subnetting, proporcionando herramientas esenciales para el cálculo, planificación y diagnóstico de direcciones IP tanto en IPv4 como en IPv6.
+## Propósito
 
-## Herramientas incluidas
-Este módulo agrupa las siguientes cinco herramientas relacionadas:
+El módulo 1 de NetOps Desk agrupa herramientas para el cálculo, planificación y diagnóstico de direccionamiento IP.
 
-**1. Calculadora IPv4/CIDR**
-- Dirección IP y prefijo.
-- Dirección de red y broadcast.
-- Máscara de subred.
-- Rango de hosts.
-- Cantidad de direcciones y hosts utilizables.
+## Estado actual
 
-**2. Subnetting IPv4**
-- División de redes por prefijos.
-- Cálculo según cantidad de hosts requerida.
-- Visualización de las subredes resultantes.
+**MVP en desarrollo:** herramienta 1, Calculadora IPv4/CIDR.
 
-**3. Planificador VLSM**
-- Asignación de subredes de distintos tamaños.
-- Organización según las necesidades de hosts.
-- Detección de asignaciones inválidas.
+Las herramientas 2 a 5 están previstas pero no implementadas. El catálogo completo con el estado de cada herramienta está en `docs/fundacional/catalogo.md`.
 
-**4. Detector de solapamiento de redes**
-- Comparación de rangos CIDR.
-- Identificación de redes que se superponen.
-- Explicación del conflicto.
+## Herramientas del módulo
 
-**5. Calculadora IPv6**
-- Dirección y prefijo.
-- Dirección de red y rangos.
-- Tipos de direcciones.
-- Datos derivados de la dirección y el prefijo.
+1. **Calculadora IPv4/CIDR** *(MVP — implementada)*.
+2. **Subnetting IPv4** *(prevista)*.
+3. **Planificador VLSM** *(prevista)*.
+4. **Detector de solapamiento de redes** *(prevista)*.
+5. **Calculadora IPv6** *(prevista)*.
+
+El detalle funcional de cada herramienta está en el catálogo oficial.
 
 ## Relación con los objetivos del producto
-Las herramientas de este módulo contribuyen directamente al primer objetivo principal de NetOps Desk: construir una herramienta práctica para tareas de diagnóstico, cálculo y documentación de redes. Específicamente:
-- Permiten el cálculo preciso de subredes para diseño y gestión de redes IP
-- Facilitan la planificación de direccionamiento mediante VLSM
-- Ayudan a identificar y resolver conflictos de solapamiento de redes
-- Soportan tanto el protocolo IPv4 legado como el futuro IPv6
+
+Las herramientas de este módulo contribuyen al primer objetivo de NetOps Desk: construir una herramienta práctica para tareas de diagnóstico, cálculo y documentación de redes.
+
+- Permiten el cálculo preciso de subredes para diseño y gestión de redes IP.
+- Facilitan la planificación de direccionamiento mediante VLSM.
+- Ayudan a identificar y resolver conflictos de solapamiento de redes.
+- Incorporan progresivamente soporte para IPv6 a medida que el módulo avanza.
+
+## Documentación específica del MVP
+
+La documentación de la calculadora IPv4/CIDR (herramienta 1) está en `docs/modulo1/ipv4-calculator/`:
+
+- `requisitos.md`
+- `arquitectura.md`
+- `api-contracts.md`
+- `decision-log.md`
+- `test-strategy.md`
