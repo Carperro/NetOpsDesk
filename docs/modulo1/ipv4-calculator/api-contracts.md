@@ -1,6 +1,10 @@
+
+## 2. `api-contracts.md` corregido
+
+```markdown
 # Contrato de API - Calculadora IPv4/CIDR (MVP)
 
-Este documento describe el contrato que implementan actualmente `models.py`, `routes/ipv4.py`, `exceptions.py` y el dominio. Los códigos y mensajes se han contrastado con el código fuente; la presencia de pruebas asociadas no significa que se hayan ejecutado en esta actualización.
+Este documento describe el contrato que implementan actualmente `models.py`, `routes/ipv4.py`, `exceptions.py` y el dominio. Los códigos y mensajes están contrastados con el código fuente.
 
 ## Endpoint
 
@@ -8,9 +12,11 @@ Este documento describe el contrato que implementan actualmente `models.py`, `ro
 - Ruta: `/api/v1/tools/ipv4/calculate`.
 - `Content-Type`: se exige `application/json`; se permite el parámetro de charset porque la ruta compara el tipo MIME normalizado antes del punto y coma.
 
+Documentación interactiva: `http://127.0.0.1:8000/docs`.
+
 ## Solicitudes
 
-El modelo de entrada de API es `IPV4Input`. Rechaza campos adicionales (`extra="forbid"`). Las propiedades de entrada no enviadas se representan internamente como ausentes o nulas; el contrato operativo es:
+El modelo de entrada de API es `IPV4Input`. Rechaza campos adicionales (`extra="forbid"`). Las propiedades no enviadas se representan internamente como ausentes o nulas; el contrato operativo es:
 
 | Campo | Tipo validado / valor predeterminado | Uso |
 |---|---|---|
@@ -26,8 +32,7 @@ Se acepta una de estas formas:
 
 ~~~json
 {
-  "cidr": "192.168.1.5/24",
-  "mode": "conventional"
+  "cidr": "192.168.1.5/24"
 }
 ~~~
 
@@ -36,8 +41,7 @@ o:
 ~~~json
 {
   "address": "192.168.1.5",
-  "netmask": "255.255.255.0",
-  "mode": "conventional"
+  "netmask": "255.255.255.0"
 }
 ~~~
 
@@ -117,7 +121,7 @@ La respuesta contiene `required_hosts`, `mode_requested`, `mode_applied`, `prefi
 | `mode_requested`, `mode_applied` | `conventional` o `point-to-point` | No nulos. |
 | `warnings` | lista de objetos `{code, message}` | Siempre presente; puede estar vacía. |
 
-Se recorren los prefijos desde `/32` hasta `/0` y se elige el de mayor longitud cuya capacidad efectiva satisface `required_hosts`. La capacidad convencional máxima en `/0` es 4,294,967,294; una solicitud superior produce `insufficient_capacity`. `mode_requested` refleja la solicitud. `mode_applied` solo es `point-to-point` cuando el modo fue solicitado y el prefijo seleccionado es `/31` o `/32`; si no, es `conventional`. Se agrega `point_to_point_not_applicable` cuando se solicitó `point-to-point` y el prefijo elegido no es `/31` ni `/32`.
+Se recorren los prefijos desde `/32` hasta `/0` y se elige el de mayor longitud cuya capacidad efectiva satisface `required_hosts`. La capacidad convencional máxima en `/0` es 4.294.967.294; una solicitud superior produce `insufficient_capacity`. `mode_requested` refleja la solicitud. `mode_applied` solo es `point-to-point` cuando el modo fue solicitado y el prefijo seleccionado es `/31` o `/32`; si no, es `conventional`. Se agrega `point_to_point_not_applicable` cuando se solicitó `point-to-point` y el prefijo elegido no es `/31` ni `/32`.
 
 ~~~json
 {
@@ -159,7 +163,9 @@ Todas las respuestas de error tienen las claves `error` y `detail`, ambas cadena
 | 422 | `validation_error` | Respaldo si FastAPI entrega un `RequestValidationError` sin errores; detalle actual: `Error de validación en la petición.` |
 | estado HTTP distinto de los mapeados | `http_<status>` | Respaldo del handler HTTP; el detalle se toma de la excepción si está presente. |
 
-Ejemplo de respuesta de campo desconocido:
+### Ejemplos de respuesta de error
+
+Campo desconocido:
 
 ~~~json
 {
@@ -168,8 +174,37 @@ Ejemplo de respuesta de campo desconocido:
 }
 ~~~
 
-El handler Pydantic prioriza los errores de campo desconocido cuando aparecen junto con otros errores de validación; si hay varios, los agrupa y ordena. El modelo ejecuta las comprobaciones de incompatibilidad y campos faltantes en el orden definido en `models.py`. Las pruebas fuente incluyen casos para método antes de cuerpo malformado, tipo de contenido no admitido antes de interpretar JSON, campo desconocido frente a incompatibilidad, incompatibilidad frente a falta de campo o tipo inválido, falta frente a tipo inválido y tipo/valor frente a máscara no contigua. Esas pruebas están presentes en el repositorio; este texto no afirma que hayan sido ejecutadas en esta actualización.
+Valor inválido (CIDR malformado):
 
-### Diferencia respecto del contrato documentado anteriormente
+~~~json
+{
+  "error": "invalid_value",
+  "detail": "El campo 'cidr' debe contener una dirección IPv4 y un prefijo válidos."
+}
+~~~
 
-Una versión anterior de este documento excluía HTTP 400 y asignaba `invalid_json` a 422 en general. El código actual distingue: los errores de sintaxis JSON mapeados como `RequestValidationError` responden 422, mientras que los `HTTPException` 400 responden `invalid_json`/400. La prueba existente de bytes UTF-8 inválidos espera 400. Esta documentación registra ese comportamiento implementado; no acredita que la excepción de HTTP 400 haya sido formalmente aprobada como cambio de diseño.
+Campo faltante:
+
+~~~json
+{
+  "error": "missing_field",
+  "detail": "Los campos 'address' y 'netmask' deben proporcionarse juntos."
+}
+~~~
+
+Tipo de contenido no soportado:
+
+~~~json
+{
+  "error": "unsupported_media_type",
+  "detail": "Content-Type 'text/plain' no soportado. Se espera 'application/json'."
+}
+~~~
+
+### Orden de validación
+
+El handler Pydantic prioriza los errores de campo desconocido cuando aparecen junto con otros errores de validación; si hay varios, los agrupa y ordena. El modelo ejecuta las comprobaciones de incompatibilidad y campos faltantes en el orden definido en `models.py`. Las pruebas cubren método antes de cuerpo malformado, tipo de contenido no admitido antes de interpretar JSON, campo desconocido frente a incompatibilidad, incompatibilidad frente a falta de campo o tipo inválido, falta frente a tipo inválido y tipo/valor frente a máscara no contigua.
+
+## Diferencia respecto del contrato documentado anteriormente
+
+Una versión anterior de este documento excluía HTTP 400 y asignaba `invalid_json` a 422 en general. El código actual distingue: los errores de sintaxis JSON mapeados como `RequestValidationError` responden 422, mientras que los `HTTPException` 400 responden `invalid_json`/400.
