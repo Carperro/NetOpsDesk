@@ -7,6 +7,7 @@
     <title>NetOps Desk - Inicio</title>
     <link rel="stylesheet" href="/static/css/reset.css">
     <link rel="stylesheet" href="/static/css/styles.css">
+    <script src="/static/js/sidebar.js" defer></script>
     <script src="/static/js/common.js" defer></script>
 </head>
 
@@ -14,33 +15,8 @@
 
     <div class="app-layout">
         <!-- SIDEBAR -->
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <span class="brand-icon" aria-hidden="true">■</span> NetOps Desk
-            </div>
-
-            <nav class="sidebar-nav">
-                <a href="/" class="nav-item active">Inicio</a>
-                <a href="/modulo-1" class="nav-item">Módulos</a>
-                <a href="#" class="nav-item">Favoritos</a>
-            </nav>
-
-            <div class="sidebar-footer">
-                <button id="theme-toggle" class="nav-item theme-toggle-btn">
-                    <span id="theme-icon" aria-hidden="true">◐</span> <span id="theme-text">Modo oscuro</span>
-                </button>
-                <!-- Usamos una clase en lugar de style inline -->
-                <button id="logout-btn" class="nav-item btn-logout">Cerrar Sesión</button>
-
-                <div class="user-profile">
-                    <div class="user-avatar" id="user-avatar">?</div>
-                    <div class="user-info">
-                        <div id="user-name" class="user-name">Cargando...</div>
-                        <div class="user-role">Admin</div>
-                    </div>
-                </div>
-            </div>
-        </aside>
+        <!-- Aquí se inyecta el sidebar con JS -->
+        <div id="sidebar-container"></div>
 
         <!-- CONTENIDO PRINCIPAL -->
         <main class="main-content">

@@ -105,7 +105,7 @@ h1, h2, h3, h4, p, span, a, label {
   align-items: center;
   gap: 12px;
   font-weight: 700;
-  font-size: 1.25rem;
+  font-size: 1.45rem;
   margin-bottom: 32px;
   padding-left: 8px;
   color: var(--text-main);
@@ -121,12 +121,32 @@ h1, h2, h3, h4, p, span, a, label {
   flex-direction: column;
   gap: 4px;
 }
+/* Botón de volver en la topbar */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  padding: .6em 1em;
+  color: var(--text-main);
+  text-decoration: none;
+  font-weight: 500;
+  border-radius: 8px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  transition: all 0.2s ease;
+}
+
+.back-link:hover {
+  color: var(--primary);
+  border-color: var(--primary);
+  background-color: var(--bg-surface-raised);
+  transform: translateX(-2px); /* Un pequeño salto hacia la izquierda al pasar el mouse */
+}
 
 .nav-item {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px 12px;
+  padding: 10px 14px;
   border-radius: 8px;
   color: var(--text-muted);
   font-weight: 500;
@@ -178,7 +198,7 @@ h1, h2, h3, h4, p, span, a, label {
   align-items: center;
   justify-content: center;
   font-weight: bold;
-  font-size: 0.875rem;
+  font-size: 1.1rem;
 }
 
 .user-info {
@@ -187,7 +207,8 @@ h1, h2, h3, h4, p, span, a, label {
 
 .user-name {
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 1.1rem;
+  margin-bottom: 2px;
 }
 
 .user-role {

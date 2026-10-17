@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetOps Desk — Módulo 1</title>
+    
+    <link rel="stylesheet" href="/static/css/reset.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/modulo-1.css">
+    
+    <!-- Cargamos el sidebar dinámico y las utilidades -->
+    <script src="/static/js/sidebar.js" defer></script>
+    <script src="/static/js/common.js" defer></script>
+</head>
+<body id="top">
+
+    <div class="app-layout">
+        
+        <!-- Aquí sidebar.js inyectará el menú automáticamente -->
+        <div id="sidebar-container"></div>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="main-content">
+            
+            <header class="topbar">
+                <a href="/" class="back-link">
+                    ← Volver al Dashboard
+                </a>
+            </header>
+
+            <div class="page-container">
+                
+                <div class="page-heading">
+                    <p class="eyebrow">Módulo 1</p>
+                    <h1>Direccionamiento IP y subnetting</h1>
+                    <p class="page-description">Herramientas para trabajar con IPv4, IPv6 y planificación de redes.</p>
+                </div>
+
+                <!-- Grilla de Herramientas -->
+                <div class="tools-grid">
+
+                    <!-- Herramienta 1: LISTA -->
+                    <a href="/tools/ipv4" class="tool-card">
+                        <div class="tool-icon icon-blue">🧮</div>
+                        <div class="tool-info">
+                            <h3>1. Calculadora IPv4/CIDR <span class="badge badge-ready">Lista</span></h3>
+                            <p>Calculá direcciones de red, broadcast, máscaras y rangos de hosts.</p>
+                        </div>
+                    </a>
+
+                    <!-- Herramienta 2: PRÓXIMAMENTE -->
+                    <div class="tool-card disabled">
+                        <div class="tool-icon icon-gray">🔀</div>
+                        <div class="tool-info">
+                            <h3>2. Subnetting IPv4 <span class="badge badge-soon">Próximamente</span></h3>
+                            <p>División de redes por prefijos y cálculo según hosts requeridos.</p>
+                        </div>
+                    </div>
+
+                    <!-- Herramienta 3: PRÓXIMAMENTE -->
+                    <div class="tool-card disabled">
+                        <div class="tool-icon icon-gray">📊</div>
+                        <div class="tool-info">
+                            <h3>3. Planificador VLSM <span class="badge badge-soon">Próximamente</span></h3>
+                            <p>Asignación de subredes de distintos tamaños optimizando el espacio.</p>
+                        </div>
+                    </div>
+
+                    <!-- Herramienta 4: PRÓXIMAMENTE -->
+                    <div class="tool-card disabled">
+                        <div class="tool-icon icon-gray">🔍</div>
+                        <div class="tool-info">
+                            <h3>4. Detector de solapamiento <span class="badge badge-soon">Próximamente</span></h3>
+                            <p>Comparación de rangos CIDR y detección de redes superpuestas.</p>
+                        </div>
+                    </div>
+
+                    <!-- Herramienta 5: PRÓXIMAMENTE -->
+                    <div class="tool-card disabled">
+                        <div class="tool-icon icon-gray">🌐</div>
+                        <div class="tool-info">
+                            <h3>5. Calculadora IPv6 <span class="badge badge-soon">Próximamente</span></h3>
+                            <p>Direccionamiento, prefijos y tipos de direcciones IPv6.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <a href="#top" class="back-to-top" aria-label="Volver al inicio de la página">↑</a>
+</body>
+</html>

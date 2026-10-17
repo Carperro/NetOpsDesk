@@ -68,34 +68,22 @@ def create_app() -> FastAPI:
         return FileResponse(STATIC_DIR / "index.html")
         # --- Rutas de Páginas (Frontend) ---
     
+    # Agregamos la ruta para el login.html
     @app.get("/login", include_in_schema=False)
     async def login_page() -> FileResponse:
         return FileResponse(STATIC_DIR / "login.html")
-
-    @app.get("/modulo-1", include_in_schema=False)
-    async def modulo_1_page() -> FileResponse:
-        return FileResponse(STATIC_DIR / "modulo-1.html")
-
-    @app.get("/modulo-2", include_in_schema=False)
-    async def modulo_2_page() -> FileResponse:
-        return FileResponse(STATIC_DIR / "modulo-2.html")
-
-    @app.get("/modulo-3", include_in_schema=False)
-    async def modulo_3_page() -> FileResponse:
-        return FileResponse(STATIC_DIR / "modulo-3.html")
-
-    @app.get("/modulo-4", include_in_schema=False)
-    async def modulo_4_page() -> FileResponse:
-        return FileResponse(STATIC_DIR / "modulo-4.html")
-
-    @app.get("/modulo-5", include_in_schema=False)
-    async def modulo_5_page() -> FileResponse:
-        return FileResponse(STATIC_DIR / "modulo-5.html")
-
+    # Agregamos la ruta para las tools
+    # Agregamos la ruta para la calculadora de IPv4
     @app.get("/tools/ipv4", include_in_schema=False)
     async def ipv4_tool_page() -> FileResponse:
         return FileResponse(STATIC_DIR / "tools" / "ipv4.html")
-    
+
+    # Agregamos la ruta para los modulos
+    @app.get("/modulo-1", include_in_schema=False)
+    async def modulo_1_page() -> FileResponse:
+        # Le agregamos la carpeta "modules" a la ruta
+        return FileResponse(STATIC_DIR / "modules" / "modulo-1.html")
+
     return app
     
 # Instancia que Uvicorn importa: 'netops_desk.api.main:app'.
