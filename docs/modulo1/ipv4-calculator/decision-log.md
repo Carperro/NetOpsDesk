@@ -157,6 +157,29 @@ Este documento registra las decisiones aprobadas relevantes para el MVP de NetOp
   - VLSM mantiene documentación funcional, arquitectónica, de API y de decisiones en `docs/modulo1/vlsm/`.
   - Las decisiones técnicas específicas de VLSM se registran en `docs/modulo1/vlsm/decision-log.md`.
 
+### DEC-011
+
+- **Estado**: APROBADA
+- **Contexto**: El alcance del MVP se amplía desde las tres primeras herramientas del Módulo 1 a las 25 herramientas del catálogo oficial.
+- **Decisión**: Las 25 herramientas de `docs/fundacional/catalogo.md` forman parte del MVP. El MVP no se considera terminado hasta que las 25 herramientas estén desarrolladas e integradas con la interfaz frontend. El desarrollo y la documentación avanzan progresivamente por herramienta; la documentación de funcionamiento, arquitectura y estrategia de pruebas se completa al terminar la integración frontend de cada herramienta.
+- **Motivo**: Decisión expresa del usuario.
+- **Vigencia y alcance**:
+  - Esta decisión amplía DEC-009 y DEC-010 y sustituye cualquier límite de alcance del MVP que las restrinja a las herramientas 1, 2 o 3.
+  - En lo que contradiga la inclusión de las 25 herramientas, sustituye las exclusiones de DEC-003 relativas a herramientas de diagnóstico del sistema operativo, inventario de dispositivos, IPAM, historial de diagnósticos y persistencia necesaria para esas herramientas.
+  - No incorpora autenticación completa, acceso por LAN ni una tecnología de persistencia concreta. La persistencia necesaria para inventario, IPAM o historial debe diseñarse antes de implementar esas herramientas; las decisiones de seguridad, privilegios y efectos sobre el sistema operativo se definirán por herramienta.
+  - La pertenencia al MVP, el estado de implementación/despliegue y el estado de documentación son estados distintos y deben registrarse por separado.
+
+### DEC-012
+
+- **Estado**: APROBADA
+- **Contexto**: Los contratos de API del Módulo 1 describen de manera desigual los errores HTTP y el formato común de error. La lógica de dominio debe conservarse independiente del transporte HTTP.
+- **Decisión**: Los contratos de API del Módulo 1 compartirán un sobre JSON de error `{ "error": "<código>", "detail": "<mensaje>" }`. Los errores de validación de entrada y dominio usarán HTTP 422; los errores de sintaxis JSON conservarán la semántica aprobada en DEC-007; los tipos de contenido no admitidos usarán HTTP 415; las excepciones inesperadas usarán HTTP 500 con detalle seguro. Los contratos específicos conservarán los campos, rutas y códigos de error propios de cada herramienta.
+- **Motivo**: Unificar la documentación pública del API y mantener una traducción coherente entre transporte y dominio, sin introducir dependencias HTTP en la lógica de negocio.
+- **Consecuencias**:
+  - `docs/modulo1/api-contracts.md` es la fuente común para el sobre de error y las reglas compartidas; cada contrato de herramienta define sus rutas, datos y códigos específicos.
+  - La implementación actual de Subnetting, VLSM y Overlap convierte algunos errores de dominio en HTTP 400. Esa diferencia queda registrada como una brecha de implementación pendiente; esta decisión no autoriza cambios de código.
+  - DEC-007 sigue vigente para el tratamiento de errores de sintaxis JSON.
+
 ## Reglas recuperadas
 
 Estas reglas proceden del contexto previo del proyecto; no se les atribuye fecha, autor ni aprobación histórica.

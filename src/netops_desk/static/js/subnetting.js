@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    requireAuth();
     // --- 1. Variables de la UI ---
     const radios = document.querySelectorAll('input[name="operation"]');
     const panelCount = document.getElementById('panel-by-count');

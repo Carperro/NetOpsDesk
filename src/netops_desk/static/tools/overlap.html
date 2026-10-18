@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetOps Desk — Planificador VLSM</title>
+    
+    <link rel="stylesheet" href="/static/css/reset.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/overlap.css">
+    
+    <script src="/static/js/sidebar.js" defer></script>
+    <script src="/static/js/common.js" defer></script>
+    <script src="/static/js/overlap.js" defer></script>
+</head>
+<body id="top">
+
+    <div class="app-layout">
+        <div id="sidebar-container"></div>
+
+        <main class="main-content">
+            <header class="topbar">
+                <a href="/modulo-1" class="back-link">← Volver al Módulo 1</a>
+            </header>
+
+            <div class="page-container">
+                <div class="page-heading">
+                    <p class="eyebrow">Herramientas de red</p>
+                    <h1>Planificador VLSM</h1>
+                    <p class="page-description">Asigná subredes de distintos tamaños optimizando el espacio de tu red.</p>
+                </div>
+                <section class="operation-panel">
+                    <h2>Detectar Solapamientos</h2>
+                    
+                    <form id="overlap-form" novalidate>
+                        <div class="form-group">
+                            <label for="networks-input">Redes a comparar (una por línea)</label>
+                            <textarea id="networks-input" rows="8" placeholder="192.168.1.0/24&#10;192.168.1.128/25&#10;10.0.0.0/8" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="button-primary">Analizar Redes</button>
+                    </form>
+                </section>
+
+                <div id="error-area"></div>
+
+                <div id="overlap-results" class="results-container" hidden>
+                    <h3>Resultados del Análisis</h3>
+                    <div id="status-banner"></div>
+                    
+                    <div class="table-responsive" id="conflicts-table-container" hidden>
+                        <table class="subnet-table">
+                            <thead>
+                                <tr>
+                                    <th>Red A</th>
+                                    <th>Red B</th>
+                                    <th>Detalle del Conflicto</th>
+                                </tr>
+                            </thead>
+                            <tbody id="overlap-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>        
+
+            </div>
+        </main>
+    </div>
+</body>
+</html>

@@ -1,5 +1,7 @@
 # Contratos de API — Subnetting IPv4
 
+Las convenciones comunes de errores HTTP están en [`docs/modulo1/api-contracts.md`](../api-contracts.md). Este documento define las rutas, entradas y respuestas específicas de Subnetting IPv4.
+
 ## Alcance
 
 Este documento describe las rutas y modelos presentes en `src/netops_desk/api/routes/subnetting.py` y `src/netops_desk/api/models/subnetting.py`. Las observaciones identificadas como comportamiento actual no implican que la respuesta sea una decisión estable cuando el código tiene una inconsistencia documentada.
@@ -72,16 +74,8 @@ Cada elemento de `subnets` tiene este esquema:
 
 El formateador calcula `broadcast` a partir de `IPv4Network.broadcast_address`. `first_host` y `last_host` se asignan solo si `total_addresses > 2`; para bloques de dos direcciones o menos ambos son `null`. Para el uso punto a punto de `/31`, esa representación no refleja por separado la semántica de RFC 3021; véase `requisitos.md`.
 
-## Errores observados
+## Errores específicos y brecha de implementación
 
-Los handlers compartidos producen un objeto con `error` y `detail`.
+El contrato común establece HTTP `422` para entradas inválidas y errores de dominio. La implementación actual convierte los `ValueError` del dominio en HTTP `400`; el handler global responde con el código `bad_request`. Esta diferencia queda pendiente de resolución en código y no modifica el contrato aprobado.
 
-| Estado | Comportamiento actual |
-|---|---|
-| `422` `missing_field` | Falta un campo obligatorio del modelo. |
-| `422` `invalid_type` | Un valor no tiene el tipo requerido por el modelo. |
-| `422` `invalid_value` | Un entero incumple `gt=0`, u otro valor Pydantic se clasifica como inválido. |
-| `400` `invalid_json` | Las rutas convierten `ValueError` del dominio en HTTP 400; el handler común asigna `invalid_json`, incluso cuando el detalle corresponde a CIDR inválido o capacidad insuficiente. Esta asignación es una inconsistencia conocida, no una clasificación semántica aprobada para Subnetting. |
-| `500` `internal_error` | Excepción inesperada; el handler común responde con un detalle genérico. |
-
-No se define aquí un contrato de error más específico para Subnetting porque no existe una decisión de códigos propia del módulo y la traducción actual de HTTP 400 es genérica.
+Los errores de esquema de solicitud se describen mediante los códigos comunes. Los detalles de red inválida o capacidad insuficiente conservan su mensaje de dominio; su implementación deberá mapearlos a HTTP `422` según el contrato común.

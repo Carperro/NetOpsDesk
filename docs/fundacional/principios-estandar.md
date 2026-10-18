@@ -20,6 +20,7 @@
 - Las operaciones sensibles se implementan en el servidor, no en el cliente.
 - Las herramientas que no necesiten conectividad externa funcionan sin Internet.
 - Las operaciones específicas del sistema operativo están aisladas para facilitar su futura adaptación a otros sistemas operativos.
+- Los datos no confiables se presentan en la interfaz sin interpretarlos accidentalmente como marcado o código ejecutable.
 
 ### Trazabilidad y verificabilidad
 
@@ -34,7 +35,7 @@
 - Nombres claros y coherentes.
 - Anotaciones de tipos en Python cuando corresponda.
 - Funciones y módulos enfocados en una responsabilidad.
-- Validación de entradas en los límites del sistema.
+- Validación de entradas en las capas pertinentes; la validación de interfaz no sustituye las garantías del servidor ni los invariantes del dominio.
 - Sin duplicación de reglas de negocio.
 - Sin ocultar errores mediante excepciones genéricas o valores de éxito ficticios.
 - Sin abstracciones sin justificación concreta.

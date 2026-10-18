@@ -472,6 +472,7 @@ h2 { font-size: 1.25rem; font-weight: 600; margin-bottom: 16px; }
     border-radius: 8px;
     border-left: 4px solid;
     margin-top: 20px;
+    margin-bottom: 22px;
     font-size: 0.95rem;
     animation: fadeIn 0.3s ease;
 }

@@ -1,5 +1,7 @@
 # Arquitectura de Subnetting IPv4
 
+Las convenciones HTTP compartidas del Módulo 1 están en [`../api-contracts.md`](../api-contracts.md).
+
 ## Componentes
 
 - **Dominio:** `src/netops_desk/subnetting.py` implementa `calculate_subnets_by_count` y `calculate_subnets_by_hosts` usando la biblioteca estándar `ipaddress`. No depende de FastAPI ni del navegador.
@@ -12,7 +14,7 @@ El sidebar se inyecta desde `static/js/sidebar.js`; `static/js/common.js` contie
 
 ## Manejo de errores observado
 
-Las rutas capturan `ValueError` del dominio y lo convierten en `HTTPException(400)`. El handler compartido de `src/netops_desk/api/exceptions.py` asigna `invalid_json` a cualquier respuesta HTTP 400. En consecuencia, los errores de CIDR o capacidad de Subnetting pueden llevar actualmente ese código aunque no sean errores de JSON. Es una limitación de la implementación observada, no una semántica funcional aprobada para el módulo.
+Las rutas capturan `ValueError` del dominio y lo convierten en `HTTPException(400)`. El handler compartido responde `bad_request` para esos errores HTTP 400; reserva `invalid_json` para el error de lectura del cuerpo que reconoce expresamente. El contrato común aprobado establece HTTP 422 para errores de entrada y dominio, por lo que la ruta actual tiene una brecha de implementación pendiente.
 
 ## Pruebas
 

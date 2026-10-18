@@ -30,6 +30,7 @@ from netops_desk.api.routes.subnetting import router as subnetting_router
 from netops_desk.api.routes.ipv4 import router as ipv4_router
 from netops_desk.ipv4 import DomainError
 from netops_desk.api.routes.vlsm import router as vlsm_router
+from netops_desk.api.routes.overlap import router as overlap_router
 
 # Directorio donde viven los archivos estáticos (HTML, CSS, JS).
 STATIC_DIR = Path(__file__).resolve().parent.parent / "static"
@@ -60,6 +61,8 @@ def create_app() -> FastAPI:
     app.include_router(ipv4_router)         # calc. ikpv4
     app.include_router(subnetting_router)   # calc. subnetting
     app.include_router(vlsm_router)         # calc. vlsm
+    app.include_router(overlap_router)
+
 
     # Archivos estáticos. Se monta DESPUÉS del router para no interceptar
     # las rutas /api/*; el prefijo /static es explícito para que no colisione
@@ -99,6 +102,11 @@ def create_app() -> FastAPI:
     @app.get("/tools/vlsm", include_in_schema=False)
     async def vlsm_tool_page() -> FileResponse:
         return FileResponse(STATIC_DIR / "tools" / "vlsm.html")
+
+    # Agregamos la ruta para overlap
+    @app.get("/tools/overlap", include_in_schema=False)
+    async def overlap_tool_page() -> FileResponse:
+        return FileResponse(STATIC_DIR / "tools" / "overlap.html")
 
     return app
     

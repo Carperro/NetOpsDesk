@@ -1,5 +1,7 @@
 # Contrato de API - Calculadora IPv4/CIDR (MVP)
 
+Las convenciones comunes de errores HTTP están en [`docs/modulo1/api-contracts.md`](../api-contracts.md). Este documento define las entradas, respuestas y códigos específicos de la Calculadora IPv4/CIDR.
+
 Este documento describe el contrato de la herramienta IPv4/CIDR. Su modelo está en `src/netops_desk/api/models/ipv4.py`; la ruta, los handlers compartidos y el dominio están en `src/netops_desk/api/routes/ipv4.py`, `src/netops_desk/api/exceptions.py` y `src/netops_desk/ipv4.py`. Subnetting tiene un contrato separado en `docs/modulo1/subnetting/api-contracts.md`.
 
 ## Endpoint

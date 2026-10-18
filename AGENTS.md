@@ -3,7 +3,7 @@
 **Versión:** 1.0  
 **Estado:** Propuesta para aprobación  
 **Proyecto:** NetOps Desk  
-**Fase actual:** Fase D — Implementación (alcance autorizado: backend IPv4/CIDR y Subnetting IPv4)
+**Fase actual:** Fase D — Implementación (MVP: 25 herramientas del catálogo; véase DEC-011)
 
 ---
 
@@ -17,25 +17,13 @@ Los agentes actuarán como asistentes técnicos, no como responsables autónomos
 
 La dirección del proyecto, la aprobación de decisiones y la autorización para avanzar corresponden al usuario.
 
-## 2. Estado inicial del proyecto
+## 2. Estado y alcance del proyecto
 
-El proyecto parte de una carpeta llamada `NETOPS-DESK`, sin código ni estructura de aplicación previamente creada.
+El usuario confirmó que las 25 herramientas del catálogo forman parte del MVP y que este no se considera terminado hasta que todas estén desarrolladas e integradas con el frontend (DEC-011, registrado en `docs/modulo1/ipv4-calculator/decision-log.md`). El catálogo es la fuente de verdad para la lista y el estado de las herramientas. La declaración de que una herramienta existe o está desplegada no autoriza por sí sola cambios en ella.
 
-Existe un documento de definición del proyecto, versión 0.2, que contiene el propósito, el catálogo de herramientas, el stack tecnológico y propuestas arquitectónicas.
+Las herramientas se documentarán progresivamente después de completar su integración frontend. La documentación específica de cada herramienta debe residir en su carpeta de herramienta e incluir, cuando corresponda, requisitos, arquitectura, contrato y estrategia de pruebas implementada. No crear documentación vacía o anticipada solo para completar una estructura.
 
-Ese documento constituye una referencia inicial, pero no convierte automáticamente todas sus propuestas en decisiones aprobadas.
-
-### Fase 1 aprobada
-
-El primer MVP incluirá:
-
-1. Calculadora IPv4/CIDR.
-2. Subnetting IPv4.
-3. API implementada con FastAPI.
-4. Interfaz con HTML5, CSS3 nativo y JavaScript vanilla.
-5. Pruebas automatizadas de las herramientas del MVP.
-
-La autenticación completa, el inventario persistente y los diagnósticos del sistema operativo quedan fuera del MVP inicial, salvo que se identifique una dependencia indispensable y el usuario apruebe modificar el alcance.
+DEC-011 prevalece sobre exclusiones anteriores que resulten incompatibles con las 25 herramientas del MVP, incluida la persistencia que alguna herramienta requiera. Esa decisión no elige una tecnología de persistencia ni aprueba automáticamente autenticación completa, exposición por LAN o cualquier otra capacidad que requiera decisión específica.
 
 ### Stack previsto
 
@@ -47,11 +35,17 @@ La autenticación completa, el inventario persistente y los diagnósticos del si
 - CSS3 nativo.
 - JavaScript vanilla.
 - Pytest.
-- `httpx2` como dependencia de pruebas, mantenida intencionalmente por compatibilidad con Python 3.12.
+- `httpx2` como dependencia declarada para pruebas; no afirmar compatibilidad técnica con Python 3.12 sin verificación.
 - Git y GitHub.
-- SQLite y SQLAlchemy 2.0 para las etapas que requieran persistencia.
+- SQLite y SQLAlchemy 2.0 aparecen como tecnologías previstas para persistencia; confirmar la decisión vigente antes de incorporarlas.
 
 La necesidad de cada dependencia deberá justificarse. Las tecnologías previstas para etapas posteriores no deberán incorporarse anticipadamente sin una razón documentada.
+
+### 2.1 Lectura obligatoria para cada agente
+
+Todo agente que trabaje en este repositorio debe leer primero este `AGENTS.md` y, a continuación, el archivo raíz [`SKILLS.md`](SKILLS.md), antes de analizar o ejecutar una tarea. Después consultará las fuentes canónicas pertinentes al alcance concreto: decisiones aprobadas, catálogo, documentación del módulo y de la herramienta, contratos y estado real del repositorio.
+
+`SKILLS.md` es una guía práctica complementaria: no es una fuente de aprobación, no amplía permisos y no prevalece sobre instrucciones del usuario, decisiones aprobadas ni este archivo. Si difiere de una fuente de mayor autoridad, se sigue la jerarquía de la sección 3, se registra la discrepancia y se detienen las acciones afectadas cuando sea necesario.
 
 ## 3. Jerarquía de autoridad
 

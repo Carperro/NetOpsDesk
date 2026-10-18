@@ -1,5 +1,7 @@
 # Arquitectura del Planificador VLSM
 
+Las convenciones HTTP compartidas del Módulo 1 están en [`../api-contracts.md`](../api-contracts.md).
+
 ## Componentes
 
 - **Dominio:** `src/netops_desk/vlsm.py` implementa `calculate_vlsm`. Utiliza la biblioteca estándar `ipaddress` para interpretar redes y `math` para calcular el tamaño del bloque. No depende de FastAPI ni del navegador.
@@ -21,4 +23,4 @@ El cálculo de asignaciones permanece en el dominio. El frontend recopila los da
 
 ## Manejo de errores observado
 
-Los errores de validación Pydantic responden HTTP 422. El router convierte `DomainError` en `HTTPException` con estado 400 y el detalle del dominio. El handler HTTP compartido asigna actualmente el código público `invalid_json` a las respuestas 400; esa asignación es el comportamiento actual del handler común, no una clasificación específica de VLSM.
+Los errores de validación Pydantic responden HTTP 422. El router convierte `DomainError` en `HTTPException` con estado 400 y el detalle del dominio; el handler compartido asigna `bad_request` a ese estado, salvo el error de lectura JSON que reconoce expresamente. El contrato común aprobado establece HTTP 422 para errores de entrada y dominio, por lo que la ruta actual tiene una brecha de implementación pendiente.

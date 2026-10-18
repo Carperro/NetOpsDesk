@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    requireAuth();
     const form = document.getElementById('vlsm-form');
     const container = document.getElementById('requirements-container');
     const addBtn = document.getElementById('add-req-btn');
