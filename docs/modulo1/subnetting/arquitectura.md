@@ -12,10 +12,9 @@ Las convenciones HTTP compartidas del Módulo 1 están en [`../api-contracts.md`
 
 El sidebar se inyecta desde `static/js/sidebar.js`; `static/js/common.js` contiene comportamiento compartido. El navegador no ejecuta los cálculos de red: los solicita a la API.
 
-## Manejo de errores observado
+## Manejo de errores
 
-Las rutas capturan `ValueError` del dominio y lo convierten en `HTTPException(400)`. El handler compartido responde `bad_request` para esos errores HTTP 400; reserva `invalid_json` para el error de lectura del cuerpo que reconoce expresamente. El contrato común aprobado establece HTTP 422 para errores de entrada y dominio, por lo que la ruta actual tiene una brecha de implementación pendiente.
-
+Las rutas dejan que `DomainError` llegue al handler global, que lo convierte en HTTP 422 con el sobre común. La dependencia compartida `require_json_content_type` rechaza tipos MIME distintos de `application/json` con HTTP 415. Los errores de validación Pydantic también responden 422 con mensajes localizados en español.
 ## Pruebas
 
-`tests/test_subnetting.py` verifica el dominio. No hay pruebas HTTP específicas de las dos rutas ni pruebas estáticas enfocadas en la página y el JavaScript de Subnetting. El alcance y los límites de esa cobertura se describen en `requisitos.md`.
+`tests/test_subnetting.py` cubre el dominio y `tests/test_api_subnetting.py` cubre ambos endpoints, errores de esquema y dominio, el contrato común y el tipo de contenido. `tests/test_frontend_static.py` comprueba que las páginas cargan el formateador compartido de errores.

@@ -65,54 +65,42 @@ document.addEventListener('DOMContentLoaded', () => {
     async function fetchSubnets(url, payload) {
         const submitBtn = document.querySelector(`#${payload.formId} button[type="submit"]`);
         const originalText = submitBtn.textContent;
-        
+
         submitBtn.disabled = true;
         submitBtn.textContent = 'Calculando...';
         resultsContainer.hidden = true;
-        errorArea.innerHTML = ''; 
+        errorArea.replaceChildren();
 
         try {
             const response = await fetch(url, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload.data)
-            });
+            }).catch(() => null);
 
-            const data = await response.json();
+            if (!response) {
+                showAlert(errorArea, 'No se pudo conectar con el servidor. Verificá la conexión e intentá de nuevo.', 'error', 'Sin conexión');
+                return;
+            }
 
+            const data = await response.json().catch(() => null);
             if (!response.ok) {
-                let errorMessage = 'Ocurrió un error inesperado.';
-                let errorCode = 'API_ERROR';
-
-                // Manejo de errores de validación de Pydantic (422)
-                if (response.status === 422 && Array.isArray(data.detail)) {
-                    errorCode = 'FORMATO INVÁLIDO';
-                    // Extraemos los mensajes de error de la lista de Pydantic
-                    errorMessage = data.detail.map(err => `${err.loc[1]}: ${err.msg}`).join(' | ');
-                } 
-                // Manejo de nuestros errores de dominio (400)
-                else if (data.detail && typeof data.detail === 'string') {
-                    errorCode = 'ERROR DE RED';
-                    errorMessage = data.detail;
-                }
-                
-                throw new Error(JSON.stringify({ message: errorMessage, code: errorCode }));
+                showAlert(errorArea, NetOpsApiErrors.message(response, data), 'error', NetOpsApiErrors.title(response));
+                return;
+            }
+            if (!data || typeof data !== 'object' || Array.isArray(data)) {
+                showAlert(errorArea, 'El servidor devolvió una respuesta inválida. Intentá de nuevo.', 'error', 'Respuesta inválida');
+                return;
             }
 
             renderResults(data);
-        } catch (error) {
-            try {
-                const parsedError = JSON.parse(error.message);
-                showAlert(errorArea, parsedError.message, 'error', parsedError.code);
-            } catch {
-                showAlert(errorArea, "No se pudo conectar con el servidor. Verificá tu conexión.", 'error', 'CONEXIÓN');
-            }
+        } catch {
+            showAlert(errorArea, 'No se pudo procesar la respuesta. Revisá los datos e intentá de nuevo.', 'error', 'Error de cálculo');
         } finally {
             submitBtn.disabled = false;
             submitBtn.textContent = originalText;
         }
     }
-
     // --- 6. Listeners de Formularios ---
     document.getElementById('form-by-count').addEventListener('submit', (e) => {
         e.preventDefault();

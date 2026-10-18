@@ -39,4 +39,4 @@ La herramienta se presenta como IPv4 y la interfaz valida una entrada IPv4/CIDR.
 
 ## Verificación existente
 
-`tests/test_subnetting.py` contiene pruebas del dominio para las dos operaciones, normalización, capacidad insuficiente y algunos casos límite. No existe una suite HTTP dedicada a los endpoints de Subnetting ni cobertura estática específica de esta herramienta en `tests/test_frontend_static.py`.
+`tests/test_subnetting.py` cubre las operaciones de dominio. `tests/test_api_subnetting.py` verifica respuestas HTTP exitosas, errores de esquema y dominio, el sobre JSON común, campos desconocidos, métodos no permitidos y tipos de contenido. Las guardas estáticas del frontend están en `tests/test_frontend_static.py`.

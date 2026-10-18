@@ -1,4 +1,5 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends
+from netops_desk.api.dependencies import require_json_content_type
 from netops_desk.api.models import (
     SubnettingByCountInput, 
     SubnettingByHostsInput, 
@@ -30,31 +31,29 @@ def format_subnet(subnet) -> SubnetResult:
     )
 
 @router.post("/by-count", response_model=SubnettingOutput)
-async def subnet_by_count(payload: SubnettingByCountInput):
-    try:
-        result = calculate_subnets_by_count(payload.network_cidr, payload.subnet_count)
-        formatted_subnets = [format_subnet(s) for s in result["subnets"]]
-        
-        return SubnettingOutput(
-            subnets=formatted_subnets,
-            was_normalized=result["was_normalized"],
-            original_network=result["original_network"]
-        )
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
+async def subnet_by_count(
+    payload: SubnettingByCountInput,
+    _: None = Depends(require_json_content_type),
+):
+    result = calculate_subnets_by_count(payload.network_cidr, payload.subnet_count)
+    formatted_subnets = [format_subnet(s) for s in result["subnets"]]
+    return SubnettingOutput(
+        subnets=formatted_subnets,
+        was_normalized=result["was_normalized"],
+        original_network=result["original_network"]
+    )
 
 @router.post("/by-hosts", response_model=SubnettingOutput)
-async def subnet_by_hosts(payload: SubnettingByHostsInput):
-    try:
-        result = calculate_subnets_by_hosts(payload.network_cidr, payload.required_hosts)
-        formatted_subnets = [format_subnet(s) for s in result["subnets"]]
-        
-        return SubnettingOutput(
-            subnets=formatted_subnets,
-            was_normalized=result["was_normalized"],
-            original_network=result["original_network"],
-            new_prefix=result["new_prefix"],
-            usable_hosts_per_subnet=result["usable_hosts_per_subnet"]
-        )
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
+async def subnet_by_hosts(
+    payload: SubnettingByHostsInput,
+    _: None = Depends(require_json_content_type),
+):
+    result = calculate_subnets_by_hosts(payload.network_cidr, payload.required_hosts)
+    formatted_subnets = [format_subnet(s) for s in result["subnets"]]
+    return SubnettingOutput(
+        subnets=formatted_subnets,
+        was_normalized=result["was_normalized"],
+        original_network=result["original_network"],
+        new_prefix=result["new_prefix"],
+        usable_hosts_per_subnet=result["usable_hosts_per_subnet"]
+    )

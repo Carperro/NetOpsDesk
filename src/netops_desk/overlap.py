@@ -14,8 +14,13 @@ def detect_overlaps(networks: list[str]) -> dict:
             if net_obj.version != 4:
                 raise DomainError(f"La red '{net_str}' no es una red IPv4 válida.")
             parsed_networks.append(net_obj)
-        except ValueError as e:
-            raise DomainError(f"Formato de red inválido en '{net_str}': {str(e)}")
+        except DomainError:
+            raise
+        except ValueError:
+            raise DomainError(
+                f"Formato de red inválido en '{net_str}'. "
+                "Ingresá una dirección IPv4 y un prefijo CIDR válidos."
+            ) from None
 
     overlaps = []
     for net_a, net_b in combinations(parsed_networks, 2):

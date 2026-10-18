@@ -18,7 +18,7 @@ def test_root_returns_index_html():
     assert 'lang="es"' in html
     assert 'data-theme="light"' in html
     assert "<title>NetOps Desk - Inicio</title>" in html
-    assert 'href="/tools/ipv4"' in html
+    assert 'href="/modulo-1"' in html
 
 
 def test_html_contains_three_operation_forms():
@@ -132,7 +132,7 @@ def test_api_405_contractual_preserved():
 
 def test_ipv4_js_covers_all_contractual_error_codes():
     """El JavaScript IPv4 contempla los códigos contractuales de error."""
-    js_content = client.get("/static/js/ipv4.js").text
+    js_content = client.get("/static/js/api-errors.js").text
     contractual_codes = (
         "method_not_allowed",
         "unsupported_media_type",
@@ -251,13 +251,68 @@ def test_changing_operation_clears_outputs_and_cancels_stale_request():
 
 
 def test_api_errors_and_non_json_responses_have_safe_fallbacks():
-    """El renderer conserva mensajes amigables y maneja respuestas inesperadas."""
+    """La API y la interfaz comparten mensajes de error localizados."""
     js_content = client.get("/static/js/ipv4.js").text
-    assert "errorMessages[code]" in js_content
-    assert "La solicitud no pudo completarse." in js_content
-    assert "La respuesta del servidor no contiene JSON válido." in js_content
-    assert "No se pudo conectar con el servidor." in js_content
+    error_helper = client.get("/static/js/api-errors.js").text
+    assert "NetOpsApiErrors.message(response, data)" in js_content
+    assert "La solicitud no pudo completarse" in error_helper or "No se pudo completar la solicitud" in error_helper
+    assert "No se pudo conectar con el servidor" in js_content
+def test_overlap_alert_renders_error_data_as_text():
+    """Los mensajes y códigos de API de Overlap no se interpretan como HTML."""
+    js_content = client.get("/static/js/overlap.js").text
+    assert "alertDiv.innerHTML" not in js_content
+    assert "header.textContent = code || 'Error'" in js_content
+    assert "messageElement.textContent = message" in js_content
 
 
+def test_vlsm_dynamic_values_are_not_interpolated_into_html():
+    """Los datos de entrada, respuesta y error de VLSM se insertan como texto/valores."""
+    js_content = client.get("/static/js/vlsm.js").text
+    assert "row.innerHTML" not in js_content
+    assert "remainingBox.innerHTML" not in js_content
+    assert "alertDiv.innerHTML" not in js_content
+    assert "nameInput.value = name" in js_content
+    assert "range.textContent =" in js_content
+    assert "messageElement.textContent = message" in js_content
+
+
+def test_vlsm_page_loads_its_script_and_result_containers():
+    response = client.get("/tools/vlsm")
+
+    assert response.status_code == 200
+    assert '/static/js/vlsm.js' in response.text
+    for element_id in ("vlsm-form", "requirements-container", "vlsm-tbody", "remaining-info"):
+        assert f'id="{element_id}"' in response.text
+
+
+def test_overlap_page_loads_its_script_and_result_containers():
+    response = client.get("/tools/overlap")
+
+    assert response.status_code == 200
+    assert '/static/js/overlap.js' in response.text
+    for element_id in (
+        "overlap-form", "networks-input", "error-area", "status-banner",
+        "conflicts-table-container", "overlap-tbody",
+    ):
+        assert f'id="{element_id}"' in response.text
+
+
+def test_todas_las_herramientas_cargan_el_formateador_comun_de_errores():
+    """Las cuatro interfaces cargan el mismo formateador antes de su lógica."""
+    pages = {
+        "/tools/ipv4": "/static/js/ipv4.js",
+        "/tools/subnetting": "/static/js/subnetting.js",
+        "/tools/vlsm": "/static/js/vlsm.js",
+        "/tools/overlap": "/static/js/overlap.js",
+    }
+
+    for page, tool_script in pages.items():
+        response = client.get(page)
+        assert response.status_code == 200
+        assert response.text.index("/static/js/api-errors.js") < response.text.index(tool_script)
+
+    for script in ("subnetting.js", "vlsm.js", "overlap.js"):
+        content = client.get(f"/static/js/{script}").text
+        assert "NetOpsApiErrors.message(response, data)" in content
 if __name__ == "__main__":
     pass

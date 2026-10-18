@@ -1,7 +1,9 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 from typing import List
 
 class OverlapInput(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
     networks: List[str] = Field(
         ..., 
         min_length=2, 

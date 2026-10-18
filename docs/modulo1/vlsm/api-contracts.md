@@ -70,8 +70,8 @@ HTTP `200`:
 
 `allocated` se ordena por cantidad de hosts solicitada, de mayor a menor. `remaining` contiene el intervalo libre final cuando existe; si la asignación consume todo el espacio, es `[]`. `total_ips` expresa direcciones totales.
 
-## Errores específicos y brecha de implementación
+## Errores
 
 El contrato común establece HTTP `422` para entradas inválidas y errores de dominio, con el sobre `{ "error": "<código>", "detail": "<mensaje>" }`.
 
-La implementación actual convierte `DomainError` en HTTP `400`; el handler global responde con el código `bad_request`. Esta diferencia queda pendiente de resolución en código y no modifica el contrato aprobado. Los errores de esquema de Pydantic permanecen en HTTP `422`.
+Los errores de dominio se traducen mediante el handler global a HTTP `422`, conservando el código de `DomainError` y su mensaje. Los errores de esquema de Pydantic también responden HTTP `422`. Las solicitudes sin `Content-Type: application/json` reciben HTTP `415` con el sobre JSON común.

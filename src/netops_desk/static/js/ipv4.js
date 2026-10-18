@@ -13,21 +13,6 @@
   let requestVersion = 0;
   let activeRequest = null;
 
-  const errorMessages = {
-    method_not_allowed: 'El método de solicitud no está permitido.',
-    unsupported_media_type: 'El tipo de contenido no es compatible.',
-    invalid_json: 'El cuerpo de la solicitud no es JSON válido.',
-    invalid_body: 'El cuerpo de la solicitud debe ser un objeto JSON.',
-    unknown_field: 'La solicitud contiene campos no reconocidos.',
-    incompatible_inputs: 'Combiná los campos de una sola operación.',
-    missing_field: 'Falta un campo obligatorio.',
-    invalid_type: 'El tipo de dato de uno de los campos no es válido.',
-    invalid_value: 'Uno de los valores ingresados no es válido.',
-    non_contiguous_netmask: 'La máscara de subred debe ser contigua.',
-    insufficient_capacity: 'La cantidad de hosts supera la capacidad IPv4 admitida.',
-    internal_error: 'Ocurrió un error interno. Intentá de nuevo más tarde.'
-  };
-
   const forms = [
     {
       operation: 'direct-cidr',
@@ -224,18 +209,9 @@
   }
 
 
-  function formatApiError(data) {
-    const code = typeof data?.error === 'string' ? data.error : 'unknown_error';
-    const detail = typeof data?.detail === 'string' ? data.detail.trim() : '';
-    if (!Object.prototype.hasOwnProperty.call(errorMessages, code)) {
-      return detail
-        ? `La solicitud no pudo completarse (${code}). ${detail}`
-        : `La solicitud no pudo completarse. Código: ${code}.`;
-    }
-    const friendly = errorMessages[code];
-    return detail && detail !== friendly ? `${friendly} ${detail}` : friendly;
+  function formatApiError(response, data) {
+    return NetOpsApiErrors.message(response, data);
   }
-
   function selectOperation(operation) {
     cancelActiveRequest();
     clearAllOutputs();
@@ -297,7 +273,7 @@
         return;
       }
       if (!response.ok) {
-        setError(config, formatApiError(data));
+        setError(config, formatApiError(response, data));
         return;
       }
 

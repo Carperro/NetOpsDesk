@@ -30,17 +30,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ networks: networks })
-            });
+            }).catch(() => null);
 
-            const data = await response.json();
+            if (!response) {
+                showAlert(errorArea, 'No se pudo conectar con el servidor. Verificá la conexión e intentá de nuevo.', 'error', 'Sin conexión');
+                return;
+            }
+
+            const data = await response.json().catch(() => null);
 
             if (!response.ok) {
-                throw new Error(data.detail || 'Error al analizar las redes.');
+                showAlert(errorArea, NetOpsApiErrors.message(response, data), 'error', NetOpsApiErrors.title(response));
+                return;
+            }
+
+            if (!data || typeof data !== 'object' || Array.isArray(data)) {
+                showAlert(errorArea, 'El servidor devolvió una respuesta inválida. Intentá de nuevo.', 'error', 'Respuesta inválida');
+                return;
             }
 
             renderResults(data);
-        } catch (error) {
-            showAlert(errorArea, error.message, 'error', 'ERROR DE RED');
+        } catch {
+            showAlert(errorArea, 'No se pudo procesar la respuesta. Revisá los datos e intentá de nuevo.', 'error', 'Error de análisis');
         } finally {
             submitBtn.disabled = false;
             submitBtn.textContent = originalText;
@@ -83,13 +94,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // Función auxiliar de alertas
     function showAlert(container, message, type = 'error', code = '') {
         if (!container) return;
-        container.innerHTML = ''; 
         const alertDiv = document.createElement('div');
         alertDiv.className = `alert alert--${type}`;
-        alertDiv.innerHTML = `
-            <div class="alert__header">${code || 'Error'}</div>
-            <div class="alert__message">${message}</div>
-        `;
-        container.appendChild(alertDiv);
+        const header = document.createElement('div');
+        header.className = 'alert__header';
+        header.textContent = code || 'Error';
+
+        const messageElement = document.createElement('div');
+        messageElement.className = 'alert__message';
+        messageElement.textContent = message;
+
+        alertDiv.append(header, messageElement);
+        container.replaceChildren(alertDiv);
     }
 });

@@ -28,9 +28,11 @@ La aplicación funciona en una computadora con Windows, mediante un servidor loc
 
 Los principios completos están en `docs/fundacional/principios-estandar.md`.
 
-## Criterio general de finalización
+## Criterios de finalización
 
-NetOps Desk se considera una base funcional sólida cuando dispone de:
+El MVP se considera completo cuando las 25 herramientas del catálogo estén desarrolladas e integradas con el frontend, de acuerdo con DEC-011.
+
+Mientras el MVP avanza, NetOps Desk cuenta con una base funcional sólida cuando dispone de:
 
 - Una arquitectura comprensible y documentada.
 - Al menos una herramienta verificada de punta a punta.

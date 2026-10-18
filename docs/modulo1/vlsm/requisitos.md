@@ -25,7 +25,7 @@ bits_para_direcciones = ceil(log2(hosts + 2))
 prefijo = 32 - bits_para_direcciones
 ```
 
-La subred se crea a partir de la siguiente dirección libre y el prefijo calculado. Si el bloque excede el prefijo de la red base o su broadcast supera el broadcast base, el dominio genera un error. La API transforma ese error de dominio en HTTP 400.
+La subred se crea a partir de la siguiente dirección libre y el prefijo calculado. Si el bloque excede el prefijo de la red base o su broadcast supera el broadcast base, el dominio genera un `DomainError`; el handler de API responde HTTP 422 con el código y mensaje de dominio en español.
 
 ## Espacio restante
 

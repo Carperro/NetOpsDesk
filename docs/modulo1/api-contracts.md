@@ -33,19 +33,13 @@ Las respuestas para rutas o métodos no admitidos conservan los estados HTTP cor
 
 ## Estado de conformidad observado
 
-La documentación establece el contrato común aprobado por DEC-012. La implementación todavía no es uniforme:
+Estado revisado el 2026-10-18: las cuatro herramientas implementadas del Módulo 1 (IPv4/CIDR, Subnetting, VLSM y Overlap) usan el contrato común de DEC-012. Los errores de esquema y de dominio responden HTTP `422`; los tipos de contenido distintos de `application/json` responden HTTP `415`; las excepciones inesperadas responden HTTP `500` con detalle seguro.
 
-- La Calculadora IPv4/CIDR utiliza errores de dominio traducidos a `422` y tiene una validación explícita de `Content-Type`.
-- Las rutas actuales de Subnetting convierten errores del dominio a `400`.
-- Las rutas actuales de VLSM y Overlap convierten errores de dominio a `400`.
-- Las rutas de Subnetting, VLSM y Overlap todavía no aplican el mismo control explícito de tipo de contenido documentado para IPv4.
-
-Estas diferencias son brechas entre contrato e implementación. Este documento no afirma que estén corregidas ni autoriza cambios de código.
-
+Todas las respuestas de error usan `{ "error": "<código>", "detail": "<mensaje>" }`. Los mensajes destinados al usuario se mantienen en español. La interfaz presenta detalles contractuales localizados y usa mensajes propios en español para fallos de conexión o respuestas inesperadas, sin mostrar mensajes técnicos del navegador.
 ## Contratos por herramienta
 
 - [Calculadora IPv4/CIDR](ipv4-calculator/api-contracts.md)
 - [Subnetting IPv4](subnetting/api-contracts.md)
 - [Planificador VLSM](vlsm/api-contracts.md)
 
-La documentación específica de Overlap se completará después de terminar su integración con el frontend, de acuerdo con la secuencia de trabajo definida para las herramientas.
+La documentación específica de Overlap sigue pendiente; hasta que se documente, sus reglas compartidas de errores HTTP se rigen por este contrato común.

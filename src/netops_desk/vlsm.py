@@ -16,8 +16,10 @@ def calculate_vlsm(network_cidr: str, requirements: list[dict]) -> dict:
     
     try:
         base_network = ipaddress.ip_network(network_cidr, strict=False)
-    except ValueError as e:
-        raise DomainError(f"Formato de red inválido: {e}")
+    except ValueError:
+        raise DomainError(
+            "Formato de red inválido. Ingresá una dirección IPv4 y un prefijo CIDR válidos."
+        ) from None
 
     if base_network.version != 4:
         raise DomainError("VLSM solo está soportado para IPv4.")

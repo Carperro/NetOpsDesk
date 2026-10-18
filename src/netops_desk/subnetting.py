@@ -18,8 +18,10 @@ def calculate_subnets_by_count(network_cidr: str, subnet_count: int) -> dict:
     # 1. Validar que la red base sea correcta (strict=False normaliza IPs de host)
     try:
         base_network = ipaddress.ip_network(network_cidr, strict=False)
-    except ValueError as e:
-        raise DomainError(f"Formato de red inválido: {e}")
+    except ValueError:
+        raise DomainError(
+            "Formato de red inválido. Ingresá una dirección IPv4 y un prefijo CIDR válidos."
+        ) from None
 
     # Detectar si hubo normalización (para avisar en el frontend)
     original_ip = network_cidr.split('/')[0]
@@ -61,8 +63,10 @@ def calculate_subnets_by_hosts(network_cidr: str, required_hosts: int) -> dict:
     # 1. Validar red base (normalizamos si es necesario)
     try:
         base_network = ipaddress.ip_network(network_cidr, strict=False)
-    except ValueError as e:
-        raise DomainError(f"Formato de red inválido: {e}")
+    except ValueError:
+        raise DomainError(
+            "Formato de red inválido. Ingresá una dirección IPv4 y un prefijo CIDR válidos."
+        ) from None
 
     original_ip = network_cidr.split('/')[0]
     was_normalized = original_ip != str(base_network.network_address)

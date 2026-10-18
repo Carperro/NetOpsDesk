@@ -1,11 +1,15 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 from typing import List
 
 class SubnettingByCountInput(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
     network_cidr: str = Field(..., description="Red base, ej: 192.168.1.0/24")
     subnet_count: int = Field(..., gt=0, description="Cantidad de subredes deseadas")
 
 class SubnettingByHostsInput(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
     network_cidr: str = Field(..., description="Red base, ej: 192.168.1.0/24")
     required_hosts: int = Field(..., gt=0, description="Hosts necesarios por subred")
 

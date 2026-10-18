@@ -40,3 +40,58 @@ def test_overlap_red_invalida():
         detect_overlaps(["192.168.1.0/24", "192.168.1.0/abc"])
     
     assert "Formato de red inválido" in str(exc_info.value)
+
+
+def test_overlap_red_ipv6_es_rechazada():
+    with pytest.raises(DomainError, match="no es una red IPv4 válida"):
+        detect_overlaps(["192.0.2.0/24", "2001:db8::/32"])
+
+
+def test_overlap_redes_adyacentes_no_se_solapan():
+    result = detect_overlaps(["192.0.2.0/24", "192.0.3.0/24"])
+
+    assert result["has_overlap"] is False
+    assert result["overlaps"] == []
+
+
+@pytest.mark.parametrize(
+    ("networks", "expected_message"),
+    [
+        (["192.0.2.0/24", "192.0.2.0/24"], "completamente dentro"),
+        (["192.0.2.0/24", "192.0.2.64/26"], "completamente dentro"),
+        (["192.0.2.0/25", "192.0.2.64/26"], "completamente dentro"),
+        (["192.0.2.0/23", "192.0.3.0/24"], "completamente dentro"),
+    ],
+)
+def test_overlap_detecta_redes_iguales_o_contenidas(networks, expected_message):
+    result = detect_overlaps(networks)
+
+    assert result["has_overlap"] is True
+    assert len(result["overlaps"]) == 1
+    assert expected_message in result["overlaps"][0]["message"]
+
+
+def test_overlap_normaliza_hosts_para_comparar_y_conserva_entrada_original():
+    networks = ["192.0.2.10/24", "192.0.2.128/25"]
+
+    result = detect_overlaps(networks)
+
+    assert result["networks"] == networks
+    assert result["has_overlap"] is True
+    assert result["overlaps"][0]["network_a"] == "192.0.2.0/24"
+    assert result["overlaps"][0]["network_b"] == "192.0.2.128/25"
+
+
+def test_overlap_devuelve_todos_los_pares_conflictivos_en_orden_de_entrada():
+    result = detect_overlaps(
+        ["10.0.0.0/8", "10.1.0.0/16", "10.1.1.0/24", "192.0.2.0/24"]
+    )
+
+    assert result["has_overlap"] is True
+    assert [
+        (item["network_a"], item["network_b"]) for item in result["overlaps"]
+    ] == [
+        ("10.0.0.0/8", "10.1.0.0/16"),
+        ("10.0.0.0/8", "10.1.1.0/24"),
+        ("10.1.0.0/16", "10.1.1.0/24"),
+    ]

@@ -8,7 +8,7 @@ Este documento describe el contrato de la herramienta IPv4/CIDR. Su modelo está
 
 - Método: `POST`.
 - Ruta: `/api/v1/tools/ipv4/calculate`.
-- `Content-Type`: se exige `application/json`; se permite el parámetro de charset porque la ruta compara el tipo MIME normalizado antes del punto y coma.
+- `Content-Type`: se exige `application/json`; la dependencia compartida `require_json_content_type` admite parámetros como `charset`.
 
 Documentación interactiva: `http://127.0.0.1:8000/docs`.
 
@@ -140,13 +140,13 @@ Se recorren los prefijos desde `/32` hasta `/0` y se elige el de mayor longitud 
 
 ## Errores
 
-Todas las respuestas de error tienen las claves `error` y `detail`, ambas cadenas. Los detalles conocidos de validación y de dominio se generan en español; algunos errores HTTP delegan el texto de `detail` al framework, como se indica abajo.
+Todas las respuestas de error tienen las claves `error` y `detail`, ambas cadenas. Los mensajes pÃºblicos de validaciÃ³n y errores HTTP se localizan en espaÃ±ol; las excepciones inesperadas usan un detalle genÃ©rico y seguro.
 
 | HTTP | Código | Condición y detalle implementados |
 |---|---|---|
 | 400 | `invalid_json` | La capa HTTP produce un `400` (por ejemplo, bytes UTF-8 inválidos al interpretar el JSON o error al leer el cuerpo). Detalle actual: `El cuerpo de la petición no es JSON válido.` |
 | 404 | `not_found` | Ruta inexistente. Detalle actual: `Recurso no encontrado.` |
-| 405 | `method_not_allowed` | Método no permitido. El handler conserva el detalle recibido de Starlette. |
+| 405 | `method_not_allowed` | MÃ©todo no permitido. El handler devuelve un mensaje localizado en espaÃ±ol.
 | 415 | `unsupported_media_type` | Falta `Content-Type` o no es `application/json`. El detalle incluye el valor recibido y el tipo esperado. |
 | 422 | `invalid_json` | Error de sintaxis JSON informado por la validación de solicitud de FastAPI. Detalle actual: `El cuerpo de la petición no es JSON válido.` |
 | 422 | `invalid_body` | El valor JSON superior no se puede tratar como objeto de entrada. El detalle deriva del error de validación de Pydantic. |
@@ -159,7 +159,7 @@ Todas las respuestas de error tienen las claves `error` y `detail`, ambas cadena
 | 422 | `insufficient_capacity` | `required_hosts` supera la capacidad efectiva máxima de `/0`. |
 | 500 | `internal_error` | Excepción no controlada; detalle actual: `Error interno del servidor.` No se incluye el texto de la excepción. |
 | 422 | `validation_error` | Respaldo si FastAPI entrega un `RequestValidationError` sin errores; detalle actual: `Error de validación en la petición.` |
-| estado HTTP distinto de los mapeados | `http_<status>` | Respaldo del handler HTTP; el detalle se toma de la excepción si está presente. |
+| Estado HTTP distinto de los mapeados | `http_<status>` | Respaldo del handler HTTP; devuelve un mensaje genérico en español sin revelar detalles del framework.
 
 ### Ejemplos de respuesta de error
 

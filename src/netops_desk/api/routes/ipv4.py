@@ -8,9 +8,9 @@ explícita para devolver 415 con un código contractual.
 
 from __future__ import annotations
 
-from fastapi import APIRouter, Depends, Request, status
+from fastapi import APIRouter, Depends
 
-from netops_desk.api.exceptions import APIValidationError
+from netops_desk.api.dependencies import require_json_content_type
 from netops_desk.api.models.ipv4 import (
     IPV4DirectOutput,
     IPV4Input,
@@ -20,27 +20,6 @@ from netops_desk.ipv4 import calculate_direct, calculate_inverse
 
 
 router = APIRouter(tags=["IPv4 Calculator"])
-
-
-async def require_json_content_type(request: Request) -> None:
-    """Rechaza peticiones cuyo Content-Type no sea application/json.
-
-    FastAPI por defecto intenta parsear el cuerpo como JSON sin verificar
-    el header Content-Type, lo que produce errores poco claros. Esta
-    dependencia rechaza tempranamente con 415 y un código contractual.
-    """
-    content_type = request.headers.get("content-type", "")
-    mime = content_type.split(";")[0].strip().lower()
-
-    if mime != "application/json":
-        raise APIValidationError(
-            status_code=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE,
-            error_code="unsupported_media_type",
-            detail=(
-                f"Content-Type '{content_type}' no soportado. "
-                "Se espera 'application/json'."
-            ),
-        )
 
 
 @router.post(

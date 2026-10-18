@@ -74,8 +74,6 @@ Cada elemento de `subnets` tiene este esquema:
 
 El formateador calcula `broadcast` a partir de `IPv4Network.broadcast_address`. `first_host` y `last_host` se asignan solo si `total_addresses > 2`; para bloques de dos direcciones o menos ambos son `null`. Para el uso punto a punto de `/31`, esa representación no refleja por separado la semántica de RFC 3021; véase `requisitos.md`.
 
-## Errores específicos y brecha de implementación
+## Errores
 
-El contrato común establece HTTP `422` para entradas inválidas y errores de dominio. La implementación actual convierte los `ValueError` del dominio en HTTP `400`; el handler global responde con el código `bad_request`. Esta diferencia queda pendiente de resolución en código y no modifica el contrato aprobado.
-
-Los errores de esquema de solicitud se describen mediante los códigos comunes. Los detalles de red inválida o capacidad insuficiente conservan su mensaje de dominio; su implementación deberá mapearlos a HTTP `422` según el contrato común.
+Los errores de esquema y de dominio responden HTTP `422` con el sobre común. Las solicitudes cuyo `Content-Type` no sea `application/json` responden HTTP `415`. Los detalles de dominio se expresan en español y las respuestas no exponen mensajes internos del framework.

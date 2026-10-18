@@ -65,6 +65,8 @@ _PYDANTIC_ERROR_MAP: dict[str, str] = {
     "missing_field": "missing_field",                # ← nuevo
     "string_type": "invalid_type",
     "int_type": "invalid_type",
+    "int_parsing": "invalid_type",
+    "float_parsing": "invalid_type",
     "bool_type": "invalid_type",
     "list_type": "invalid_type",
     "dict_type": "invalid_type",
@@ -77,6 +79,11 @@ _PYDANTIC_ERROR_MAP: dict[str, str] = {
     "greater_than_equal": "invalid_value",
     "less_than": "invalid_value",
     "less_than_equal": "invalid_value",
+    "string_too_short": "invalid_value",
+    "string_too_long": "invalid_value",
+    "too_short": "invalid_value",
+    "too_long": "invalid_value",
+    "string_pattern_mismatch": "invalid_value",
     "ip_v4_address": "invalid_value",
     "ip_v4_network": "invalid_value",
     "ip_any_address": "invalid_value",
@@ -98,8 +105,6 @@ def _format_pydantic_error(err: dict) -> tuple[str, str]:
     """Traduce un error individual de Pydantic a (código, mensaje)."""
     err_type = err.get("type", "")
     loc = err.get("loc", [])
-    msg = err.get("msg", "")
-
     error_code = _PYDANTIC_ERROR_MAP.get(err_type, "invalid_value")
 
     # Construimos la ruta del campo, filtrando elementos internos de Pydantic.
@@ -132,8 +137,24 @@ def _format_pydantic_error(err: dict) -> tuple[str, str]:
         detail = f"El campo '{field_path}' debe ser mayor que el mínimo permitido."
     elif err_type == "json_invalid":
         detail = "El cuerpo de la petición no es JSON válido."
+    elif err_type in {"incompatible_inputs", "missing_field", "invalid_type", "invalid_value"}:
+        detail = err.get("msg") or "La solicitud contiene un dato no válido."
+    elif err_type in {"int_parsing", "float_parsing"}:
+        detail = f"El campo '{field_path}' debe contener un número válido."
+    elif err_type in {"string_too_short", "too_short"}:
+        detail = f"El campo '{field_path}' no alcanza la longitud o cantidad mínima requerida."
+    elif err_type in {"string_too_long", "too_long"}:
+        detail = f"El campo '{field_path}' supera la longitud o cantidad máxima permitida."
+    elif err_type == "string_pattern_mismatch":
+        detail = f"El campo '{field_path}' no tiene el formato requerido."
+    elif err_type in {"greater_than", "greater_than_equal", "less_than", "less_than_equal"}:
+        detail = f"El valor del campo '{field_path}' está fuera del límite permitido."
     else:
-        detail = f"{msg} (campo: {field_path})" if field_path else msg
+        detail = (
+            f"El campo '{field_path}' tiene un tipo, formato o valor no válido."
+            if field_path
+            else "La solicitud contiene un tipo, formato o valor no válido."
+        )
 
     return error_code, detail
 
@@ -220,11 +241,13 @@ async def http_exception_handler(
     # Mensajes en español para los errores que produce FastAPI/Starlette.
     if status_code == status.HTTP_404_NOT_FOUND:
         detail = "Recurso no encontrado."
+    elif status_code == status.HTTP_405_METHOD_NOT_ALLOWED:
+        detail = "El método de solicitud no está permitido para esta ruta."
     elif status_code == status.HTTP_400_BAD_REQUEST and str(exc.detail) == "There was an error parsing the body":
         error_code = "invalid_json"
         detail = "El cuerpo de la petición no es JSON válido."
     else:
-        detail = str(exc.detail) if exc.detail else "Error HTTP."
+        detail = "La solicitud no pudo completarse por un error HTTP."
 
     logger.info(
         "HTTPException %d en %s: %s", status_code, request.url.path, detail

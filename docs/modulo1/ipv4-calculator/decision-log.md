@@ -177,8 +177,21 @@ Este documento registra las decisiones aprobadas relevantes para el MVP de NetOp
 - **Motivo**: Unificar la documentación pública del API y mantener una traducción coherente entre transporte y dominio, sin introducir dependencias HTTP en la lógica de negocio.
 - **Consecuencias**:
   - `docs/modulo1/api-contracts.md` es la fuente común para el sobre de error y las reglas compartidas; cada contrato de herramienta define sus rutas, datos y códigos específicos.
-  - La implementación actual de Subnetting, VLSM y Overlap convierte algunos errores de dominio en HTTP 400. Esa diferencia queda registrada como una brecha de implementación pendiente; esta decisión no autoriza cambios de código.
+  - Al aprobarse, las implementaciones de Subnetting, VLSM y Overlap aún tenían brechas frente al contrato. Estado revisado el 2026-10-18: las cuatro herramientas implementadas del Módulo 1 usan `422` para errores de validación y dominio, `415` para tipos de contenido no admitidos y mensajes de usuario en español.
   - DEC-007 sigue vigente para el tratamiento de errores de sintaxis JSON.
+
+### DEC-013
+
+- **Estado**: APROBADA
+- **Contexto**: Los frontends de Overlap y VLSM insertaban mensajes de error y otros valores dinámicos mediante `innerHTML`. En Overlap, el detalle de error puede contener texto derivado de una red inválida suministrada por el usuario. Esto constituye un flujo estático de riesgo de inyección HTML; no se afirma que se haya demostrado explotación dinámica.
+- **Decisión**: En Overlap y VLSM, construir los elementos dinámicos del DOM mediante APIs de nodos y presentar mensajes, valores de entrada y datos de respuesta con `textContent` o propiedades de formulario como `value`. No interpolar datos dinámicos en plantillas HTML interpretadas.
+- **Motivo**: Evitar que datos de entrada, respuestas o errores se interpreten como marcado o código ejecutable, siguiendo el principio de presentación segura de datos no confiables.
+- **Consecuencias**:
+  - Se aplica a `src/netops_desk/static/js/overlap.js` y `src/netops_desk/static/js/vlsm.js`.
+  - Se añaden guardas estáticas en `tests/test_frontend_static.py` para evitar la regresión de los sinks de renderizado identificados.
+  - No se cambian contratos, rutas ni mensajes de dominio.
+  - Las pruebas agregadas requieren ejecución autorizada; esta decisión no registra un resultado de pruebas.
+- **Verificación**: La revisión estática identifica el flujo de datos; no se ejecutó una prueba de explotación ni una prueba de navegador como condición para aprobar este cambio.
 
 ## Reglas recuperadas
 
