@@ -41,5 +41,6 @@ Todas las respuestas de error usan `{ "error": "<código>", "detail": "<mensaje>
 - [Calculadora IPv4/CIDR](ipv4-calculator/api-contracts.md)
 - [Subnetting IPv4](subnetting/api-contracts.md)
 - [Planificador VLSM](vlsm/api-contracts.md)
+- [Detector de solapamiento](overlap/api-contracts.md)
 
-La documentación específica de Overlap sigue pendiente; hasta que se documente, sus reglas compartidas de errores HTTP se rigen por este contrato común.
+Cada contrato específico define las rutas, campos, respuestas y errores propios de su herramienta; las reglas transversales anteriores aplican a todas las herramientas del módulo.

@@ -20,6 +20,14 @@ Este registro describe decisiones autorizadas para la implementación actual del
 - **Motivo:** la respuesta representa el rango contiguo restante y su cantidad total de direcciones sin afirmar que ese intervalo sea una subred CIDR alineada.
 - **Consecuencias:** `remaining` contiene cero o un elemento con `network`, `broadcast` y `total_ips`; si no hay direcciones disponibles, queda vacío.
 
+### VLSM-DEC-003 — Límite de requerimientos
+
+- **Estado:** APROBADA.
+- **Contexto:** cada requerimiento VLSM genera una asignación y trabajo proporcional de validación y cálculo.
+- **Decisión:** admitir como máximo 100 requerimientos por solicitud.
+- **Motivo:** limitar el tamaño del trabajo y de la respuesta de una operación.
+- **Consecuencias:** más de 100 requerimientos se rechazan con HTTP 422 y `invalid_requirement`.
+
 ## Alcance
 
 Estas decisiones describen el algoritmo presente en `src/netops_desk/vlsm.py`. Los campos HTTP y las respuestas están documentados en `api-contracts.md`.

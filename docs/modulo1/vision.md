@@ -15,7 +15,7 @@ El catálogo completo y el estado de cada herramienta están en `docs/fundaciona
 1. **Calculadora IPv4/CIDR** *(MVP; desplegada)*.
 2. **Subnetting IPv4** *(MVP; desplegada)*.
 3. **Planificador VLSM** *(MVP; desplegado)*.
-4. **Detector de solapamiento de redes** *(MVP; desplegado; documentación pendiente)*.
+4. **Detector de solapamiento de redes** *(MVP; desplegado; documentación específica disponible)*.
 5. **Calculadora IPv6** *(MVP; pendiente de desarrollo e integración)*.
 
 El detalle funcional de cada herramienta está en el catálogo oficial.
@@ -45,6 +45,7 @@ La documentación de Subnetting IPv4 (herramienta 2) está en `docs/modulo1/subn
 - `arquitectura.md`
 - `api-contracts.md`
 - `decision-log.md`
+- `test-strategy.md`
 
 La documentación del Planificador VLSM (herramienta 3) está en `docs/modulo1/vlsm/`:
 
@@ -52,5 +53,12 @@ La documentación del Planificador VLSM (herramienta 3) está en `docs/modulo1/v
 - `arquitectura.md`
 - `api-contracts.md`
 - `decision-log.md`
+- `test-strategy.md`
 
-La documentación específica del Detector de solapamiento (herramienta 4) se completará después de terminar su integración con el frontend.
+La documentación específica del Detector de solapamiento (herramienta 4) está en `docs/modulo1/overlap/`:
+
+- `requisitos.md`
+- `arquitectura.md`
+- `api-contracts.md`
+- `decision-log.md`
+- `test-strategy.md`

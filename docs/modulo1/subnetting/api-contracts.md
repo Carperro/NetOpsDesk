@@ -28,6 +28,8 @@ Las dos operaciones usan `POST` y reciben JSON.
 
 El dominio calcula `ceil(log2(subnet_count))` bits de división y devuelve exactamente la cantidad solicitada de las subredes de tamaño uniforme resultantes.
 
+El dominio genera como máximo 4096 subredes por solicitud. Si `subnet_count` supera 4096 o la división por cantidad de hosts produciría más de 4096 subredes, responde HTTP `422` con `insufficient_capacity`.
+
 ### Calcular por hosts
 
 `POST /api/v1/tools/subnetting/by-hosts`
@@ -46,7 +48,9 @@ El dominio calcula `ceil(log2(subnet_count))` bits de división y devuelve exact
 
 El dominio calcula un prefijo de subred según la capacidad de hosts y devuelve las subredes que caben en la red base. Los casos `/31` y `/32` tienen las discrepancias descritas en `requisitos.md`; no se debe inferir de ellos una respuesta de rango que el serializador no entrega.
 
-**Campos adicionales:** los modelos no configuran `extra="forbid"`; con la configuración predeterminada de Pydantic, los campos no declarados se ignoran. Esto describe el comportamiento actual.
+La generación de subredes en esta operación también está limitada a 4096 resultados; superar el límite produce HTTP `422` con `insufficient_capacity`.
+
+**Campos adicionales:** ambos modelos configuran `extra="forbid"`. Los campos no declarados se rechazan con HTTP `422` y código `unknown_field`, de acuerdo con el handler común.
 
 ## Respuesta exitosa
 
@@ -76,4 +80,13 @@ El formateador calcula `broadcast` a partir de `IPv4Network.broadcast_address`. 
 
 ## Errores
 
-Los errores de esquema y de dominio responden HTTP `422` con el sobre común. Las solicitudes cuyo `Content-Type` no sea `application/json` responden HTTP `415`. Los detalles de dominio se expresan en español y las respuestas no exponen mensajes internos del framework.
+Los errores de esquema y de dominio responden HTTP `422` con el sobre común. Los códigos de dominio son:
+
+| HTTP | Código | Causa |
+|---|---|---|
+| `422` | `invalid_network` | CIDR no parseable o red que no sea IPv4. |
+| `422` | `invalid_subnet_count` | `subnet_count` menor que 1. |
+| `422` | `invalid_host_count` | `required_hosts` menor que 1. |
+| `422` | `insufficient_capacity` | La red base no admite la cantidad de subredes o hosts solicitada. |
+
+Las solicitudes cuyo `Content-Type` no sea `application/json` responden HTTP `415`. Los detalles de dominio se expresan en español y las respuestas no exponen mensajes internos del framework.

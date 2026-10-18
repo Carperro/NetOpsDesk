@@ -1,0 +1,14 @@
+repos:
+  - repo: local
+    hooks:
+      - id: ruff-critical
+        name: Ruff (errores críticos)
+        entry: python -m ruff check --select E9,F63,F7,F82
+        language: system
+        types: [python]
+      - id: pytest
+        name: Suite completa de Pytest
+        entry: python -m pytest tests/ -q
+        language: system
+        pass_filenames: false
+        always_run: true

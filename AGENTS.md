@@ -1,7 +1,7 @@
 # AGENTS.md — NetOps Desk
 
 **Versión:** 1.0  
-**Estado:** Propuesta para aprobación  
+**Estado:** Aprobado por el usuario (DEC-014)
 **Proyecto:** NetOps Desk  
 **Fase actual:** Fase D — Implementación (MVP: 25 herramientas del catálogo; véase DEC-011)
 
@@ -21,7 +21,7 @@ La dirección del proyecto, la aprobación de decisiones y la autorización para
 
 El usuario confirmó que las 25 herramientas del catálogo forman parte del MVP y que este no se considera terminado hasta que todas estén desarrolladas e integradas con el frontend (DEC-011, registrado en `docs/modulo1/ipv4-calculator/decision-log.md`). El catálogo es la fuente de verdad para la lista y el estado de las herramientas. La declaración de que una herramienta existe o está desplegada no autoriza por sí sola cambios en ella.
 
-Las herramientas se documentarán progresivamente después de completar su integración frontend. La documentación específica de cada herramienta debe residir en su carpeta de herramienta e incluir, cuando corresponda, requisitos, arquitectura, contrato y estrategia de pruebas implementada. No crear documentación vacía o anticipada solo para completar una estructura.
+Las herramientas se documentarán progresivamente después de completar su integración frontend. La documentación específica de cada herramienta debe residir en su carpeta e incluir los cinco documentos de [`docs/plantilla-herramienta/`](docs/plantilla-herramienta/): requisitos, arquitectura, contrato de API, registro de decisiones y estrategia de pruebas implementada. No crear documentación vacía o anticipada solo para completar una estructura.
 
 DEC-011 prevalece sobre exclusiones anteriores que resulten incompatibles con las 25 herramientas del MVP, incluida la persistencia que alguna herramienta requiera. Esa decisión no elige una tecnología de persistencia ni aprueba automáticamente autenticación completa, exposición por LAN o cualquier otra capacidad que requiera decisión específica.
 

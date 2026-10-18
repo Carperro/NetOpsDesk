@@ -1,6 +1,26 @@
+from __future__ import annotations
+
 import ipaddress
 import math
+
 from netops_desk.exceptions import DomainError
+
+MAX_REQUIREMENTS = 100
+
+
+class ErrorCode:
+    """Códigos estables de los errores del dominio VLSM."""
+
+    INVALID_NETWORK = "invalid_network"
+    EMPTY_REQUIREMENTS = "empty_requirements"
+    INVALID_REQUIREMENT = "invalid_requirement"
+    INSUFFICIENT_SPACE = "insufficient_space"
+
+
+def _error(code: str, message: str) -> DomainError:
+    """Crea un error de dominio con código contractual estable."""
+    return DomainError(message=message, code=code)
+
 
 def calculate_vlsm(network_cidr: str, requirements: list[dict]) -> dict:
     """
@@ -12,17 +32,34 @@ def calculate_vlsm(network_cidr: str, requirements: list[dict]) -> dict:
     """
     # 1. Validaciones iniciales
     if not requirements:
-        raise DomainError("Debés proporcionar al menos un requerimiento.")
+        raise _error(
+            ErrorCode.EMPTY_REQUIREMENTS,
+            "Debés proporcionar al menos un requerimiento.",
+        )
+
+    if len(requirements) > MAX_REQUIREMENTS:
+        raise _error(
+            ErrorCode.INVALID_REQUIREMENT,
+            "No se permiten más de 100 requerimientos por solicitud.",
+        )
     
     try:
         base_network = ipaddress.ip_network(network_cidr, strict=False)
     except ValueError:
-        raise DomainError(
+        raise _error(
+            ErrorCode.INVALID_NETWORK,
             "Formato de red inválido. Ingresá una dirección IPv4 y un prefijo CIDR válidos."
         ) from None
 
     if base_network.version != 4:
-        raise DomainError("VLSM solo está soportado para IPv4.")
+        raise _error(ErrorCode.INVALID_NETWORK, "VLSM solo está soportado para IPv4.")
+
+    for req in requirements:
+        if req["hosts"] <= 0 or not req["name"].strip():
+            raise _error(
+                ErrorCode.INVALID_REQUIREMENT,
+                "Cada requerimiento debe tener un nombre y una cantidad de hosts mayor que 0.",
+            )
 
     # 2. REGLA DE ORO: Ordenar de mayor a menor (los más grandes primero)
     # Usamos una función lambda para ordenar la lista en base a la llave 'hosts'
@@ -44,7 +81,10 @@ def calculate_vlsm(network_cidr: str, requirements: list[dict]) -> dict:
         new_prefix = 32 - bits_for_hosts
 
         if new_prefix < base_network.prefixlen:
-            raise DomainError(f"El requerimiento '{name}' es demasiado grande para la red base.")
+            raise _error(
+                ErrorCode.INSUFFICIENT_SPACE,
+                f"El requerimiento '{name}' es demasiado grande para la red base.",
+            )
 
         # 2. CREAR LA SUBRED con la IP actual y el nuevo prefijo
         # f"{current_ip}/{new_prefix}" se convierte en string, ej: "192.168.1.0/25"
@@ -53,7 +93,10 @@ def calculate_vlsm(network_cidr: str, requirements: list[dict]) -> dict:
         # 3. VERIFICAR SI NOS PASAMOS DEL LÍMITE DEL TERRENO
         # Comparamos el broadcast de esta subred con el broadcast de la red base original
         if subnet.broadcast_address > base_broadcast:
-            raise DomainError(f"No hay espacio suficiente para el requerimiento '{name}'.")
+            raise _error(
+                ErrorCode.INSUFFICIENT_SPACE,
+                f"No hay espacio suficiente para el requerimiento '{name}'.",
+            )
 
         # 4. GUARDAR LA SUBRED ASIGNADA
         allocated_subnets.append({

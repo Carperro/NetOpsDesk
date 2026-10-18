@@ -63,6 +63,7 @@ def test_vlsm_red_muy_chica():
         calculate_vlsm("192.168.1.0/24", requerimientos)
     
     assert "demasiado grande" in str(exc_info.value)
+    assert exc_info.value.code == "insufficient_space"
 
 def test_vlsm_sin_espacio():
     """Caso de error: Los departamentos entran por separado, pero juntos no caben en la red."""
@@ -78,11 +79,14 @@ def test_vlsm_sin_espacio():
         calculate_vlsm("192.168.1.0/24", requerimientos)
     
     assert "No hay espacio suficiente" in str(exc_info.value)
+    assert exc_info.value.code == "insufficient_space"
 
 def test_vlsm_lista_vacia():
     """Caso de error: No se enviaron requerimientos."""
-    with pytest.raises(DomainError):
+    with pytest.raises(DomainError) as exc_info:
         calculate_vlsm("192.168.1.0/24", [])
+
+    assert exc_info.value.code == "empty_requirements"
 
 
 def test_vlsm_limite_exacto():
@@ -141,6 +145,7 @@ def test_vlsm_ipv6_rechazado():
         calculate_vlsm("2001:db8::/32", [{"name": "Ventas", "hosts": 10}])
 
     assert str(exc_info.value) == "VLSM solo está soportado para IPv4."
+    assert exc_info.value.code == "invalid_network"
 
 
 def test_vlsm_normaliza_la_red_base_y_conserva_los_requerimientos():
@@ -179,8 +184,37 @@ def test_vlsm_asignaciones_no_se_solapan_y_quedan_dentro_de_la_red_base():
 
 
 def test_vlsm_rechaza_cidr_malformado():
-    with pytest.raises(DomainError, match="Formato de red inválido"):
+    with pytest.raises(DomainError, match="Formato de red inválido") as exc_info:
         calculate_vlsm("no-es-un-cidr", [{"name": "Ventas", "hosts": 10}])
+
+    assert exc_info.value.code == "invalid_network"
+
+
+@pytest.mark.parametrize(
+    "requirement",
+    [
+        {"name": "Ventas", "hosts": 0},
+        {"name": "   ", "hosts": 10},
+    ],
+)
+def test_vlsm_rechaza_requerimientos_invalidos_con_codigo(requirement):
+    with pytest.raises(DomainError) as exc_info:
+        calculate_vlsm("192.168.1.0/24", [requirement])
+
+    assert exc_info.value.code == "invalid_requirement"
+
+
+def test_vlsm_rechaza_limite_de_requerimientos_mas_uno():
+    requirements = [
+        {"name": f"Red {index}", "hosts": 1}
+        for index in range(101)
+    ]
+
+    with pytest.raises(DomainError) as exc_info:
+        calculate_vlsm("192.168.1.0/24", requirements)
+
+    assert exc_info.value.code == "invalid_requirement"
+    assert "más de 100" in str(exc_info.value)
 
 
 def test_vlsm_el_espacio_restante_es_contiguo_y_su_cantidad_inclusiva():

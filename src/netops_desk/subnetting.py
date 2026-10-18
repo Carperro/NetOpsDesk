@@ -1,7 +1,25 @@
-from netops_desk.exceptions import DomainError
+from __future__ import annotations
+
 import ipaddress
 import math
 
+from netops_desk.exceptions import DomainError
+
+MAX_GENERATED_SUBNETS = 4096
+
+
+class ErrorCode:
+    """Códigos estables de los errores del dominio Subnetting."""
+
+    INVALID_NETWORK = "invalid_network"
+    INVALID_SUBNET_COUNT = "invalid_subnet_count"
+    INVALID_HOST_COUNT = "invalid_host_count"
+    INSUFFICIENT_CAPACITY = "insufficient_capacity"
+
+
+def _error(code: str, message: str) -> DomainError:
+    """Crea un error de dominio con código contractual estable."""
+    return DomainError(message=message, code=code)
 
 def _usable_host_count(prefixlen: int) -> int:
     """Calcula hosts utilizables para un prefijo, considerando casos borde /31 y /32."""
@@ -19,16 +37,29 @@ def calculate_subnets_by_count(network_cidr: str, subnet_count: int) -> dict:
     try:
         base_network = ipaddress.ip_network(network_cidr, strict=False)
     except ValueError:
-        raise DomainError(
+        raise _error(
+            ErrorCode.INVALID_NETWORK,
             "Formato de red inválido. Ingresá una dirección IPv4 y un prefijo CIDR válidos."
         ) from None
+
+    if base_network.version != 4:
+        raise _error(ErrorCode.INVALID_NETWORK, "La red debe ser IPv4.")
 
     # Detectar si hubo normalización (para avisar en el frontend)
     original_ip = network_cidr.split('/')[0]
     was_normalized = original_ip != str(base_network.network_address)
 
     if subnet_count < 1:
-        raise DomainError("La cantidad de subredes debe ser mayor a 0.")
+        raise _error(
+            ErrorCode.INVALID_SUBNET_COUNT,
+            "La cantidad de subredes debe ser mayor a 0.",
+        )
+
+    if subnet_count > MAX_GENERATED_SUBNETS:
+        raise _error(
+            ErrorCode.INSUFFICIENT_CAPACITY,
+            "Se solicitaron demasiadas subredes; el máximo es 4096.",
+        )
 
     bits_needed = math.ceil(math.log2(subnet_count))
     new_prefix = base_network.prefixlen + bits_needed
@@ -37,9 +68,17 @@ def calculate_subnets_by_count(network_cidr: str, subnet_count: int) -> dict:
     max_bits_for_subnets = 32 - base_network.prefixlen
     if bits_needed > max_bits_for_subnets:
         max_subnets = 2 ** max_bits_for_subnets
-        raise DomainError(
+        raise _error(
+            ErrorCode.INSUFFICIENT_CAPACITY,
             f"La red {base_network} solo permite un máximo de {max_subnets} subredes. "
             f"Pediste {subnet_count}."
+        )
+
+    generated_count = 1 << (new_prefix - base_network.prefixlen)
+    if generated_count > MAX_GENERATED_SUBNETS:
+        raise _error(
+            ErrorCode.INSUFFICIENT_CAPACITY,
+            "Se solicitaron demasiadas subredes; el máximo es 4096.",
         )
 
     subnets = list(base_network.subnets(new_prefix=new_prefix))
@@ -64,15 +103,22 @@ def calculate_subnets_by_hosts(network_cidr: str, required_hosts: int) -> dict:
     try:
         base_network = ipaddress.ip_network(network_cidr, strict=False)
     except ValueError:
-        raise DomainError(
+        raise _error(
+            ErrorCode.INVALID_NETWORK,
             "Formato de red inválido. Ingresá una dirección IPv4 y un prefijo CIDR válidos."
         ) from None
+
+    if base_network.version != 4:
+        raise _error(ErrorCode.INVALID_NETWORK, "La red debe ser IPv4.")
 
     original_ip = network_cidr.split('/')[0]
     was_normalized = original_ip != str(base_network.network_address)
 
     if required_hosts < 1:
-        raise DomainError("La cantidad de hosts requeridos debe ser mayor a 0.")
+        raise _error(
+            ErrorCode.INVALID_HOST_COUNT,
+            "La cantidad de hosts requeridos debe ser mayor a 0.",
+        )
 
     # 2. Calcular cuántos bits (h) necesitamos para los hosts
     # La fórmula es 2^h - 2 >= required_hosts.
@@ -92,9 +138,17 @@ def calculate_subnets_by_hosts(network_cidr: str, required_hosts: int) -> dict:
     # (No podés pedir subredes más grandes que la red original)
     if new_prefix < base_network.prefixlen:
         max_hosts_possible = _usable_host_count(base_network.prefixlen)
-        raise DomainError(
+        raise _error(
+            ErrorCode.INSUFFICIENT_CAPACITY,
             f"La red original es demasiado pequeña. El máximo de hosts para "
             f"{network_cidr} es {max_hosts_possible}. Pediste {required_hosts}."
+        )
+
+    generated_count = 1 << (new_prefix - base_network.prefixlen)
+    if generated_count > MAX_GENERATED_SUBNETS:
+        raise _error(
+            ErrorCode.INSUFFICIENT_CAPACITY,
+            "Se solicitaron demasiadas subredes; el máximo es 4096.",
         )
 
     # 5. Generar las subredes

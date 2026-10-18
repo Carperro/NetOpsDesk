@@ -27,7 +27,13 @@ dependencies = [
 
 [project.optional-dependencies]
 test = ["httpx2>=2.0.0", "pytest>=8.0.0"]
-dev = ["ruff>=0.4.0", "black>=24.0.0", "mypy>=1.10.0"]
+dev = [
+    "ruff>=0.4.0",
+    "black>=24.0.0",
+    "mypy>=1.10.0",
+    "pip-tools>=7.6.2",
+    "pre-commit>=4.0.0",
+]
 
 [project.urls]
 Homepage = "https://github.com/Carperro/NetOpsDesk"

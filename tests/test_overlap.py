@@ -33,6 +33,7 @@ def test_overlap_menos_de_dos_redes():
         detect_overlaps(["192.168.1.0/24"])
     
     assert "al menos dos redes" in str(exc_info.value)
+    assert exc_info.value.code == "too_few_networks"
 
 def test_overlap_red_invalida():
     """Caso de error: Formato de red inválido."""
@@ -40,11 +41,24 @@ def test_overlap_red_invalida():
         detect_overlaps(["192.168.1.0/24", "192.168.1.0/abc"])
     
     assert "Formato de red inválido" in str(exc_info.value)
+    assert exc_info.value.code == "invalid_network"
 
 
 def test_overlap_red_ipv6_es_rechazada():
-    with pytest.raises(DomainError, match="no es una red IPv4 válida"):
+    with pytest.raises(DomainError, match="no es una red IPv4 válida") as exc_info:
         detect_overlaps(["192.0.2.0/24", "2001:db8::/32"])
+
+    assert exc_info.value.code == "invalid_network"
+
+
+def test_overlap_rechaza_limite_de_redes_mas_uno():
+    networks = [f"10.{index}.0.0/16" for index in range(51)]
+
+    with pytest.raises(DomainError) as exc_info:
+        detect_overlaps(networks)
+
+    assert exc_info.value.code == "invalid_network"
+    assert "más de 50" in str(exc_info.value)
 
 
 def test_overlap_redes_adyacentes_no_se_solapan():

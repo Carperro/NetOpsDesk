@@ -26,19 +26,21 @@ def test_subnetting_api_operaciones_validas_responden_200(endpoint, payload):
 
 
 @pytest.mark.parametrize(
-    ("endpoint", "payload"),
+    ("endpoint", "payload", "expected_error"),
     [
-        (BY_COUNT, {"network_cidr": "red-invalida", "subnet_count": 2}),
-        (BY_COUNT, {"network_cidr": "192.0.2.0/30", "subnet_count": 5}),
-        (BY_HOSTS, {"network_cidr": "192.0.2.0/24", "required_hosts": 1000}),
+        (BY_COUNT, {"network_cidr": "red-invalida", "subnet_count": 2}, "invalid_network"),
+        (BY_COUNT, {"network_cidr": "192.0.2.0/30", "subnet_count": 5}, "insufficient_capacity"),
+        (BY_HOSTS, {"network_cidr": "192.0.2.0/24", "required_hosts": 1000}, "insufficient_capacity"),
     ],
 )
-def test_subnetting_api_errores_de_dominio_usan_422_y_sobre_comun(endpoint, payload):
+def test_subnetting_api_errores_de_dominio_usan_422_y_sobre_comun(
+    endpoint, payload, expected_error
+):
     response = client.post(endpoint, json=payload)
 
     assert response.status_code == 422
     assert set(response.json()) == {"error", "detail"}
-    assert response.json()["error"] == "invalid_value"
+    assert response.json()["error"] == expected_error
     assert response.json()["detail"]
 
 

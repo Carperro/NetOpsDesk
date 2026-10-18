@@ -2,6 +2,8 @@
 
 Este documento registra las decisiones aprobadas relevantes para el MVP de NetOps Desk. Cada decisión incluye un identificador estable, su estado, el contexto en que se tomó, la decisión misma, el motivo y las consecuencias. Las alternativas consideradas se registran solo cuando hay evidencia de que fueron evaluadas explícitamente.
 
+> **Vigencia del registro global:** DEC-011, DEC-012 y DEC-013 se mantienen aquí como parte de su historial de origen en IPv4. Desde el 2026-10-18, su copia canónica para decisiones transversales está en [`docs/fundacional/decision-log.md`](../../fundacional/decision-log.md), junto con DEC-014. Las decisiones específicas de la calculadora IPv4 y las entradas históricas permanecen en este archivo.
+
 ## Decisiones aprobadas
 
 ### DEC-001

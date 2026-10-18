@@ -8,28 +8,41 @@ La implementación es gradual. El primer módulo prioriza herramientas de direcc
 
 **Alcance del MVP:** las 25 herramientas de este catálogo, según DEC-011 en `docs/modulo1/ipv4-calculator/decision-log.md`.
 
-El usuario confirma que las herramientas 1 a 4 están desplegadas. Las herramientas 1 a 3 tienen documentación específica; la documentación de Overlap (herramienta 4) está pendiente de completarse tras su integración con el frontend. Las herramientas 5 a 25 forman parte del MVP y están pendientes de desarrollo e integración. La pertenencia al MVP, el despliegue y el estado de documentación se indican por separado.
+El usuario confirma que las herramientas 1 a 4 están desplegadas. Las herramientas 1 a 4 tienen documentación específica; la documentación de las herramientas 5 a 25 se completará progresivamente tras cada integración frontend. La pertenencia al MVP, el despliegue y el estado de documentación se indican por separado.
+
+### Leyenda de estados de implementación
+
+Los estados son acumulativos: una herramienta solo recibe un nivel si cumple ese nivel y los anteriores. «Pendiente» indica que aún no alcanza el primer nivel.
+
+| Estado | Criterio observable |
+|---|---|
+| **Implementada** | Existe código para los comportamientos funcionales definidos de la herramienta. |
+| **Integrada** | La interfaz de la aplicación permite usar la herramienta y está conectada con su API o mecanismo de ejecución aprobado. |
+| **Verificada** | Las pruebas de aceptación pertinentes se ejecutaron después del último cambio funcional y pasaron. |
+| **Desplegada** | El usuario confirmó que la herramienta está disponible en el entorno previsto. |
+
+El catálogo registra el nivel más alto alcanzado. La documentación se registra por separado y no se infiere del estado de implementación.
 
 ## Módulo 1. Direccionamiento IP y subnetting
 
-### 1. Calculadora IPv4/CIDR *(MVP — implementada)*
+### 1. Calculadora IPv4/CIDR *(MVP — implementada · integrada · verificada · desplegada)*
 - Dirección IP y prefijo.
 - Dirección de red y broadcast.
 - Máscara de subred.
 - Rango de hosts.
 - Cantidad de direcciones y hosts utilizables.
 
-### 2. Subnetting IPv4 *(MVP — implementada)*
+### 2. Subnetting IPv4 *(MVP — implementada · integrada · verificada · desplegada)*
 - División de redes por prefijos.
 - Cálculo según cantidad de hosts requerida.
 - Visualización de las subredes resultantes.
 
-### 3. Planificador VLSM *(MVP — implementada)*
+### 3. Planificador VLSM *(MVP — implementada · integrada · verificada · desplegada)*
 - Asignación de subredes de distintos tamaños.
 - Organización según las necesidades de hosts.
 - Detección de asignaciones inválidas.
 
-### 4. Detector de solapamiento de redes *(MVP — desplegada; documentación pendiente)*
+### 4. Detector de solapamiento de redes *(MVP — implementada · integrada · verificada · desplegada)*
 - Comparación de rangos CIDR.
 - Identificación de redes que se superponen.
 - Explicación del conflicto.

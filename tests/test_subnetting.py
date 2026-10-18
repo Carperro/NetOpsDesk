@@ -40,11 +40,20 @@ def test_subnetting_insufficient_capacity():
     
     # Verificamos que el mensaje de error sea claro
     assert "solo permite un máximo de 256 subredes" in str(exc_info.value)
+    assert exc_info.value.code == "insufficient_capacity"
 
 def test_subnetting_invalid_network():
     """Caso de error: Formato de red totalmente inválido."""
     with pytest.raises(ValueError):
         calculate_subnets_by_count("esto-no-es-una-ip/24", 4)
+
+
+def test_subnetting_by_count_rejects_ipv6():
+    with pytest.raises(ValueError) as exc_info:
+        calculate_subnets_by_count("2001:db8::/64", 4)
+
+    assert exc_info.value.code == "invalid_network"
+    assert "IPv4" in str(exc_info.value)
 
 
 # Tests para el modo B de Subnetting: por cantidad de hosts.
@@ -99,3 +108,41 @@ def test_subnetting_by_hosts_slash_31_one_host():
     result = calculate_subnets_by_hosts("192.222.1.0/31", 1)
     
     assert result["usable_hosts_per_subnet"] == 2
+
+
+def test_subnetting_by_hosts_rejects_ipv6():
+    with pytest.raises(ValueError) as exc_info:
+        calculate_subnets_by_hosts("2001:db8::/64", 1)
+
+    assert exc_info.value.code == "invalid_network"
+    assert "IPv4" in str(exc_info.value)
+
+
+def test_subnetting_by_count_rejects_invalid_count_with_code():
+    with pytest.raises(ValueError) as exc_info:
+        calculate_subnets_by_count("192.168.1.0/24", 0)
+
+    assert exc_info.value.code == "invalid_subnet_count"
+
+
+def test_subnetting_by_hosts_rejects_invalid_count_with_code():
+    with pytest.raises(ValueError) as exc_info:
+        calculate_subnets_by_hosts("192.168.1.0/24", 0)
+
+    assert exc_info.value.code == "invalid_host_count"
+
+
+def test_subnetting_by_count_rechaza_limite_mas_uno():
+    with pytest.raises(ValueError) as exc_info:
+        calculate_subnets_by_count("0.0.0.0/0", 4097)
+
+    assert exc_info.value.code == "insufficient_capacity"
+    assert "máximo es 4096" in str(exc_info.value)
+
+
+def test_subnetting_by_hosts_rechaza_generacion_superior_al_limite():
+    with pytest.raises(ValueError) as exc_info:
+        calculate_subnets_by_hosts("10.0.0.0/18", 1)
+
+    assert exc_info.value.code == "insufficient_capacity"
+    assert "máximo es 4096" in str(exc_info.value)

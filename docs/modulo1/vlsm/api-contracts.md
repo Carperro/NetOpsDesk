@@ -27,6 +27,8 @@ La solicitud y la respuesta usan JSON. Los nombres y tipos descritos aquí corre
 | `requirements[].name` | cadena | Obligatorio, longitud mínima 1. |
 | `requirements[].hosts` | entero | Obligatorio, mayor que 0. |
 
+Se admiten como máximo 100 requerimientos por solicitud. Una lista mayor responde HTTP `422` con el código `invalid_requirement`.
+
 ## Respuesta exitosa
 
 HTTP `200`:
@@ -74,4 +76,13 @@ HTTP `200`:
 
 El contrato común establece HTTP `422` para entradas inválidas y errores de dominio, con el sobre `{ "error": "<código>", "detail": "<mensaje>" }`.
 
-Los errores de dominio se traducen mediante el handler global a HTTP `422`, conservando el código de `DomainError` y su mensaje. Los errores de esquema de Pydantic también responden HTTP `422`. Las solicitudes sin `Content-Type: application/json` reciben HTTP `415` con el sobre JSON común.
+Los errores de dominio se traducen mediante el handler global a HTTP `422`, conservando el código de `DomainError` y su mensaje:
+
+| HTTP | Código | Causa |
+|---|---|---|
+| `422` | `invalid_network` | CIDR no parseable o red que no sea IPv4. |
+| `422` | `empty_requirements` | La lista de requerimientos está vacía. |
+| `422` | `invalid_requirement` | Un requerimiento tiene `hosts` menor o igual que cero o nombre vacío. |
+| `422` | `insufficient_space` | Un requerimiento no cabe en la red base. |
+
+Los errores de esquema de Pydantic también responden HTTP `422`. Las solicitudes sin `Content-Type: application/json` reciben HTTP `415` con el sobre JSON común.
