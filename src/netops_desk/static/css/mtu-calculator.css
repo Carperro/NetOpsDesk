@@ -1,0 +1,146 @@
+.mtu-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1.5rem 0;
+    max-width: 600px;
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.form-row .form-group { flex: 1; }
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.form-input {
+    padding: 0.6rem 0.75rem;
+    font-size: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: var(--bg-surface);
+    color: var(--text-main);
+}
+
+.mtu-form .btn-primary { align-self: flex-start; }
+
+/* Contenedor de Resultados */
+.result-container {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--bg-surface-raised);
+    max-width: 800px;
+}
+
+.result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.mss-badge {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+}
+
+.mss-label {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    color: #10b981;
+    font-weight: 700;
+}
+
+.mss-value {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #10b981;
+    font-family: monospace;
+}
+
+.mss-unit {
+    color: #10b981;
+    font-size: 0.9rem;
+}
+
+/* Fórmula Matemática Visual */
+.math-breakdown {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    background: var(--bg-surface);
+    padding: 1.5rem;
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+.math-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.math-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.math-value {
+    font-size: 1.3rem;
+    font-weight: 700;
+    font-family: monospace;
+    color: var(--text-main);
+}
+
+.math-result .math-value {
+    color: var(--primary);
+}
+
+.math-result .math-label {
+    color: var(--primary);
+}
+
+.math-op {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--text-muted);
+}
+
+/* Warnings */
+.warnings-list {
+    margin-top: 1.5rem;
+    padding: 1rem 1rem 1rem 2rem;
+    background: rgba(245, 158, 11, 0.15);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    border-radius: 6px;
+    color: #f59e0b;
+}
+
+.warnings-list li {
+    margin-bottom: 0.5rem;
+}

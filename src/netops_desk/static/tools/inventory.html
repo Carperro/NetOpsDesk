@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetOps Desk - Inventario</title>
+    <link rel="stylesheet" href="/static/css/reset.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/inventory.css">
+    <script src="/static/js/sidebar.js" defer></script>
+    <script src="/static/js/common.js" defer></script>
+    <script src="/static/js/api-errors.js" defer></script>
+    <script src="/static/js/inventory.js" defer></script>
+</head>
+<body id="top">
+    <div class="app-layout">
+        <div id="sidebar-container"></div>
+        <main class="main-content">
+            <header class="topbar">
+                <div class="search-box">
+                    <span aria-hidden="true">🔍</span>
+                    <input type="text" placeholder="Buscar herramientas...">
+                </div>
+            </header>
+
+            <div class="page-container">
+                <h1>Inventario de dispositivos</h1>
+                <p class="subtitle">Registrá y gestioná los equipos de tu red.</p>
+
+                <form id="device-form" class="inventory-form" novalidate>
+                    <input type="hidden" id="device-id">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Nombre</label>
+                            <input type="text" id="name-input" class="form-input" placeholder="Ej: Router Cisco" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Dirección IP</label>
+                            <input type="text" id="ip-input" class="form-input" placeholder="Ej: 192.168.1.1" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo</label>
+                            <input type="text" id="type-input" class="form-input" placeholder="Ej: Router, Switch, PC">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Ubicación</label>
+                            <input type="text" id="location-input" class="form-input" placeholder="Ej: Rack A">
+                        </div>
+                        <div class="form-group">
+                            <label>Observaciones</label>
+                            <input type="text" id="notes-input" class="form-input" placeholder="Notas adicionales">
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" id="save-btn" class="btn-primary">Agregar Dispositivo</button>
+                        <button type="button" id="cancel-btn" class="btn-secondary" hidden>Cancelar Edición</button>
+                    </div>
+                </form>
+
+                <div id="error-container" class="error-message" role="alert" hidden></div>
+
+                <section id="result-container" class="result-container" aria-live="polite" style="margin-top: 2rem;">
+                    <h2>Dispositivos Registrados</h2>
+                    <div class="table-responsive" role="region" tabindex="0" aria-label="Tabla de resultados">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>IP</th>
+                                    <th>Nombre</th>
+                                    <th>Tipo</th>
+                                    <th>Ubicación</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="devices-tbody">
+                                <!-- Se inyecta con JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+            
+            <footer class="site-footer">
+                <p>&copy; <span id="current-year"></span> NetOps Desk. Todos los derechos reservados.</p>
+            </footer>
+        </main>
+    </div>
+    <a href="#top" class="back-to-top" aria-label="Volver al inicio de la página">↑</a>
+</body>
+</html>

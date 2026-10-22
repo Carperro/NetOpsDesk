@@ -1,0 +1,53 @@
+.search-bar-container {
+    margin: 1.5rem 0;
+    max-width: 500px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--bg-surface);
+    color: var(--text-main);
+}
+
+.form-input:focus {
+    outline: 2px solid var(--primary);
+}
+
+.result-container {
+    padding: 1.25rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--bg-surface);
+    margin-top: 1rem;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.table th {
+    background: var(--bg-surface-raised);
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.table tbody tr:hover {
+    background: rgba(255,255,255,0.02);
+}
+
+.table td { font-family: monospace; }
+.table td:nth-child(4) { font-family: inherit; }

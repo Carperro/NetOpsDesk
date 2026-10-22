@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetOps Desk - Configuración IP</title>
+    <link rel="stylesheet" href="/static/css/reset.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/ip-config.css">
+    <script src="/static/js/sidebar.js" defer></script>
+    <script src="/static/js/common.js" defer></script>
+    <script src="/static/js/api-errors.js" defer></script>
+    <script src="/static/js/ip-config.js" defer></script>
+</head>
+<body id="top">
+    <div class="app-layout">
+        <div id="sidebar-container"></div>
+        <main class="main-content">
+            <header class="topbar">
+                <div class="search-box">
+                    <span aria-hidden="true">🔍</span>
+                    <input type="text" placeholder="Buscar herramientas...">
+                </div>
+            </header>
+
+            <div class="page-container">
+                <h1>Asistente de configuración IP</h1>
+                <p class="subtitle">Generá los comandos de Windows necesarios para configurar tu red.</p>
+
+                <form id="ipconfig-form" class="ipconfig-form" novalidate>
+                    <div class="form-group">
+                        <label for="action-input" class="form-label">Acción a realizar</label>
+                        <select id="action-input" class="form-input">
+                            <option value="renew_dhcp">Renovar IP por DHCP (ipconfig /renew)</option>
+                            <option value="set_dhcp">Establecer DHCP automático</option>
+                            <option value="set_static">Establecer IP Fija (Estática)</option>
+                            <option value="set_dns">Establecer Servidor DNS</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="iface-input" class="form-label">Nombre exacto de la Interfaz</label>
+                        <input type="text" id="iface-input" class="form-input" placeholder="Ej: Wi-Fi o Ethernet" required>
+                    </div>
+
+                    <div id="static-fields" hidden>
+                        <div class="form-row">
+                            <div class="form-group"><label for="ip-input">Dirección IP</label><input type="text" id="ip-input" class="form-input" placeholder="192.168.1.100"></div>
+                            <div class="form-group"><label for="mask-input">Máscara</label><input type="text" id="mask-input" class="form-input" placeholder="255.255.255.0"></div>
+                            <div class="form-group"><label for="gw-input">Gateway</label><input type="text" id="gw-input" class="form-input" placeholder="192.168.1.1"></div>
+                        </div>
+                    </div>
+
+                    <div id="dns-fields" hidden>
+                        <div class="form-group"><label for="dns-input">Servidor DNS (IP)</label><input type="text" id="dns-input" class="form-input" placeholder="8.8.8.8"></div>
+                    </div>
+
+                    <button type="submit" id="generate-btn" class="btn-primary">Generar Comando</button>
+                </form>
+
+                <div id="error-container" class="error-message" role="alert" hidden></div>
+
+                <section id="result-container" class="result-container" aria-live="polite" hidden>
+                    <h2>Comando Generado</h2>
+                    
+                    <div class="command-box">
+                        <code id="result-command"></code>
+                        <button id="copy-btn" class="btn-secondary" type="button">Copiar</button>
+                    </div>
+                    
+                    <div class="explanation-box">
+                        <p id="result-explanation"></p>
+                    </div>
+                </section>
+            </div>
+            
+            <footer class="site-footer">
+                <p>&copy; <span id="current-year"></span> NetOps Desk. Todos los derechos reservados.</p>
+            </footer>
+        </main>
+    </div>
+    <a href="#top" class="back-to-top" aria-label="Volver al inicio de la página">↑</a>
+</body>
+</html>

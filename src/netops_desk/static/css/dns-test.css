@@ -1,0 +1,122 @@
+.dns-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1.5rem 0;
+    max-width: 700px;
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.dns-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.dns-form .form-label {
+    font-weight: 600;
+}
+
+.dns-form .form-input {
+    padding: 0.6rem 0.75rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: var(--bg-surface);
+    color: var(--text-main);
+}
+
+.dns-form .form-input:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 1px;
+}
+
+.dns-form .btn-primary {
+    align-self: flex-start;
+}
+
+.dns-form[aria-busy="true"] .btn-primary {
+    opacity: 0.6;
+    cursor: wait;
+}
+
+#error-container {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.result-container {
+    margin-top: 2rem;
+    padding: 1.25rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: #f9fafb;
+}
+
+.result-container h2 {
+    margin-bottom: 1rem;
+    font-size: 1.15rem;
+}
+
+.result-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem 1.5rem;
+}
+
+.result-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.result-item dt {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+}
+
+.result-item dd {
+    font-family: monospace;
+    font-size: 1rem;
+    margin: 0;
+}
+
+.records-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background: var(--bg-surface-raised);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+}
+
+.records-list li {
+    padding: 0.75rem 1rem;
+    font-family: monospace;
+    font-size: 0.95rem;
+    border-bottom: 1px solid var(--border-color);
+    word-break: break-all;
+}
+
+.records-list li:last-child {
+    border-bottom: none;
+}
+
+[data-theme="dark"] .result-container {
+    background: #1f2937;
+    border-color: #374151;
+}
+
+[data-theme="dark"] .result-item dt {
+    color: #9ca3af;
+}

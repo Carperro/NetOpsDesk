@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetOps Desk - Diagnóstico DNS</title>
+    <link rel="stylesheet" href="/static/css/reset.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/dns-test.css">
+    <script src="/static/js/sidebar.js" defer></script>
+    <script src="/static/js/common.js" defer></script>
+    <script src="/static/js/api-errors.js" defer></script>
+    <script src="/static/js/dns-test.js" defer></script>
+</head>
+<body id="top">
+    <div class="app-layout">
+        <div id="sidebar-container"></div>
+        <main class="main-content">
+            <header class="topbar">
+                <div class="search-box">
+                    <span aria-hidden="true">🔍</span>
+                    <input type="text" placeholder="Buscar herramientas...">
+                </div>
+            </header>
+
+            <div class="page-container">
+                <h1>Diagnóstico DNS</h1>
+                <p class="subtitle">Consultá registros de un dominio y compará distintos servidores DNS.</p>
+
+                <form id="dns-form" class="dns-form" novalidate>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="domain-input" class="form-label">Dominio</label>
+                            <input type="text" id="domain-input" class="form-input" placeholder="Ej: google.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="type-input" class="form-label">Tipo de Registro</label>
+                            <select id="type-input" class="form-input">
+                                <option value="A">A (IPv4)</option>
+                                <option value="AAAA">AAAA (IPv6)</option>
+                                <option value="MX">MX (Correo)</option>
+                                <option value="TXT">TXT (Texto)</option>
+                                <option value="NS">NS (Nameservers)</option>
+                                <option value="CNAME">CNAME (Alias)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="resolver-input" class="form-label">Servidor DNS (Opcional)</label>
+                        <input type="text" id="resolver-input" class="form-input" placeholder="Ej: 8.8.8.8 (Google) o 1.1.1.1 (Cloudflare). Dejar vacío para usar el sistema.">
+                    </div>
+                    <button type="submit" id="execute-btn" class="btn-primary">Consultar DNS</button>
+                </form>
+
+                <div id="error-container" class="error-message" role="alert" hidden></div>
+
+                <section id="result-container" class="result-container" aria-live="polite" hidden>
+                    <h2>Resultado de la consulta</h2>
+                    <dl class="result-grid">
+                        <div class="result-item">
+                            <dt>Dominio</dt>
+                            <dd id="result-domain">—</dd>
+                        </div>
+                        <div class="result-item">
+                            <dt>Registro</dt>
+                            <dd id="result-type">—</dd>
+                        </div>
+                        <div class="result-item">
+                            <dt>Resolver usado</dt>
+                            <dd id="result-resolver">—</dd>
+                        </div>
+                        <div class="result-item">
+                            <dt>Tiempo de respuesta</dt>
+                            <dd id="result-time">—</dd>
+                        </div>
+                    </dl>
+
+                    <div id="records-section" style="margin-top: 1.5rem;">
+                        <h3 style="margin-bottom: 0.5rem; font-size: 1.1rem;">Registros encontrados</h3>
+                        <ul id="records-list" class="records-list">
+                            <!-- Se inyecta con JS -->
+                        </ul>
+                    </div>
+                </section>
+            </div>
+            
+            <footer class="site-footer">
+                <p>&copy; <span id="current-year"></span> NetOps Desk. Todos los derechos reservados.</p>
+            </footer>
+        </main>
+    </div>
+    <a href="#top" class="back-to-top" aria-label="Volver al inicio de la página">↑</a>
+</body>
+</html>

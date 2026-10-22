@@ -48,3 +48,14 @@ Este documento es la fuente canónica de decisiones aprobadas que afectan al pro
 - **Motivo:** Fijar las dependencias usadas por pruebas y desarrollo y contar con un procedimiento repetible para actualizar el lockfile. La elección de `pip-tools` sigue la alternativa indicada para el caso en que `uv` no esté instalado.
 - **Consecuencias:** `requirements.lock` registra las versiones resueltas y sus hashes para Python 3.12. Los cambios intencionales en dependencias requieren actualizar `pyproject.toml`, regenerar el lockfile y revisar ambos diffs juntos. El lockfile no sustituye la declaración de dependencias del proyecto.
 - **Aprobación:** Autorización explícita del usuario para ejecutar F4 el 2026-10-18.
+
+## DEC-020 — SQLite nativo, patrón Repository y autenticación JWT
+
+- **Estado:** APROBADA
+- **Contexto:** NetOps Desk requiere persistencia local compartida para usuarios, inventario, IPAM e historial. Las herramientas deben mantener separados el dominio, la API y el acceso a datos; las rutas de herramientas deben exigir autenticación.
+- **Decisión:** Usar SQLite mediante `sqlite3` nativo, sin ORM, sobre `netops.db` en el directorio de trabajo desde el que se inicia la aplicación, y encapsular el acceso mediante repositorios. Configurar las conexiones con WAL y `busy_timeout=5000`; traducir `sqlite3.OperationalError` a `DomainError(code="db_locked")`. Autenticar con JWT Bearer (PyJWT/HS256) y hashes Argon2 gestionados por `pwdlib`; crear `admin`/`admin` solo al inicializar una base vacía.
+- **Motivo:** Mantener una instalación local sin servicio de base de datos externo, compartir persistencia entre herramientas y conservar el dominio independiente de SQLite y HTTP.
+- **Alternativas consideradas:** SQLAlchemy/ORM y base de datos de servidor. No se adoptan para esta entrega.
+- **Consecuencias:** Las rutas de herramientas y `/api/v1/auth/me` requieren un token; el login permanece público. WAL mejora la convivencia entre lectores y escritores, pero SQLite sigue permitiendo un único escritor a la vez. La cuenta inicial y la clave JWT de desarrollo deben sustituirse antes de una entrega operativa.
+- **Aprobación:** Solicitud explícita del usuario para documentar la decisión global de SQLite, Repository y JWT; persistencia SQLite nativa aprobada previamente como DEC-018.
+- **Referencias:** [DEC-018 de Inventario](../modulo4/inventory/decision-log.md#dec-018--persistencia-sqlite-nativa-con-patrón-repository), [decisiones de autenticación](auth/decision-log.md).

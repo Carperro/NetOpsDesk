@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetOps Desk — Módulo 5</title>
+    
+    <link rel="stylesheet" href="/static/css/reset.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/modulo-5.css">
+    
+    <script src="/static/js/sidebar.js" defer></script>
+    <script src="/static/js/common.js" defer></script>
+    <script src="/static/js/tools-catalog.js" defer></script>
+    <script src="/static/js/search.js" defer></script>
+</head>
+<body id="top">
+
+    <div class="app-layout">
+        <div id="sidebar-container"></div>
+
+        <main class="main-content">
+            <header class="topbar module-topbar">
+                <div class="search-box">
+                    <span aria-hidden="true">🔍</span>
+                    <input id="tool-search" type="search" placeholder="Buscar herramientas..." aria-label="Buscar herramientas" autocomplete="off">
+                    <div id="search-results" class="search-dropdown search-results" role="listbox" aria-live="polite" hidden></div>
+                </div>
+                <a href="/" class="back-link">← Volver al Dashboard</a>
+            </header>
+
+            <div class="page-container">
+                <div class="page-heading">
+                    <p class="eyebrow">Módulo 5</p>
+                    <h1>Análisis, documentación y productividad</h1>
+                    <p class="page-description">Generá informes, compará configuraciones y optimizá tu trabajo diario.</p>
+                </div>
+
+                <div class="tools-grid">
+                    <!-- Herramienta 21: LISTA -->
+                    <a href="/tools/report-generator" class="tool-card">
+                        <div class="tool-icon icon-teal">📄</div>
+                        <div class="tool-info">
+                            <h3>21. Generador de informes <span class="badge badge-ready">Lista</span></h3>
+                            <p>Consolidación de resultados y exportación a formato Markdown.</p>
+                        </div>
+                    </a>
+
+                    <!-- Herramienta 22: LISTA -->
+                    <a href="/tools/troubleshooter" class="tool-card">
+                        <div class="tool-icon icon-green">🛠️</div>
+                        <div class="tool-info">
+                            <h3>22. Asistente de resolución <span class="badge badge-ready">Lista</span></h3>
+                            <p>Recopilación de síntomas y presentación de posibles causas.</p>
+                        </div>
+                    </a>
+
+                    <!-- Herramienta 23: LISTA -->
+                    <a href="/tools/config-comparator" class="tool-card">
+                        <div class="tool-icon icon-green">⚖️</div>
+                        <div class="tool-info">
+                            <h3>23. Comparador de configuraciones <span class="badge badge-ready">Lista</span></h3>
+                            <p>Identificación de diferencias entre dos configuraciones.</p>
+                        </div>
+                    </a>
+
+                    <!-- Herramienta 24: LISTA -->
+                    <a href="/tools/command-generator" class="tool-card">
+                        <div class="tool-icon icon-green">⌨️</div>
+                        <div class="tool-info">
+                            <h3>24. Generador de comandos <span class="badge badge-ready">Lista</span></h3>
+                            <p>Preparación de comandos y explicación de sus parámetros.</p>
+                        </div>
+                    </a>
+
+                    <!-- Herramienta 25: LISTA -->
+                    <a href="/tools/history" class="tool-card">
+                        <div class="tool-icon icon-green">🕒</div>
+                        <div class="tool-info">
+                            <h3>25. Historial de diagnósticos <span class="badge badge-ready">Lista</span></h3>
+                            <p>Registro de ejecuciones, fecha y resultado.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

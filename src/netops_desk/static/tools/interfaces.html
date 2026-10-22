@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetOps Desk - Interfaces de Red</title>
+    <link rel="stylesheet" href="/static/css/reset.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/interfaces.css">
+    <script src="/static/js/sidebar.js" defer></script>
+    <script src="/static/js/common.js" defer></script>
+    <script src="/static/js/api-errors.js" defer></script>
+    <script src="/static/js/interfaces.js" defer></script>
+</head>
+<body id="top">
+    <div class="app-layout">
+        <div id="sidebar-container"></div>
+        <main class="main-content">
+            <header class="topbar">
+                <div class="search-box">
+                    <span aria-hidden="true">🔍</span>
+                    <input type="text" placeholder="Buscar herramientas...">
+                </div>
+            </header>
+
+            <div class="page-container">
+                <h1>Información de interfaces de red</h1>
+                <p class="subtitle">Analiza las propiedades de los adaptadores de red de este servidor.</p>
+
+                <button id="execute-btn" class="btn-primary" style="margin: 1.5rem 0;">Escanear Interfaces</button>
+
+                <div id="error-container" class="error-message" role="alert" hidden></div>
+
+                <div id="result-container" class="interfaces-grid" aria-live="polite" hidden>
+                    <!-- Se inyectan las tarjetas con JS -->
+                </div>
+            </div>
+            
+            <footer class="site-footer">
+                <p>&copy; <span id="current-year"></span> NetOps Desk. Todos los derechos reservados.</p>
+            </footer>
+        </main>
+    </div>
+    <a href="#top" class="back-to-top" aria-label="Volver al inicio de la página">↑</a>
+</body>
+</html>

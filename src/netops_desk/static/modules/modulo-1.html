@@ -11,6 +11,8 @@
     
     <script src="/static/js/sidebar.js" defer></script>
     <script src="/static/js/common.js" defer></script>
+    <script src="/static/js/tools-catalog.js" defer></script>
+    <script src="/static/js/search.js" defer></script>
 </head>
 <body id="top">
 
@@ -18,7 +20,12 @@
         <div id="sidebar-container"></div>
 
         <main class="main-content">
-            <header class="topbar">
+            <header class="topbar module-topbar">
+                <div class="search-box">
+                    <span aria-hidden="true">🔍</span>
+                    <input id="tool-search" type="search" placeholder="Buscar herramientas..." aria-label="Buscar herramientas" autocomplete="off">
+                    <div id="search-results" class="search-dropdown search-results" role="listbox" aria-live="polite" hidden></div>
+                </div>
                 <a href="/" class="back-link">← Volver al Dashboard</a>
             </header>
 
@@ -59,21 +66,21 @@
 
                     <!-- Herramienta 4: LISTA -->
                     <a href="/tools/overlap" class="tool-card">
-                        <div class="tool-icon icon-blue"">🔍</div>
+                        <div class="tool-icon icon-blue">🔍</div>
                         <div class="tool-info">
                             <h3>4. Detector de solapamiento <span class="badge badge-ready">LISTA</span></h3>
                             <p>Comparación de rangos CIDR y detección de redes superpuestas.</p>
                         </div>
                     </a>
 
-                    <!-- Herramienta 5: PRÓXIMAMENTE -->
-                    <div class="tool-card disabled">
-                        <div class="tool-icon icon-gray">🌐</div>
+                    <!-- Herramienta 5: LISTA -->
+                    <a href="/tools/ipv6" class="tool-card">
+                        <div class="tool-icon icon-blue">🌐</div>
                         <div class="tool-info">
-                            <h3>5. Calculadora IPv6 <span class="badge badge-soon">Próximamente</span></h3>
+                            <h3>5. Calculadora IPv6 <span class="badge badge-ready">LISTA</span></h3>
                             <p>Direccionamiento, prefijos y tipos de direcciones IPv6.</p>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </main>

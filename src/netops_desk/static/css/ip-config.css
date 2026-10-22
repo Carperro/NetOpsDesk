@@ -1,0 +1,111 @@
+.ipconfig-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1.5rem 0;
+    max-width: 700px;
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.form-row .form-group { flex: 1; }
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.form-label { 
+    font-weight: 600; 
+    color: var(--text-main);
+}
+
+/* Adaptación de los inputs y selects a las variables del tema */
+.form-input {
+    padding: 0.6rem 0.75rem;
+    font-size: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: var(--bg-surface);
+    color: var(--text-main);
+    font-family: inherit;
+}
+
+.form-input:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 1px;
+}
+
+/* TRUCO PARA MODO OSCURO: Evitar que las opciones del select queden blancas */
+[data-theme="dark"] select.form-input option {
+    background-color: var(--bg-surface);
+    color: var(--text-main);
+}
+
+.result-container {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--bg-surface-raised);
+}
+
+.result-container h2 {
+    font-size: 1.15rem;
+    margin-bottom: 1rem;
+    color: var(--text-main);
+}
+
+.command-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #1e1e1e; /* Fondo oscuro fijo para que parezca una terminal */
+    color: #d4d4d4;
+    padding: 1rem;
+    border-radius: 6px;
+    margin: 1rem 0;
+    font-family: monospace;
+    word-break: break-all;
+    gap: 1rem;
+}
+
+.command-box code {
+    font-size: 1.1rem;
+    color: #a7f3d0; /* Un verde suave para el comando */
+}
+
+.btn-secondary {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: opacity 0.2s;
+}
+
+.btn-secondary:hover { 
+    opacity: 0.8; 
+}
+
+.explanation-box {
+    padding: 1rem;
+    background: #fef9c3;
+    border-left: 4px solid #eab308;
+    color: #713f12;
+    border-radius: 4px;
+}
+
+[data-theme="dark"] .explanation-box {
+    background: rgba(161, 98, 7, 0.15);
+    border-color: #a16207;
+    color: #fef08a;
+}

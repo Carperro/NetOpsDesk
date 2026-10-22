@@ -7,42 +7,112 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #0B1120;
-  background-image: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.15) 0%, transparent 50%);
   min-width: 100%;
+  background-color: #0B1120;
+  
+  /* Acá está la magia: la imagen de fondo + un filtro oscuro encima */
+  background-image: 
+    linear-gradient(rgba(11, 17, 32, 0.75), rgba(11, 17, 32, 0.85)), 
+    url('/static/img/bg-1.jpg');
+    
+  /* Estas 3 propiedades son OBLIGATORIAS para que la imagen se vea bien */
+  background-size: cover;      /* Hace que la imagen cubra toda la pantalla sin estirarse */
+  background-position: center; /* Centra la imagen */
+  background-repeat: no-repeat;/* Evita que la imagen se duplique como mosaico */
+  background-attachment: fixed;/* Hace que el fondo no se mueva si hay scroll */
 }
 
 .login-container {
   width: 100%;
   max-width: 420px;
-  background-color: #111827;
-  border: 1px solid #374151;
-  border-radius: 16px;
+  min-width: 260px;
   padding: 48px 40px;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  border-radius: 16px;
   color: #F9FAFB;
+
+  /* --- EFECTO GLASSMORPHISM --- */
+  /* Fondo oscuro con opacidad (el 0.65 es clave) */
+  background: rgba(17, 24, 39, 0.65); 
+  
+  /* El desenfoque de lo que está detrás */
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px); /* Para que funcione en Safari */
+  
+  /* Un borde blanco súper fino y transparente */
+  border: 1px solid rgba(255, 255, 255, 0.1); 
+  
+  /* Una sombra profunda para despegarlo del fondo */
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6); 
+}
+.login-header { 
+  text-align: center; 
+  margin-bottom: 32px; 
 }
 
-.login-header { text-align: center; margin-bottom: 32px; }
-.login-logo { display: flex; justify-content: center; margin-bottom: 16px; }
-.login-header h1 { font-size: 1.75rem; color: #FFF; margin-bottom: 8px; }
-.login-header p { color: #9CA3AF; font-size: 0.9rem; }
+.login-logo { display: flex; 
+  justify-content: center; 
+  margin-bottom: 16px; 
+  
+}
 
-.form-group { margin-bottom: 20px; }
-.form-group label { display: block; margin-bottom: 8px; font-size: 0.85rem; color: #D1D5DB; }
+.brand-logo-svg {
+  /* Efecto de luz neón azul */
+  filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.6)); 
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
 
-.input-with-icon { position: relative; display: flex; align-items: center; }
-.input-with-icon svg { position: absolute; left: 14px; color: #6B7280; }
+/* Un pequeño detalle: si pasás el mouse por el título, el logo "respira" */
+.login-header:hover .brand-logo-svg {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.9));
+}
+
+.login-header h1 { 
+  font-size: 1.75rem;
+  color: #FFF; 
+  margin-bottom: 8px; 
+}
+
+.login-header p { 
+  color: #9CA3AF; 
+  font-size: 0.9rem; 
+}
+
+.form-group { 
+  margin-bottom: 20px; 
+}
+.form-group label { 
+  display: block; margin-bottom: 8px; 
+  font-size: 0.85rem; 
+  color: #D1D5DB; 
+}
+
+.input-with-icon { 
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-with-icon svg { 
+  position: absolute; left: 14px; 
+  color: #6B7280;
+}
 .input-with-icon input {
   width: 100%;
   padding: 12px 14px 12px 42px;
-  border: 1px solid #374151;
+  border: 1px solid rgba(255, 255, 255, 0.1); /* Borde sutil */
   border-radius: 8px;
-  background-color: #1F2937;
+  background-color: rgba(31, 41, 55, 0.5); /* Fondo semitransparente */
   color: #F9FAFB;
+  transition: all 0.2s ease;
 }
-.input-with-icon input:focus { outline: none; border-color: #3B82F6; }
 
+.input-with-icon input:focus { 
+  outline: none;   
+  border-color: #3B82F6;
+  background-color: rgba(31, 41, 55, 0.8); /* Se oscurece un poco al hacer foco */
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); /* Halo azul al hacer foco */
+}
 /* Bajamos la opacidad a todos los placeholders*/
 ::placeholder {
     opacity: 0.5; 
@@ -82,5 +152,47 @@
     color: var(--primary); /* Se vuelven del color azul principal de tu marca */
 }
 
-.button-primary:hover { background-color: var(--primary-hover); }
-.login-footer { text-align: center; margin-top: 24px; font-size: 0.9rem; color: var(--text-muted) }
+.button-primary:hover { 
+  background-color: var(--primary-hover); 
+}
+
+.login-footer { 
+  text-align: center; 
+  margin-top: 24px; 
+  font-size: 0.9rem; 
+  color: var(--text-muted) 
+}
+
+/* =========================================
+   Alerta de Error del Login (Forzado por ID)
+   ========================================= */
+#error-message {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  background-color: rgba(239, 68, 68, 0.1) !important; /* Fondo rojo sutil */
+  border: 1px solid rgba(239, 68, 68, 0.3) !important; /* Borde rojo fino */
+  border-left: 4px solid #EF4444 !important; /* Acento grueso a la izquierda */
+  border-radius: 8px;
+  color: #F87171 !important; /* Texto rojo claro */
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-align: left;
+  animation: slideDown 0.3s ease-out; 
+}
+
+#error-message[hidden] {
+  display: none !important; /* Asegura que desaparezca cuando no hay error */
+}
+
+@keyframes slideDown {
+  from { 
+    opacity: 0; 
+    transform: translateY(-8px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}

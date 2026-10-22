@@ -238,6 +238,15 @@ async def http_exception_handler(
     status_code = exc.status_code
     error_code = _HTTP_STATUS_MAP.get(status_code, f"http_{status_code}")
 
+    if status_code == status.HTTP_401_UNAUTHORIZED:
+        if isinstance(exc.detail, dict):
+            return JSONResponse(status_code=status_code, content=exc.detail)
+        return _error_response(
+            status_code=status_code,
+            error_code="unauthorized",
+            detail=str(exc.detail or "La autenticación es requerida."),
+        )
+
     # Mensajes en español para los errores que produce FastAPI/Starlette.
     if status_code == status.HTTP_404_NOT_FOUND:
         detail = "Recurso no encontrado."

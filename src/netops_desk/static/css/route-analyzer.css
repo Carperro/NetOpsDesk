@@ -1,0 +1,88 @@
+/* Reutiliza muchos estilos de Traceroute/Ping para tablas, 
+   pero agrega la tarjeta del gateway */
+
+#error-container {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.gateway-card {
+    background: var(--bg-surface-raised);
+    border: 1px solid var(--border-color);
+    border-left: 4px solid var(--primary);
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.gateway-card .label {
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.gateway-card .value {
+    font-family: monospace;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.result-container {
+    margin-top: 1rem;
+    padding: 1.25rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: #f9fafb;
+}
+
+.result-container h2 {
+    margin-bottom: 1rem;
+    font-size: 1.15rem;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.table th, .table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.table th {
+    font-weight: 600;
+    color: #374151;
+    background: #f3f4f6;
+    border-top: 1px solid #e5e7eb;
+}
+
+.table tbody tr:hover {
+    background: #f9fafb;
+}
+
+.table td { font-family: monospace; }
+
+[data-theme="dark"] .result-container {
+    background: #1f2937;
+    border-color: #374151;
+}
+
+[data-theme="dark"] .table th {
+    background: #374151;
+    color: #d1d5db;
+    border-color: #4b5563;
+}
+
+[data-theme="dark"] .table th, [data-theme="dark"] .table td {
+    border-bottom-color: #374151;
+}
+
+[data-theme="dark"] .table tbody tr:hover {
+    background: #374151;
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetOps Desk — Módulo 2</title>
+    
+    <link rel="stylesheet" href="/static/css/reset.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/modulo-2.css">
+    
+    <script src="/static/js/sidebar.js" defer></script>
+    <script src="/static/js/common.js" defer></script>
+    <script src="/static/js/tools-catalog.js" defer></script>
+    <script src="/static/js/search.js" defer></script>
+</head>
+<body id="top">
+
+    <div class="app-layout">
+        <div id="sidebar-container"></div>
+
+        <main class="main-content">
+            <header class="topbar module-topbar">
+                <div class="search-box">
+                    <span aria-hidden="true">🔍</span>
+                    <input id="tool-search" type="search" placeholder="Buscar herramientas..." aria-label="Buscar herramientas" autocomplete="off">
+                    <div id="search-results" class="search-dropdown search-results" role="listbox" aria-live="polite" hidden></div>
+                </div>
+                <a href="/" class="back-link">← Volver al Dashboard</a>
+            </header>
+
+            <div class="page-container">
+                <div class="page-heading">
+                    <p class="eyebrow">Módulo 2</p>
+                    <h1>Diagnóstico de conectividad</h1>
+                    <p class="page-description">Verificá y analizá la conectividad de tus redes y dispositivos.</p>
+                </div>
+
+                <div class="tools-grid">
+                    <!-- Herramienta 6: Lista -->
+                    <a href="/tools/ping" class="tool-card">
+                        <div class="tool-icon icon-green">📡</div>
+                        <div class="tool-info">
+                            <h3>6. Ping <span class="badge badge-ready">Lista</span></h3>
+                            <p>Tiempo de respuesta, latencia y pérdida de paquetes.</p>
+                        </div>
+                    </a>
+
+                    <!-- Herramienta 7: Lista -->
+                    <a href="/tools/traceroute" class="tool-card ">
+                        <div class="tool-icon icon-green">🗺️</div>
+                        <div class="tool-info">
+                            <h3>7. Traceroute <span class="badge badge-ready">Lista</span></h3>
+                            <p>Saltos de la ruta, direcciones y tiempos de respuesta.</p>
+                        </div>
+                    </a>
+
+                    <!-- Herramienta 8: Lista -->
+                    <a href="/tools/tcp-test" class="tool-card">
+                        <div class="tool-icon icon-green">🔌</div>
+                        <div class="tool-info">
+                            <h3>8. Prueba de puertos TCP <span class="badge badge-ready">Lista</span></h3>
+                            <p>Comprobación de conectividad TCP hacia un host y puerto.</p>
+                        </div>
+                    </a>
+
+                    <!-- Herramienta 9: Lista -->
+                    <a href="/tools/dns-test" class="tool-card">
+                        <div class="tool-icon icon-green">🔍</div>
+                        <div class="tool-info">
+                            <h3>9. Diagnóstico DNS <span class="badge badge-ready">Lista</span></h3>
+                            <p>Consultas de registros DNS, comparación de resolvers.</p>
+                        </div>
+                    </a>
+
+                    <!-- Herramienta 10: Lista -->
+                    <a href="/tools/route-analyzer" class="tool-card">
+                        <div class="tool-icon icon-green">🚪</div>
+                        <div class="tool-info">
+                            <h3>10. Analizador de gateway y rutas <span class="badge badge-ready">Lista</span></h3>
+                            <p>Identificación de puerta de enlace y selección de rutas.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

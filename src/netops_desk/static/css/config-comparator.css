@@ -1,0 +1,113 @@
+.compare-inputs {
+    display: flex;
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.input-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.input-group label {
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.form-textarea {
+    width: 100%;
+    height: 300px;
+    padding: 1rem;
+    font-family: monospace;
+    font-size: 0.95rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--bg-surface);
+    color: var(--text-main);
+    resize: vertical;
+}
+
+.actions-bar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.btn-secondary {
+    background: var(--bg-surface);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.result-container {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--bg-surface);
+    overflow: hidden;
+    margin-top: 1rem;
+}
+
+.result-container h2 {
+    margin: 0;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--bg-surface-raised);
+    font-size: 1.15rem;
+}
+
+.diff-output {
+    font-family: monospace;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    overflow-x: auto;
+}
+
+.diff-line {
+    padding: 0 1rem;
+    white-space: pre;
+}
+
+/* Colores del Diff (estilo GitHub) */
+.diff-header {
+    color: #8b949e;
+    background-color: rgba(110, 118, 129, 0.1);
+    padding: 0.25rem 1rem;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    margin: 0.5rem 0;
+}
+
+.diff-add {
+    background-color: #e6ffec;
+    color: #1a7f37;
+}
+
+.diff-del {
+    background-color: #ffebe9;
+    color: #cf222e;
+}
+
+.diff-context {
+    color: var(--text-main);
+}
+
+/* Modo Oscuro */
+[data-theme="dark"] .diff-add {
+    background-color: rgba(46, 160, 67, 0.15);
+    color: #3fb950;
+}
+
+[data-theme="dark"] .diff-del {
+    background-color: rgba(248, 81, 73, 0.15);
+    color: #f85149;
+}
+
+[data-theme="dark"] .diff-header {
+    background-color: rgba(110, 118, 129, 0.1);
+}

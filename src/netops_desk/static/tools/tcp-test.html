@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetOps Desk - Prueba de Puertos TCP</title>
+    <link rel="stylesheet" href="/static/css/reset.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/tcp-test.css">
+    <script src="/static/js/sidebar.js" defer></script>
+    <script src="/static/js/common.js" defer></script>
+    <script src="/static/js/api-errors.js" defer></script>
+    <script src="/static/js/tcp-test.js" defer></script>
+</head>
+<body id="top">
+    <div class="app-layout">
+        <div id="sidebar-container"></div>
+        <main class="main-content">
+            <header class="topbar">
+                <div class="search-box">
+                    <span aria-hidden="true">🔍</span>
+                    <input type="text" placeholder="Buscar herramientas...">
+                </div>
+            </header>
+
+            <div class="page-container">
+                <h1>Prueba de puertos TCP</h1>
+                <p class="subtitle">Comprobá si un puerto específico está abierto, cerrado o filtrado.</p>
+
+                <form id="tcp-form" class="tcp-form" novalidate>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="host-input" class="form-label">Host (IP o Dominio)</label>
+                            <input type="text" id="host-input" class="form-input" placeholder="Ej: 8.8.8.8" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="port-input" class="form-label">Puerto (1-65535)</label>
+                            <input type="number" id="port-input" class="form-input" min="1" max="65535" value="443" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="timeout-input" class="form-label">Timeout (ms)</label>
+                            <input type="number" id="timeout-input" class="form-input" min="500" max="10000" value="3000" required>
+                        </div>
+                    </div>
+                    <button type="submit" id="execute-btn" class="btn-primary">Probar Puerto</button>
+                </form>
+
+                <div id="error-container" class="error-message" role="alert" hidden></div>
+
+                <section id="result-container" class="result-container" aria-live="polite" hidden>
+                    <h2>Resultado del escaneo</h2>
+                    <div class="result-grid">
+                        <div class="result-item">
+                            <dt>Host</dt>
+                            <dd id="result-host">—</dd>
+                        </div>
+                        <div class="result-item">
+                            <dt>Puerto</dt>
+                            <dd id="result-port">—</dd>
+                        </div>
+                        <div class="result-item">
+                            <dt>Estado</dt>
+                            <dd id="result-status">—</dd>
+                        </div>
+                        <div class="result-item">
+                            <dt>Tiempo de respuesta</dt>
+                            <dd id="result-time">—</dd>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            
+            <footer class="site-footer">
+                <p>&copy; <span id="current-year"></span> NetOps Desk. Todos los derechos reservados.</p>
+            </footer>
+        </main>
+    </div>
+    <a href="#top" class="back-to-top" aria-label="Volver al inicio de la página">↑</a>
+</body>
+</html>

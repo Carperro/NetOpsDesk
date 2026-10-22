@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetOps Desk - Analizador de Rutas</title>
+    <link rel="stylesheet" href="/static/css/reset.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/route-analyzer.css">
+    <script src="/static/js/sidebar.js" defer></script>
+    <script src="/static/js/common.js" defer></script>
+    <script src="/static/js/api-errors.js" defer></script>
+    <script src="/static/js/route-analyzer.js" defer></script>
+</head>
+<body id="top">
+    <div class="app-layout">
+        <div id="sidebar-container"></div>
+        <main class="main-content">
+            <header class="topbar">
+                <div class="search-box">
+                    <span aria-hidden="true">🔍</span>
+                    <input type="text" placeholder="Buscar herramientas...">
+                </div>
+            </header>
+
+            <div class="page-container">
+                <h1>Analizador de gateway y rutas</h1>
+                <p class="subtitle">Consulta la puerta de enlace predeterminada y la tabla de rutas de este servidor.</p>
+
+                <button id="execute-btn" class="btn-primary" style="margin: 1.5rem 0;">Analizar Red Local</button>
+
+                <div id="error-container" class="error-message" role="alert" hidden></div>
+
+                <div id="result-wrapper" hidden>
+                    <div class="gateway-card">
+                        <span class="label">Gateway Predeterminado:</span>
+                        <span id="result-gateway" class="value">—</span>
+                    </div>
+
+                    <section class="result-container" aria-live="polite">
+                        <h2>Tabla de Rutas IPv4</h2>
+                        <div class="table-responsive" role="region" tabindex="0" aria-label="Tabla de resultados">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Destino</th>
+                                        <th>Máscara</th>
+                                        <th>Gateway</th>
+                                        <th>Interfaz</th>
+                                        <th>Métrica</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="routes-tbody">
+                                    <!-- Se inyecta con JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            
+            <footer class="site-footer">
+                <p>&copy; <span id="current-year"></span> NetOps Desk. Todos los derechos reservados.</p>
+            </footer>
+        </main>
+    </div>
+    <a href="#top" class="back-to-top" aria-label="Volver al inicio de la página">↑</a>
+</body>
+</html>

@@ -22,7 +22,6 @@
     margin-bottom: 24px;
 }
 .operation-picker legend { font-weight: 600; padding: 0 8px; font-size: 1.1rem; }
-.visually-muted { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 16px; }
 .operation-picker__options { display: flex; gap: 16px; flex-wrap: wrap; }
 
 /* Botones de selección (Radio buttons estilizados) */
@@ -80,7 +79,8 @@
     transition: border-color 0.2s;
 }
 .form-group input:focus, .form-group select:focus {
-    outline: none;
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
     border-color: var(--primary);
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
 }

@@ -1,0 +1,133 @@
+/* =========================================
+   Estilos para la página del Módulo 1
+   ========================================= */
+
+/* Títulos más grandes y llamativos */
+.page-heading {
+    margin-bottom: 40px;
+}
+
+.page-heading .eyebrow {
+    font-size: 1.1rem;
+    margin-bottom: 14px;
+}
+
+.page-heading h1 {
+    font-size: 2.5rem; /* Título principal más grande */
+    margin-bottom: 14px;
+    line-height: 1em;
+
+}
+
+.page-heading .page-description {
+    font-size: 1.2rem;
+}
+
+/* Grilla más generosa */
+.tools-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px; /* Más espacio entre tarjetas */
+}
+
+@media (min-width: 900px) {
+    .tools-grid {
+        /* Hacemos que las tarjetas sean más anchas (min 400px) para que no queden chicas */
+        grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    }
+}
+
+/* Tarjeta base - Más grande y con más aire */
+.tool-card {
+    display: flex;
+    gap: 24px;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 16px; /* Bordes un poco más redondeados */
+    padding: 32px; /* Más padding interno */
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+/* Efecto al pasar el mouse */
+a.tool-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-4px); /* Se eleva un poco más */
+    box-shadow: 0 12px 24px -8px rgba(0,0,0,0.3);
+}
+
+/* Tarjeta deshabilitada */
+.tool-card.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: var(--bg-surface-raised);
+    border-style: dashed; /* Borde punteado para indicar que no está lista */
+}
+
+/* Íconos más grandes */
+.tool-icon {
+    width: 64px; /* De 56 a 64 */
+    height: 64px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem; /* Ícono más grande */
+    flex-shrink: 0;
+}
+
+.icon-blue { 
+    background: rgba(59, 130, 246, 0.15); 
+    color: #3B82F6; 
+    border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.icon-gray { 
+    background: var(--bg-surface); 
+    color: var(--text-muted); 
+    border: 1px solid var(--border-color); 
+}
+
+/* Textos de la tarjeta más legibles */
+.tool-info h3 {
+    font-size: 1.25rem; /* Título de la herramienta más grande */
+    font-weight: 600;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    color: var(--text-main);
+}
+
+.tool-info p {
+    font-size: 1rem; /* Texto descriptivo más grande */
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Etiquetas (Badges) más visibles */
+.badge {
+    font-size: 0.75rem;
+    padding: 6px 12px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.badge-ready {
+    background-color: var(--success-bg);
+    color: var(--success);
+    border: 1px solid var(--success);
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.2); /* Pequeño brillo verde */
+}
+
+.badge-soon {
+    background-color: var(--bg-surface-raised);
+    color: var(--text-muted);
+    border: 1px solid var(--border-color);
+}

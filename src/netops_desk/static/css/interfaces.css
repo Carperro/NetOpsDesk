@@ -1,0 +1,66 @@
+.interfaces-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.interface-card {
+    background: var(--bg-surface-raised);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.25rem;
+}
+
+.iface-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.iface-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--text-main);
+}
+
+.badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+::placeholder{
+    opacity: 0.6;
+}
+.status-up { background: rgba(16, 185, 129, 0.2); color: #10b981; }
+.status-down { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+
+.iface-details {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.iface-details li {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+}
+
+.iface-label {
+    color: var(--text-muted);
+}
+
+.iface-value {
+    font-family: monospace;
+    color: var(--text-main);
+    font-weight: 500;
+}

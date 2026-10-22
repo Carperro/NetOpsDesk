@@ -1,0 +1,66 @@
+.mac-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1.5rem 0;
+    max-width: 500px;
+}
+
+.mac-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.mac-form .form-label { font-weight: 600; }
+
+.mac-form .form-input {
+    padding: 0.6rem 0.75rem;
+    font-size: 1.1rem;
+    font-family: monospace;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: var(--bg-surface);
+    color: var(--text-main);
+}
+
+.mac-form .btn-primary { align-self: flex-start; }
+
+.result-container {
+    margin-top: 2rem;
+    padding: 1.25rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--bg-surface-raised);
+    max-width: 700px;
+}
+
+.result-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.result-item-wide { grid-column: 1 / -1; }
+
+.result-item dt {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+}
+
+.result-item dd {
+    font-family: monospace;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.vendor-highlight {
+    font-size: 1.3rem !important;
+    color: var(--primary);
+    font-weight: bold;
+    font-family: inherit !important;
+}

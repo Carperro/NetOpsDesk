@@ -5,6 +5,14 @@ import math
 
 from netops_desk.exceptions import DomainError
 
+__all__ = [
+    "DomainError",
+    "ErrorCode",
+    "calculate_subnets_by_count",
+    "calculate_subnets_by_hosts",
+]
+
+
 MAX_GENERATED_SUBNETS = 4096
 
 

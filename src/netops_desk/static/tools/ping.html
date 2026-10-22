@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetOps Desk - Ping</title>
+    <link rel="stylesheet" href="/static/css/reset.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/ping.css">
+    <script src="/static/js/sidebar.js" defer></script>
+    <script src="/static/js/common.js" defer></script>
+    <script src="/static/js/api-errors.js" defer></script>
+    <script src="/static/js/ping.js" defer></script>
+</head>
+<body id="top">
+    <div class="app-layout">
+        <div id="sidebar-container"></div>
+        <main class="main-content">
+            <header class="topbar">
+                <div class="search-box">
+                    <span aria-hidden="true">🔍</span>
+                    <input type="text" placeholder="Buscar herramientas...">
+                </div>
+            </header>
+
+            <div class="page-container">
+                <h1>Ping</h1>
+                <p class="subtitle">Medí la latencia y pérdida de paquetes hacia un host.</p>
+
+                <form id="ping-form" class="ping-form" novalidate>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="host-input" class="form-label">Host (IP o Dominio)</label>
+                            <input type="text" id="host-input" class="form-input" placeholder="Ej: 8.8.8.8 o google.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="count-input" class="form-label">Cantidad de paquetes</label>
+                            <input type="number" id="count-input" class="form-input" min="1" max="10" value="4" required>
+                        </div>
+                    </div>
+                    <button type="submit" id="execute-btn" class="btn-primary">Ejecutar Ping</button>
+                </form>
+
+                <div id="error-container" class="error-message" role="alert" hidden></div>
+
+                <section id="result-container" class="result-container" aria-live="polite" hidden>
+                    <h2>Estadísticas</h2>
+                    <dl class="result-grid">
+                        <div class="result-item">
+                            <dt>Host solicitado</dt>
+                            <dd id="result-host">—</dd>
+                        </div>
+                        <div class="result-item">
+                            <dt>IP resuelta</dt>
+                            <dd id="result-resolved-ip">—</dd>
+                        </div>
+                        <div class="result-item">
+                            <dt>Paquetes enviados</dt>
+                            <dd id="result-sent">—</dd>
+                        </div>
+                        <div class="result-item">
+                            <dt>Paquetes recibidos</dt>
+                            <dd id="result-received">—</dd>
+                        </div>
+                        <div class="result-item">
+                            <dt>Pérdida</dt>
+                            <dd id="result-loss">—</dd>
+                        </div>
+                        <div class="result-item">
+                            <dt>Mín / Máx / Prom (ms)</dt>
+                            <dd id="result-times">—</dd>
+                        </div>
+                    </dl>
+
+                    <div id="responses-section" hidden>
+                        <h3 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Detalle de respuestas</h3>
+                        <div class="table-responsive" role="region" tabindex="0" aria-label="Tabla de resultados">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Secuencia</th>
+                                        <th>Tiempo (ms)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="responses-tbody">
+                                    <!-- Se inyecta con JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            
+            <footer class="site-footer">
+                <p>&copy; <span id="current-year"></span> NetOps Desk. Todos los derechos reservados.</p>
+            </footer>
+        </main>
+    </div>
+    <a href="#top" class="back-to-top" aria-label="Volver al inicio de la página">↑</a>
+</body>
+</html>

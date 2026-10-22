@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetOps Desk - Calculadora IPv6</title>
+    <link rel="stylesheet" href="/static/css/reset.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/ipv6.css">
+    <script src="/static/js/sidebar.js" defer></script>
+    <script src="/static/js/common.js" defer></script>
+    <script src="/static/js/api-errors.js" defer></script>
+    <script src="/static/js/ipv6.js" defer></script>
+</head>
+
+<body id="top">
+
+    <div class="app-layout">
+        <div id="sidebar-container"></div>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div class="search-box">
+                    <span aria-hidden="true">🔍</span>
+                    <input type="text" placeholder="Buscar herramientas...">
+                </div>
+            </header>
+
+            <div class="page-container">
+                <h1>Calculadora IPv6</h1>
+                <p class="subtitle">
+                    Ingresá una dirección IPv6 con prefijo para calcular la red,
+                    la última dirección del bloque y el total de direcciones.
+                </p>
+
+                <form id="ipv6-form" class="ipv6-form" novalidate>
+                    <div class="form-group">
+                        <label for="cidr-input" class="form-label">
+                            Dirección IPv6 / Prefijo
+                        </label>
+                        <input
+                            type="text"
+                            id="cidr-input"
+                            name="cidr"
+                            class="form-input"
+                            placeholder="Ejemplo: 2001:db8::/64"
+                            autocomplete="off"
+                            spellcheck="false"
+                            required
+                        >
+                    </div>
+                    <button
+                        type="submit"
+                        id="calculate-btn"
+                        class="btn-primary"
+                    >
+                        Calcular
+                    </button>
+                </form>
+
+                <div
+                    id="error-container"
+                    class="error-message"
+                    role="alert"
+                    hidden
+                ></div>
+
+                <section
+                    id="result-container"
+                    class="result-container"
+                    aria-live="polite"
+                    hidden
+                >
+                    <h2>Resultado</h2>
+                    <dl class="result-grid">
+                        <div class="result-item">
+                            <dt>Entrada</dt>
+                            <dd id="result-input">—</dd>
+                        </div>
+                        <div class="result-item">
+                            <dt>Dirección</dt>
+                            <dd id="result-address">—</dd>
+                        </div>
+                        <div class="result-item">
+                            <dt>Prefijo</dt>
+                            <dd id="result-prefix-length">—</dd>
+                        </div>
+                        <div class="result-item">
+                            <dt>Red</dt>
+                            <dd id="result-network">—</dd>
+                        </div>
+                        <div class="result-item">
+                            <dt>Última dirección</dt>
+                            <dd id="result-last-address">—</dd>
+                        </div>
+                        <div class="result-item">
+                            <dt>Total de direcciones</dt>
+                            <dd id="result-total-addresses">—</dd>
+                        </div>
+                        <div class="result-item">
+                            <dt>Bits de host activos</dt>
+                            <dd id="result-host-bits-set">—</dd>
+                        </div>
+                        <div class="result-item result-item-wide">
+                            <dt>Clasificaciones</dt>
+                            <dd id="result-classifications">—</dd>
+                        </div>
+                    </dl>
+
+                    <div id="warnings-container" class="warnings-area" hidden></div>
+                </section>
+            </div>
+
+            <footer class="site-footer">
+                <p>&copy; <span id="current-year"></span> NetOps Desk. Todos los derechos reservados.</p>
+            </footer>
+        </main>
+    </div>
+
+    <a href="#top" class="back-to-top" aria-label="Volver al inicio de la página">↑</a>
+</body>
+
+</html>

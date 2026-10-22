@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetOps Desk — Módulo 3</title>
+    
+    <link rel="stylesheet" href="/static/css/reset.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/modulo-3.css">
+    
+    <script src="/static/js/sidebar.js" defer></script>
+    <script src="/static/js/common.js" defer></script>
+    <script src="/static/js/tools-catalog.js" defer></script>
+    <script src="/static/js/search.js" defer></script>
+</head>
+<body id="top">
+
+    <div class="app-layout">
+        <div id="sidebar-container"></div>
+
+        <main class="main-content">
+            <header class="topbar module-topbar">
+                <div class="search-box">
+                    <span aria-hidden="true">🔍</span>
+                    <input id="tool-search" type="search" placeholder="Buscar herramientas..." aria-label="Buscar herramientas" autocomplete="off">
+                    <div id="search-results" class="search-dropdown search-results" role="listbox" aria-live="polite" hidden></div>
+                </div>
+                <a href="/" class="back-link">← Volver al Dashboard</a>
+            </header>
+
+            <div class="page-container">
+                <div class="page-heading">
+                    <p class="eyebrow">Módulo 3</p>
+                    <h1>Diagnóstico local de Windows</h1>
+                    <p class="page-description">Herramientas para analizar y configurar tu equipo local.</p>
+                </div>
+
+                <div class="tools-grid">
+                    <!-- Herramienta 11: LISTA -->
+                    <a href="/tools/interfaces" class="tool-card">
+                        <div class="tool-icon icon-blue">💻</div>
+                        <div class="tool-info">
+                            <h3>11. Información de interfaces <span class="badge badge-ready">Lista</span></h3>
+                            <p>Dirección IP, máscara, gateway, DNS y estado del adaptador.</p>
+                        </div>
+                    </a>
+
+                    <!-- Herramienta 12: Lista -->
+                    <a href="/tools/ip-config" class="tool-card">
+                        <div class="tool-icon icon-green">⚙️</div>
+                        <div class="tool-info">
+                            <h3>12. Asistente de configuración IP <span class="badge badge-ready">Lista</span></h3>
+                            <p>Preparación y explicación de comandos DHCP y DNS.</p>
+                        </div>
+                    </a>
+
+                    <!-- Herramienta 13: Lista -->
+                    <a href="/tools/arp-viewer" class="tool-card">
+                        <div class="tool-icon icon-gray">🔗</div>
+                        <div class="tool-info">
+                            <h3>13. Visor de caché ARP <span class="badge badge-ready">Lista</span></h3>
+                            <p>Direcciones IP conocidas y direcciones MAC asociadas.</p>
+                        </div>
+                    </a>
+
+                    <!-- Herramienta 14: Lista -->
+                    <a href="/tools/route-table" class="tool-card">
+                        <div class="tool-icon icon-green">🗺️</div>
+                        <div class="tool-info">
+                            <h3>14. Visor de tabla de rutas <span class="badge badge-ready">Lista</span></h3>
+                            <p>Consulta de rutas locales, métricas y gateways.</p>
+                        </div>
+                    </a>
+
+                    <!-- Herramienta 15: Lista -->
+                    <a href="/tools/adapters" class="tool-card ">
+                        <div class="tool-icon icon-green">📶</div>
+                        <div class="tool-info">
+                            <h3>15. Estado de adaptadores <span class="badge badge-ready">Lista</span></h3>
+                            <p>Estado del enlace, velocidad e información disponible.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

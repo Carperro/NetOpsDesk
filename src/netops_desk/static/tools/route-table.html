@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetOps Desk - Tabla de Rutas</title>
+    <link rel="stylesheet" href="/static/css/reset.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/route-table.css">
+    <script src="/static/js/sidebar.js" defer></script>
+    <script src="/static/js/common.js" defer></script>
+    <script src="/static/js/api-errors.js" defer></script>
+    <script src="/static/js/route-table.js" defer></script>
+</head>
+<body id="top">
+    <div class="app-layout">
+        <div id="sidebar-container"></div>
+        <main class="main-content">
+            <header class="topbar">
+                <div class="search-box">
+                    <span aria-hidden="true">🔍</span>
+                    <input type="text" placeholder="Buscar herramientas...">
+                </div>
+            </header>
+
+            <div class="page-container">
+                <h1>Visor de tabla de rutas</h1>
+                <p class="subtitle">Consulta las rutas locales, métricas y gateways de este equipo.</p>
+
+                <button id="execute-btn" class="btn-primary" style="margin: 1.5rem 0;">Consultar Tabla de Rutas</button>
+
+                <div id="error-container" class="error-message" role="alert" hidden></div>
+
+                <section id="result-container" class="result-container" aria-live="polite" hidden>
+                    <h2>Tabla de Rutas IPv4</h2>
+                    <div class="table-responsive" role="region" tabindex="0" aria-label="Tabla de resultados">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Destino</th>
+                                    <th>Máscara</th>
+                                    <th>Gateway</th>
+                                    <th>Interfaz</th>
+                                    <th>Métrica</th>
+                                </tr>
+                            </thead>
+                            <tbody id="routes-tbody">
+                                <!-- Se inyecta con JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+            
+            <footer class="site-footer">
+                <p>&copy; <span id="current-year"></span> NetOps Desk. Todos los derechos reservados.</p>
+            </footer>
+        </main>
+    </div>
+    <a href="#top" class="back-to-top" aria-label="Volver al inicio de la página">↑</a>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetOps Desk - Historial</title>
+    <link rel="stylesheet" href="/static/css/reset.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/history.css">
+    <script src="/static/js/sidebar.js" defer></script>
+    <script src="/static/js/common.js" defer></script>
+    <script src="/static/js/api-errors.js" defer></script>
+    <script src="/static/js/history.js" defer></script>
+</head>
+<body id="top">
+    <div class="app-layout">
+        <div id="sidebar-container"></div>
+        <main class="main-content">
+            <header class="topbar">
+                <div class="search-box">
+                    <span aria-hidden="true">🔍</span>
+                    <input type="text" placeholder="Buscar herramientas...">
+                </div>
+            </header>
+
+            <div class="page-container">
+                <h1>Historial de diagnósticos</h1>
+                <p class="subtitle">Registrá y consultá los diagnósticos realizados.</p>
+
+                <form id="history-form" class="history-form" novalidate>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Herramienta</label>
+                            <input type="text" id="tool-input" class="form-input" placeholder="Ej: Ping" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Acción</label>
+                            <input type="text" id="action-input" class="form-input" placeholder="Ej: Diagnóstico 8.8.8.8" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Estado</label>
+                            <select id="status-input" class="form-input">
+                                <option value="success">Exitoso</option>
+                                <option value="warning">Advertencia</option>
+                                <option value="error">Error</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Detalles (Opcional)</label>
+                        <input type="text" id="details-input" class="form-input" placeholder="Ej: Latencia de 15ms">
+                    </div>
+                    <button type="submit" id="save-btn" class="btn-primary">Registrar Entrada</button>
+                </form>
+
+                <div id="error-container" class="error-message" role="alert" hidden></div>
+
+                <section id="result-container" class="result-container">
+                    <div class="result-header">
+                        <h2>Historial de Actividad</h2>
+                        <button type="button" id="clear-all-btn" class="btn-danger">🗑️ Borrar Todo</button>
+                    </div>
+                    <div class="table-responsive" role="region" tabindex="0" aria-label="Tabla de resultados">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Herramienta</th>
+                                    <th>Acción</th>
+                                    <th>Estado</th>
+                                    <th>Detalles</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="logs-tbody">
+                                <!-- Se inyecta con JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+            
+            <footer class="site-footer">
+                <p>&copy; <span id="current-year"></span> NetOps Desk. Todos los derechos reservados.</p>
+            </footer>
+        </main>
+    </div>
+    <a href="#top" class="back-to-top" aria-label="Volver al inicio de la página">↑</a>
+</body>
+</html>

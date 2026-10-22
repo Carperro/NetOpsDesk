@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetOps Desk — Módulo 4</title>
+    
+    <link rel="stylesheet" href="/static/css/reset.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/modulo-4.css">
+    
+    <script src="/static/js/sidebar.js" defer></script>
+    <script src="/static/js/common.js" defer></script>
+    <script src="/static/js/tools-catalog.js" defer></script>
+    <script src="/static/js/search.js" defer></script>
+</head>
+<body id="top">
+
+    <div class="app-layout">
+        <div id="sidebar-container"></div>
+
+        <main class="main-content">
+            <header class="topbar module-topbar">
+                <div class="search-box">
+                    <span aria-hidden="true">🔍</span>
+                    <input id="tool-search" type="search" placeholder="Buscar herramientas..." aria-label="Buscar herramientas" autocomplete="off">
+                    <div id="search-results" class="search-dropdown search-results" role="listbox" aria-live="polite" hidden></div>
+                </div>
+                <a href="/" class="back-link">← Volver al Dashboard</a>
+            </header>
+
+            <div class="page-container">
+                <div class="page-heading">
+                    <p class="eyebrow">Módulo 4</p>
+                    <h1>Inventario y planificación de redes</h1>
+                    <p class="page-description">Gestioná dispositivos, direcciones y recursos de red.</p>
+                </div>
+
+                <div class="tools-grid">
+                    <!-- Herramienta 16: LISTA -->
+                    <a href="/tools/inventory" class="tool-card">
+                        <div class="tool-icon icon-orange">📋</div>
+                        <div class="tool-info">
+                            <h3>16. Inventario de dispositivos <span class="badge badge-ready">Lista</span></h3>
+                            <p>Registro de equipos, IPs, ubicaciones y observaciones.</p>
+                        </div>
+                    </a>
+
+                    <!-- Herramienta 17: LISTA -->
+                    <a href="/tools/ipam" class="tool-card">
+                        <div class="tool-icon icon-green">🌐</div>
+                        <div class="tool-info">
+                            <h3>17. Gestor de direcciones IP <span class="badge badge-ready">Lista</span></h3>
+                            <p>Registro de asignaciones y consulta de direcciones.</p>
+                        </div>
+                    </a>
+
+                    <!-- Herramienta 18: LISTA -->
+                    <a href="/tools/mac-analyzer" class="tool-card">
+                        <div class="tool-icon icon-green">🔍</div>
+                        <div class="tool-info">
+                            <h3>18. Analizador de direcciones MAC <span class="badge badge-ready">Lista</span></h3>
+                            <p>Validación, normalización e identificación de fabricantes.</p>
+                        </div>
+                    </a>
+
+                    <!-- Herramienta 19: LISTA -->
+                    <a href="/tools/port-catalog" class="tool-card">
+                        <div class="tool-icon icon-green">🔌</div>
+                        <div class="tool-info">
+                            <h3>19. Catálogo de puertos y protocolos <span class="badge badge-ready">Lista</span></h3>
+                            <p>Consulta de puertos conocidos y sus usos.</p>
+                        </div>
+                    </a>
+
+                    <!-- Herramienta 20: LISTA -->
+                    <a href="/tools/mtu-calculator" class="tool-card">
+                        <div class="tool-icon icon-green">📏</div>
+                        <div class="tool-info">
+                            <h3>20. Calculadora MTU <span class="badge badge-ready">Lista</span></h3>
+                            <p>Cálculo de tamaños de paquetes y fragmentación.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

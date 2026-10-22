@@ -21,3 +21,25 @@ async def require_json_content_type(request: Request) -> None:
                 "Se espera 'application/json'."
             ),
         )
+
+from fastapi import Header, HTTPException, status
+from netops_desk.auth import decode_token
+from netops_desk.exceptions import DomainError
+
+async def get_current_user(authorization: str = Header(None)) -> dict:
+    """Dependencia que valida el token JWT en cada request."""
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail={"error": "unauthorized", "detail": "Falta el token de autenticación."}
+        )
+    
+    token = authorization.split(" ")[1]
+    try:
+        payload = decode_token(token)
+        return payload
+    except DomainError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail={"error": exc.code, "detail": exc.message}
+        )

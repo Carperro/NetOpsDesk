@@ -9,28 +9,33 @@
     <link rel="stylesheet" href="/static/css/styles.css">
     <script src="/static/js/sidebar.js" defer></script>
     <script src="/static/js/common.js" defer></script>
+    <script src="/static/js/tools-catalog.js" defer></script>
+    <script src="/static/js/search.js" defer></script>
 </head>
 
 <body id="top">
-
     <div class="app-layout">
-        <!-- SIDEBAR -->
-        <!-- Aquí se inyecta el sidebar con JS -->
         <div id="sidebar-container"></div>
 
-        <!-- CONTENIDO PRINCIPAL -->
         <main class="main-content">
-
-            <!-- Topbar de búsqueda -->
             <header class="topbar">
                 <div class="search-box">
                     <span aria-hidden="true">🔍</span>
-                    <input type="text" placeholder="Buscar herramientas...">
+                    <input id="tool-search" type="search" placeholder="Buscar herramientas..." aria-label="Buscar herramientas" aria-controls="search-results" aria-expanded="false" autocomplete="off">
+                    <div id="search-results" class="search-dropdown search-results" role="listbox" aria-live="polite" hidden></div>
                 </div>
                 <div class="topbar-actions">
-                    <button class="icon-btn" aria-label="Notificaciones">🔔</button>
-                    <!-- Usamos una clase en lugar de style inline -->
-                    <div class="topbar-user-name" id="topbar-user">Usuario</div>
+                    <div class="profile-menu">
+                        <button class="profile-trigger" id="profile-toggle" type="button" aria-label="Menú de usuario" aria-haspopup="true" aria-expanded="false" aria-controls="profile-dropdown">
+                            <span class="profile-avatar" id="profile-avatar" aria-hidden="true">A</span>
+                            <span class="topbar-user-name" id="topbar-user">Usuario</span>
+                        </button>
+                        <div class="profile-dropdown" id="profile-dropdown" hidden>
+                            <strong id="profile-name">Usuario</strong>
+                            <span id="profile-role">Cuenta</span>
+                            <button type="button" data-logout>Cerrar sesión</button>
+                        </div>
+                    </div>
                 </div>
             </header>
 
@@ -38,13 +43,11 @@
                 <h1 id="welcome-title">Bienvenido a NetOps Desk</h1>
                 <p class="subtitle">Tu centro de herramientas para redes, conectividad y diagnóstico.</p>
 
-                <!-- Banner Azul -->
                 <div class="welcome-banner">
                     <div class="banner-text">
                         <h2>Potenciá tu trabajo en redes</h2>
-                        <p>Calculá, diagnosticá, planificá y resolvé. NetOps Desk te ofrece 25 herramientas organizadas
-                            en 5 módulos, diseñadas para simplificar tu día a día.</p>
-                        <a href="/modulo-1" class="btn-primary">Explorar herramientas →</a>
+                        <p>Calculá, diagnosticá, planificá y resolvé. NetOps Desk reúne 25 herramientas organizadas en cinco módulos.</p>
+                        <a href="#catalog-title" class="btn-primary">Explorar herramientas →</a>
                     </div>
                     <div class="banner-stats">
                         <div class="stat-item">
@@ -52,97 +55,77 @@
                             <span class="label">Módulos</span>
                         </div>
                         <div class="stat-item">
-                            <span class="number">25</span>
-                            <span class="label">Herramientas</span>
+                            <span class="number">25/25</span>
+                            <span class="label">Herramientas completadas</span>
                         </div>
                         <div class="stat-item">
-                            <span class="number">MVP</span>
-                            <span class="label">En desarrollo</span>
+                            <span class="number">✓</span>
+                            <span class="label">MVP completo</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Grid de Módulos -->
                 <h2 class="section-title">Módulos</h2>
                 <div class="module-grid">
-
-                    <a href="#" class="module-card">
+                    <a href="/modulo-1" class="module-card">
                         <div class="module-icon icon-blue" aria-hidden="true">📦</div>
                         <h3>1. Direccionamiento IP y subnetting</h3>
-                        <p>Herramientas para trabajar con IPv4, IPv6 y planificación de redes.</p>
-                        <div class="card-footer">
-                            <span>5 herramientas</span>
-                            <span class="arrow" aria-hidden="true">→</span>
-                        </div>
+                        <p>Herramientas para IPv4, IPv6 y planificación de redes.</p>
+                        <div class="card-footer"><span>5 herramientas</span><span class="arrow" aria-hidden="true">→</span></div>
                     </a>
-
-                    <a href="#" class="module-card">
+                    <a href="/modulo-2" class="module-card">
                         <div class="module-icon icon-green" aria-hidden="true">📡</div>
                         <h3>2. Diagnóstico de conectividad</h3>
-                        <p>Verificá y analizá la conectividad de tus redes y dispositivos.</p>
-                        <div class="card-footer">
-                            <span>5 herramientas</span>
-                            <span class="arrow" aria-hidden="true">→</span>
-                        </div>
+                        <p>Verificá y analizá la conectividad de redes y dispositivos.</p>
+                        <div class="card-footer"><span>5 herramientas</span><span class="arrow" aria-hidden="true">→</span></div>
                     </a>
-
-                    <a href="#" class="module-card">
+                    <a href="/modulo-3" class="module-card">
                         <div class="module-icon icon-purple" aria-hidden="true">💻</div>
                         <h3>3. Diagnóstico local de Windows</h3>
-                        <p>Herramientas para analizar y configurar tu equipo local.</p>
-                        <div class="card-footer">
-                            <span>5 herramientas</span>
-                            <span class="arrow" aria-hidden="true">→</span>
-                        </div>
+                        <p>Herramientas para analizar y configurar el equipo local.</p>
+                        <div class="card-footer"><span>5 herramientas</span><span class="arrow" aria-hidden="true">→</span></div>
                     </a>
-
-                    <a href="#" class="module-card">
+                    <a href="/modulo-4" class="module-card">
                         <div class="module-icon icon-orange" aria-hidden="true">📋</div>
                         <h3>4. Inventario y planificación de redes</h3>
                         <p>Gestioná dispositivos, direcciones y recursos de red.</p>
-                        <div class="card-footer">
-                            <span>5 herramientas</span>
-                            <span class="arrow" aria-hidden="true">→</span>
-                        </div>
+                        <div class="card-footer"><span>5 herramientas</span><span class="arrow" aria-hidden="true">→</span></div>
                     </a>
-
-                    <a href="#" class="module-card">
+                    <a href="/modulo-5" class="module-card">
                         <div class="module-icon icon-teal" aria-hidden="true">📊</div>
                         <h3>5. Análisis, documentación y productividad</h3>
                         <p>Generá informes, compará configuraciones y más.</p>
-                        <div class="card-footer">
-                            <span>5 herramientas</span>
-                            <span class="arrow" aria-hidden="true">→</span>
-                        </div>
+                        <div class="card-footer"><span>5 herramientas</span><span class="arrow" aria-hidden="true">→</span></div>
                     </a>
-
                 </div>
 
-                <!-- Banner MVP -->
+                <section class="tool-catalog-section" aria-labelledby="catalog-title">
+                    <div class="section-heading">
+                        <div>
+                            <h2 class="section-title" id="catalog-title">Catálogo de herramientas</h2>
+                            <p class="subtitle">Buscá una herramienta o guardala en favoritos.</p>
+                        </div>
+                    </div>
+                    <div class="tools-grid" id="tools-grid"></div>
+                </section>
+
                 <div class="mvp-banner">
                     <div class="mvp-info">
-                        <h4>✅ Módulo 1: cuatro herramientas disponibles</h4>
-                        <p>Calculadora IPv4/CIDR, Subnetting, VLSM y Overlap están disponibles. El MVP comprende las 25
-                            herramientas del catálogo y se completa progresivamente.</p>
+                        <h4>✅ 25 de 25 herramientas completadas</h4>
+                        <p>Las cinco áreas funcionales reúnen las herramientas del MVP. Explorá el catálogo o buscá por nombre y descripción.</p>
                     </div>
-                    <a href="/modulo-1" class="btn-primary">Explorar el Módulo 1 →</a>
+                    <a href="#catalog-title" class="btn-primary">Explorar el catálogo →</a>
                 </div>
-
             </div>
 
-            <!-- FOOTER -->
             <footer class="site-footer">
                 <p>&copy; <span id="current-year"></span> NetOps Desk. Todos los derechos reservados.</p>
                 <p>Desarrollado para profesionales de IT y redes.</p>
             </footer>
-
         </main>
     </div>
 
-    <!-- Botón Volver Arriba -->
     <a href="#top" class="back-to-top" aria-label="Volver al inicio de la página">↑</a>
-
     <script src="/static/js/dashboard.js" defer></script>
 </body>
-
 </html>

@@ -195,6 +195,39 @@ def test_theme_control_is_injected_and_wired_by_shared_scripts():
     assert "themeBtn.addEventListener('click', toggleTheme)" in common_js
 
 
+def test_login_page_loads_only_real_login_script_and_disables_stale_cache():
+    response = client.get("/login")
+    assert response.status_code == 200
+    assert response.headers["cache-control"] == "no-store"
+    assert '/static/js/login.js' in response.text
+    assert '/static/js/auth.js' not in response.text
+    assert '/static/js/common.js' not in response.text
+
+
+def test_login_script_posts_credentials_to_auth_api():
+    response = client.get("/static/js/login.js")
+    assert response.status_code == 200
+    assert response.headers["cache-control"] == "no-store"
+    assert "fetch('/api/v1/auth/login'" in response.text
+    assert "data.access_token" in response.text
+    assert "window.location.replace('/')" in response.text
+
+
+def test_common_fetch_interceptor_handles_headers_and_auth_lifecycle():
+    response = client.get("/static/js/common.js")
+    assert response.status_code == 200
+    assert response.headers["cache-control"] == "no-store"
+    assert "new Headers(input instanceof Request ? input.headers : undefined)" in response.text
+    assert 'headers.set("Authorization", `Bearer ${token}`)' in response.text
+    assert 'url.pathname === "/api/v1/auth/login"' in response.text
+    assert "function isAuthenticated()" in response.text
+    assert "response.status === 401" in response.text
+
+
+def test_auth_simulator_is_not_served():
+    assert client.get("/static/js/auth.js").status_code == 404
+
+
 def test_warnings_render_code_and_message_without_object_interpolation():
     """El renderer usa los campos code y message del warning."""
     js_content = client.get("/static/js/ipv4.js").text

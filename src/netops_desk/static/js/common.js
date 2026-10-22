@@ -1,112 +1,130 @@
-/**
- * common.js - Utilidades compartidas para NetOps Desk
- */
+"use strict";
 
-const AUTH_KEY = 'netops_token';
-const USER_KEY = 'netops_user';
-const THEME_KEY = 'netops-desk-theme';
+const AUTH_KEY = "netops_token";
+const USER_KEY = "netops_user";
+const THEME_KEY = "netops-desk-theme";
+let sessionRedirectInProgress = false;
 
-// --- 1. Autenticación ---
-function isAuthenticated() {
-    return localStorage.getItem(AUTH_KEY) !== null;
+(function installAuthenticatedFetch() {
+    const originalFetch = window.fetch.bind(window);
+
+    window.fetch = async function(...args) {
+        const [input, requestOptions = {}] = args;
+        const requestUrl = input instanceof Request
+            ? input.url
+            : input instanceof URL
+                ? input.href
+                : String(input);
+        const url = new URL(requestUrl, window.location.href);
+        const isSameOriginApi = url.origin === window.location.origin
+            && url.pathname.startsWith("/api/");
+        const isLoginRequest = isSameOriginApi
+            && url.pathname === "/api/v1/auth/login";
+
+        const headers = new Headers(input instanceof Request ? input.headers : undefined);
+        new Headers(args[1]?.headers).forEach((value, name) => {
+            headers.set(name, value);
+        });
+
+        const token = localStorage.getItem(AUTH_KEY);
+        if (isSameOriginApi && !isLoginRequest && token) {
+            headers.set("Authorization", `Bearer ${token}`);
+        }
+
+        args[1] = { ...requestOptions, headers };
+        const response = await originalFetch(...args);
+
+        if (isSameOriginApi && !isLoginRequest && response.status === 401) {
+            expireSession();
+        }
+        return response;
+    };
+})();
+
+function isLoginPage() {
+    return window.location.pathname === "/login"
+        || window.location.pathname.endsWith("/login.html");
 }
 
-function getUser() {
-    const userStr = localStorage.getItem(USER_KEY);
-    return userStr ? JSON.parse(userStr) : null;
+function isAuthenticated() {
+    return Boolean(localStorage.getItem(AUTH_KEY));
 }
 
 function requireAuth() {
-    if (!isAuthenticated()) {
-        window.location.href = '/login';
-    }
+    if (isLoginPage()) return true;
+    if (isAuthenticated()) return true;
+    window.location.replace("/login");
+    return false;
+}
+
+function expireSession() {
+    localStorage.removeItem(AUTH_KEY);
+    localStorage.removeItem(USER_KEY);
+    if (sessionRedirectInProgress) return;
+
+    sessionRedirectInProgress = true;
+    window.alert("Sesión expirada");
+    if (!isLoginPage()) window.location.replace("/login");
 }
 
 function logout() {
     localStorage.removeItem(AUTH_KEY);
     localStorage.removeItem(USER_KEY);
-    window.location.href = '/login';
+    window.location.replace("/login");
 }
 
-function login(username, password) {
-    if (username && password) {
-        localStorage.setItem(AUTH_KEY, 'fake-jwt-token-' + Date.now());
-        localStorage.setItem(USER_KEY, JSON.stringify({
-            username: username,
-            role: 'admin',
-            loginAt: new Date().toISOString()
-        }));
-        return true;
+function getUser() {
+    try {
+        return JSON.parse(localStorage.getItem(USER_KEY) || "null");
+    } catch {
+        return null;
     }
-    return false;
 }
 
-// --- 2. Gestión de Tema (Claro / Oscuro) ---
 function initTheme() {
     const stored = localStorage.getItem(THEME_KEY);
-    const theme = (stored === 'dark' || stored === 'light') ? stored : 'dark';
-    document.documentElement.setAttribute('data-theme', theme);
+    const theme = stored === "light" || stored === "dark" ? stored : "dark";
+    document.documentElement.setAttribute("data-theme", theme);
     updateThemeButton(theme);
 }
 
 function toggleTheme() {
-    const current = document.documentElement.getAttribute('data-theme') || 'dark';
-    const next = current === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
+    const current = document.documentElement.getAttribute("data-theme") || "dark";
+    const next = current === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
     localStorage.setItem(THEME_KEY, next);
     updateThemeButton(next);
 }
 
 function updateThemeButton(theme) {
-    const btn = document.getElementById('theme-toggle');
-    if (!btn) return;
-    
-    // Actualiza el texto del botón
-    const textEl = btn.querySelector('#theme-text') || btn.querySelector('.theme-toggle__label');
-    if (textEl) {
-        textEl.textContent = theme === 'dark' ? 'Modo claro' : 'Modo oscuro';
-    }
+    const button = document.getElementById("theme-toggle");
+    const label = button?.querySelector("#theme-text, .theme-toggle__label");
+    if (label) label.textContent = theme === "dark" ? "Modo claro" : "Modo oscuro";
 }
 
-// Ejecutar cuando la página termine de cargar
-document.addEventListener('DOMContentLoaded', () => {
-    initTheme();
-    
-    // Lógica del botón de tema
-    const themeBtn = document.getElementById('theme-toggle');
-    if (themeBtn) {
-        themeBtn.addEventListener('click', toggleTheme);
-    }
-    
-    // Cargar el usuario en el sidebar
-    loadUserUI(); 
-
-     // --- NUEVO: Configurar el botón de Cerrar Sesión global ---
-    const logoutBtn = document.getElementById('logout-btn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', logout);
-    }
-});
-
-
-// --- 3. Utilidades Globales ---
-document.addEventListener('DOMContentLoaded', () => {
-    // Actualizar el año del footer automáticamente
-    const yearSpan = document.getElementById('current-year');
-    if (yearSpan) {
-        yearSpan.textContent = new Date().getFullYear();
-    }
-});
-
-// --- Función para cargar datos del usuario en el Sidebar ---
 function loadUserUI() {
     const user = getUser();
-    if (user) {
-        const userNameEl = document.getElementById('user-name');
-        const userAvatarEl = document.getElementById('user-avatar');
-        
-        if (userNameEl) userNameEl.textContent = user.username;
-        if (userAvatarEl) userAvatarEl.textContent = user.username.charAt(0).toUpperCase();
-    }
+    if (!user) return;
+    const name = user.username || "Usuario";
+    const nameElement = document.getElementById("user-name");
+    const avatarElement = document.getElementById("user-avatar");
+    if (nameElement) nameElement.textContent = name;
+    if (avatarElement) avatarElement.textContent = name.charAt(0).toUpperCase();
 }
 
+document.addEventListener("DOMContentLoaded", (event) => {
+    if (!requireAuth()) {
+        document.body.hidden = true;
+        event.stopImmediatePropagation();
+        return;
+    }
+
+    initTheme();
+    loadUserUI();
+
+    const themeBtn = document.getElementById("theme-toggle");
+    if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
+
+    const year = document.getElementById("current-year");
+    if (year) year.textContent = String(new Date().getFullYear());
+});

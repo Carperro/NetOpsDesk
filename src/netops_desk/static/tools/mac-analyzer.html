@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetOps Desk - Analizador MAC</title>
+    <link rel="stylesheet" href="/static/css/reset.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/mac-analyzer.css">
+    <script src="/static/js/sidebar.js" defer></script>
+    <script src="/static/js/common.js" defer></script>
+    <script src="/static/js/api-errors.js" defer></script>
+    <script src="/static/js/mac-analyzer.js" defer></script>
+</head>
+<body id="top">
+    <div class="app-layout">
+        <div id="sidebar-container"></div>
+        <main class="main-content">
+            <header class="topbar">
+                <div class="search-box">
+                    <span aria-hidden="true">🔍</span>
+                    <input type="text" placeholder="Buscar herramientas...">
+                </div>
+            </header>
+
+            <div class="page-container">
+                <h1>Analizador de direcciones MAC</h1>
+                <p class="subtitle">Validá, normalizá y descubrí el fabricante de una dirección física.</p>
+
+                <form id="mac-form" class="mac-form" novalidate>
+                    <div class="form-group">
+                        <label for="mac-input" class="form-label">Dirección MAC</label>
+                        <input type="text" id="mac-input" class="form-input" placeholder="Ej: 00:1A:2B:3C:4D:5E o 00-1A-2B-3C-4D-5E" required>
+                    </div>
+                    <button type="submit" id="execute-btn" class="btn-primary">Analizar MAC</button>
+                </form>
+
+                <div id="error-container" class="error-message" role="alert" hidden></div>
+
+                <section id="result-container" class="result-container" aria-live="polite" hidden>
+                    <h2>Resultado del análisis</h2>
+                    <dl class="result-grid">
+                        <div class="result-item">
+                            <dt>MAC Original</dt>
+                            <dd id="result-original">—</dd>
+                        </div>
+                        <div class="result-item">
+                            <dt>MAC Normalizada</dt>
+                            <dd id="result-normalized">—</dd>
+                        </div>
+                        <div class="result-item result-item-wide">
+                            <dt>Fabricante (OUI)</dt>
+                            <dd id="result-vendor" class="vendor-highlight">—</dd>
+                        </div>
+                    </dl>
+                </section>
+            </div>
+            
+            <footer class="site-footer">
+                <p>&copy; <span id="current-year"></span> NetOps Desk. Todos los derechos reservados.</p>
+            </footer>
+        </main>
+    </div>
+    <a href="#top" class="back-to-top" aria-label="Volver al inicio de la página">↑</a>
+</body>
+</html>

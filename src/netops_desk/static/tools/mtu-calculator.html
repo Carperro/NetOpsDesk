@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetOps Desk - Calculadora MTU</title>
+    <link rel="stylesheet" href="/static/css/reset.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/mtu-calculator.css">
+    <script src="/static/js/sidebar.js" defer></script>
+    <script src="/static/js/common.js" defer></script>
+    <script src="/static/js/api-errors.js" defer></script>
+    <script src="/static/js/mtu-calculator.js" defer></script>
+</head>
+<body id="top">
+    <div class="app-layout">
+        <div id="sidebar-container"></div>
+        <main class="main-content">
+            <header class="topbar">
+                <div class="search-box">
+                    <span aria-hidden="true">🔍</span>
+                    <input type="text" placeholder="Buscar herramientas...">
+                </div>
+            </header>
+
+            <div class="page-container">
+                <h1>Calculadora MTU y fragmentación</h1>
+                <p class="subtitle">Calculá el tamaño máximo de payload restando las cabeceras de red.</p>
+
+                <form id="mtu-form" class="mtu-form" novalidate>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>MTU Físico (bytes)</label>
+                            <input type="number" id="mtu-input" class="form-input" value="1500" min="68" max="9000" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Versión IP</label>
+                            <select id="ip-input" class="form-input">
+                                <option value="ipv4">IPv4</option>
+                                <option value="ipv6">IPv6</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Protocolo de Transporte</label>
+                            <select id="transport-input" class="form-input">
+                                <option value="tcp">TCP</option>
+                                <option value="udp">UDP</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Túnel / VPN</label>
+                            <select id="tunnel-input" class="form-input">
+                                <option value="none">Sin túnel</option>
+                                <option value="gre">GRE</option>
+                                <option value="ipsec">IPsec</option>
+                                <option value="wireguard">WireGuard</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" id="calculate-btn" class="btn-primary">Calcular MSS</button>
+                </form>
+
+                <div id="error-container" class="error-message" role="alert" hidden></div>
+
+                <section id="result-container" class="result-container" aria-live="polite" hidden>
+                    <div class="result-header">
+                        <h2>Resultado del Cálculo</h2>
+                        <div class="mss-badge">
+                            <span class="mss-label">MSS Máximo</span>
+                            <span id="result-mss" class="mss-value">0</span>
+                            <span class="mss-unit">bytes</span>
+                        </div>
+                    </div>
+
+                    <div class="math-breakdown">
+                        <div class="math-item">
+                            <span class="math-label">MTU</span>
+                            <span id="math-mtu" class="math-value">1500</span>
+                        </div>
+                        <div class="math-op">-</div>
+                        <div class="math-item">
+                            <span class="math-label">C. IP</span>
+                            <span id="math-ip" class="math-value">20</span>
+                        </div>
+                        <div class="math-op">-</div>
+                        <div class="math-item">
+                            <span class="math-label">C. Transp.</span>
+                            <span id="math-transport" class="math-value">20</span>
+                        </div>
+                        <div class="math-op">-</div>
+                        <div class="math-item">
+                            <span class="math-label">C. Túnel</span>
+                            <span id="math-tunnel" class="math-value">0</span>
+                        </div>
+                        <div class="math-op">=</div>
+                        <div class="math-item math-result">
+                            <span class="math-label">Payload</span>
+                            <span id="math-result" class="math-value">1460</span>
+                        </div>
+                    </div>
+
+                    <ul id="warnings-list" class="warnings-list" hidden>
+                        <!-- Se inyecta con JS -->
+                    </ul>
+                </section>
+            </div>
+            
+            <footer class="site-footer">
+                <p>&copy; <span id="current-year"></span> NetOps Desk. Todos los derechos reservados.</p>
+            </footer>
+        </main>
+    </div>
+    <a href="#top" class="back-to-top" aria-label="Volver al inicio de la página">↑</a>
+</body>
+</html>

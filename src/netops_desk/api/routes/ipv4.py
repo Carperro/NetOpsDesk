@@ -31,6 +31,7 @@ router = APIRouter(tags=["IPv4 Calculator"])
         "(required_hosts+mode)."
     ),
 )
+
 async def calculate_ipv4(
     body: IPV4Input,
     _: None = Depends(require_json_content_type),

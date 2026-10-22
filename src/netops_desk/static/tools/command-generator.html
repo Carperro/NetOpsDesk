@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetOps Desk - Generador de Comandos</title>
+    <link rel="stylesheet" href="/static/css/reset.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/command-generator.css">
+    <script src="/static/js/sidebar.js" defer></script>
+    <script src="/static/js/common.js" defer></script>
+    <script src="/static/js/api-errors.js" defer></script>
+    <script src="/static/js/command-generator.js" defer></script>
+</head>
+<body id="top">
+    <div class="app-layout">
+        <div id="sidebar-container"></div>
+        <main class="main-content">
+            <header class="topbar">
+                <div class="search-box">
+                    <span aria-hidden="true">🔍</span>
+                    <input type="text" placeholder="Buscar herramientas...">
+                </div>
+            </header>
+
+            <div class="page-container">
+                <h1>Generador de comandos</h1>
+                <p class="subtitle">Armá comandos de red de Windows con sus parámetros explicados.</p>
+
+                <form id="command-form" class="command-form" novalidate>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Comando</label>
+                            <select id="command-type" class="form-input">
+                                <option value="ping">Ping</option>
+                                <option value="tracert">Tracert</option>
+                                <option value="ipconfig">Ipconfig</option>
+                                <option value="netstat">Netstat</option>
+                                <option value="nslookup">Nslookup</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Objetivo (IP o Dominio)</label>
+                            <input type="text" id="target-input" class="form-input" placeholder="Ej: 8.8.8.8">
+                            <small id="target-help" class="text-muted">Requerido para este comando.</small>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Opciones / Parámetros</label>
+                        <div id="options-container" class="options-grid">
+                            <!-- Los checkboxes se inyectan con JS -->
+                        </div>
+                    </div>
+
+                    <button type="submit" id="generate-btn" class="btn-primary">Generar Comando</button>
+                </form>
+
+                <div id="error-container" class="error-message" role="alert" hidden></div>
+
+                <section id="result-container" class="result-container" aria-live="polite" hidden>
+                    <div id="admin-warning" class="admin-warning" hidden>
+                        ⚠️ <strong>Atención:</strong> Este comando requiere ejecutarse en una consola como Administrador.
+                    </div>
+                    
+                    <h2>Comando Generado</h2>
+                    <div class="command-box">
+                        <textarea id="output-command" class="output-textarea" readonly></textarea>
+                        <button type="button" id="copy-btn" class="btn-secondary">📋 Copiar</button>
+                    </div>
+                    
+                    <h3>Explicación</h3>
+                    <pre id="output-explanation" class="explanation-box"></pre>
+                </section>
+            </div>
+            
+            <footer class="site-footer">
+                <p>&copy; <span id="current-year"></span> NetOps Desk. Todos los derechos reservados.</p>
+            </footer>
+        </main>
+    </div>
+    <a href="#top" class="back-to-top" aria-label="Volver al inicio de la página">↑</a>
+</body>
+</html>
